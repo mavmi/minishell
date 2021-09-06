@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/03 15:54:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/06 19:03:16 by pmaryjo          ###   ########.fr       */
+/*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
+/*   Updated: 2021/09/06 19:06:01 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
-# define PORMT "minishel> "
-
-# define ECHO "echo"
-# define CD "cd"
-# define PWD "pwd"
-# define EXPORT "export"
-# define UNSET "unset"
-# define ENV "env"
-# define EXIT "exit"
-
-# include <stdio.h>
-# include <readline/history.h>
-# include <readline/readline.h>
+# include <stdlib.h>
 
 # include "../libft/libft.h"
-# include "utils.h"
-# include "enviroment.h"
-# include "pipex.h"
+
+typedef struct s_process	t_process;
+
+struct s_process
+{
+	int			fields[2];
+	char		*exec_name;
+	char		*exec_path;
+	char		**argv;
+	t_process	*next;
+};
+
+char	*find_executable(char **dirs, char *file_name);
 
 #endif

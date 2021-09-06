@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/06 17:12:34 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/06 19:05:32 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,9 @@ void	parse_command(char *command)
 	free(command_strs);
 }
 
-int	main(int argc, char **argv, char **envp)
+void test_env(int argc, char **argv, char **envp)
 {
 	(void)argc; (void)argv; (void)envp;
-
-
-	
-
 
 	t_enviroment *env = env_create(envp);
 	if (!env){
@@ -79,9 +75,21 @@ int	main(int argc, char **argv, char **envp)
 			printf("%s=%s\n", elem->name, elem->value);
 			elem = elem->next;
 		}
-	}
+	}	
+	env_destroy(env);	
+}
+
+void test_pipex()
+{
 	
-	env_destroy(env);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	(void)argc; (void)argv; (void)envp;
+
+	
+
 	return 0;
 
 	// while (1)
