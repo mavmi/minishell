@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/08 20:23:28 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/08 21:21:34 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,26 +93,24 @@ int	main(int argc, char **argv, char **envp)
 
 	g_data.envp = env_create(envp);
 
-	t_process	*list = proc_init_list(argv + 1, envp);
-	// t_process	*ptr = list;
-	// while (ptr)
-	// {
-	// 	printf("%p \nnext = %p \nprev = %p\n\n", ptr, ptr->next, ptr->prev);
-	// 	ptr = ptr->next;
-	// }
-	proc_execute_list(list);
+	{
+		t_process	*list = proc_init_list(argv + 1, envp);
+		proc_execute_list(list);
+		proc_destroy_list(list);
+	}
+
+	set_up_signals();
+
+	while (1)
+	{
+		char *str = readline(PORMT);
+		if (!str)
+			exit(0);
+		add_history(str);
+		free(str);
+	}
+	// rl_clear_history();
 
 	env_destroy(g_data.envp);
-	proc_destroy_list(list);
-
 	return 0;
-
-	// while (1)
-	// {
-	// 	char *str = readline(PORMT);
-	// 	add_history(str);
-	// 	parse_command(str);
-	// 	free(str);
-	// }	
-	// rl_clear_history();
 }
