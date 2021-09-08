@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:49:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/06 18:58:40 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/08 16:22:49 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Get absolute path.
 // "dir_name" + "file_name" = /dir_name/file_name.
 // May return NULL
-static char	*get_full_path(char *dir, char *file_name)
+static char	*proc_get_full_path(char *dir, char *file_name)
 {
 	char	*res;
 	char	*tmp;
@@ -33,7 +33,7 @@ static char	*get_full_path(char *dir, char *file_name)
 // Get PATH string from enviroment
 // and convert it to the array of stirngs.
 // May return NULL
-char	**get_paths_array(char **envp)
+char	**proc_get_paths_array(char **envp)
 {
 	if (!envp)
 		return (NULL);
@@ -51,7 +51,7 @@ char	**get_paths_array(char **envp)
 // Find path to the executable file [file_name]
 // in the list of directories [dirs].
 // May return NULL
-char	*find_executable(char **dirs, char *file_name)
+char	*proc_find_executable(char **dirs, char *file_name)
 {
 	int		iter;
 	char	*path;
@@ -59,7 +59,7 @@ char	*find_executable(char **dirs, char *file_name)
 	iter = 0;
 	while (*(dirs + iter))
 	{
-		path = get_full_path(*(dirs + iter), file_name);
+		path = proc_get_full_path(*(dirs + iter), file_name);
 		if (!path)
 			return (NULL);
 		if (!access(path, 1))

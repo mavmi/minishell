@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/06 19:05:32 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/08 17:02:11 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,27 @@ void test_env(int argc, char **argv, char **envp)
 	env_destroy(env);	
 }
 
-void test_pipex()
+void print_strings_array(char **strings)
 {
-	
+	while (*strings){
+		printf(" > %s\n", *strings);
+		strings++;
+	}	
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc; (void)argv; (void)envp;
 
-	
+	t_process	*list = proc_init_list(argv + 1, envp);
+	t_process	*ptr = list;
+	while (list)
+	{
+		printf("name = %s || path = %s\n", list->exec_name, list->exec_path);
+		print_strings_array(list->argv);
+		list = list->next;
+	}
+	proc_destroy_list(ptr);
 
 	return 0;
 

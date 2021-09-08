@@ -8,8 +8,10 @@ PIPEX_DIR	=	$(SRCS_DIR)/pipex
 HDRS_DIR	=	include
 
 HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h)
-SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c utils.c) $(addprefix $(FUNCS_DIR)/, pwd.c cd.c env.c)\
-				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c) $(addprefix $(PIPEX_DIR)/, paths.c pipex.c)
+SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c utils.c)\
+				$(addprefix $(FUNCS_DIR)/, pwd.c cd.c env.c)\
+				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c)\
+				$(addprefix $(PIPEX_DIR)/, paths.c pipex.c)
 OBJS		=	$(SRCS:.c=.o)
 
 

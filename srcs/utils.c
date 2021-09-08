@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 18:56:24 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/05 20:11:16 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/08 16:14:56 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,19 @@ int	cmp_strings(char *s1, char *s2)
 		return (1);
 	}
 	return (0);
+}
+
+void	destroy_strings_array(char **arr)
+{
+	char	**ptr;
+
+	if (!arr)
+		return ;
+	ptr = arr;
+	while (*ptr)
+	{
+		free(*ptr);
+		ptr++;
+	}
+	free(arr);
 }

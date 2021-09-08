@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 17:34:35 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/06 16:57:01 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/08 16:11:46 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_env_elem		*env_get_new_elem(char *str);
 int				env_push_back(t_enviroment *env, char *str);
 t_env_elem		*env_get_by_position(t_enviroment *env, size_t pos);
 t_env_elem		*env_get_by_name(t_enviroment *env, char *name);
-int				env_set_by_position(t_enviroment *env, size_t pos, char *new_val);
+int				env_set_by_position(t_enviroment *env,
+					size_t pos, char *new_val);
 int				env_set_by_name(t_enviroment *env, char *name, char *new_val);
 char			**env_get_content(t_enviroment *env);
 void			env_destroy(t_enviroment *env);
