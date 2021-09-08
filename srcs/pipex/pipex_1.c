@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/08 16:57:27 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/08 19:09:52 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_process	*proc_get_new_elem(char *command, char **dirs)
 	process->exec_name = NULL;
 	process->exec_path = NULL;
 	process->next = NULL;
+	process->prev = NULL;
 	process->argv = ft_split(command, ' ');
 	if (!process->argv)
 	{
@@ -66,6 +67,7 @@ t_process	*proc_get_new_elem(char *command, char **dirs)
 	return (process);
 }
 
+// Part of proc_init_list function
 static t_process	*proc_init_list_handler(char **commands, char **dirs)
 {
 	t_process	*list;
@@ -84,7 +86,9 @@ static t_process	*proc_init_list_handler(char **commands, char **dirs)
 			proc_destroy_elem(list);
 			return (NULL);
 		}
+		pipe(ptr->output);
 		ptr->next = new_elem;
+		new_elem->prev = ptr;
 		ptr = new_elem;
 	}
 	return (list);

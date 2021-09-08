@@ -11,7 +11,7 @@ HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils
 SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c utils.c)\
 				$(addprefix $(FUNCS_DIR)/, pwd.c cd.c env.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c)\
-				$(addprefix $(PIPEX_DIR)/, paths.c pipex.c)
+				$(addprefix $(PIPEX_DIR)/, paths.c pipex_1.c pipex_2.c)
 OBJS		=	$(SRCS:.c=.o)
 
 

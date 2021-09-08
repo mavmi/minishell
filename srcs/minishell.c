@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/08 17:02:11 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/08 20:23:28 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,19 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc; (void)argv; (void)envp;
 
+	g_data.envp = env_create(envp);
+
 	t_process	*list = proc_init_list(argv + 1, envp);
-	t_process	*ptr = list;
-	while (list)
-	{
-		printf("name = %s || path = %s\n", list->exec_name, list->exec_path);
-		print_strings_array(list->argv);
-		list = list->next;
-	}
-	proc_destroy_list(ptr);
+	// t_process	*ptr = list;
+	// while (ptr)
+	// {
+	// 	printf("%p \nnext = %p \nprev = %p\n\n", ptr, ptr->next, ptr->prev);
+	// 	ptr = ptr->next;
+	// }
+	proc_execute_list(list);
+
+	env_destroy(g_data.envp);
+	proc_destroy_list(list);
 
 	return 0;
 
