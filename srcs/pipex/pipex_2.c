@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/09 18:05:41 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/09 19:52:08 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	proc_execute_default_func(t_process *proc, int input, int output)
 		close(proc->prev->output[0]);
 		close(proc->prev->output[1]);
 	}
-	else if (input != -1)
+	else if (input != -1 && input != STDIN_FILENO)
 	{
 		dup2(input, STDIN_FILENO);
 		close(input);
@@ -40,7 +40,7 @@ void	proc_execute_default_func(t_process *proc, int input, int output)
 		close(proc->output[0]);
 		close(proc->output[1]);
 	}
-	else if (output != -1)
+	else if (output != -1 && output != STDOUT_FILENO)
 	{
 		dup2(output, STDOUT_FILENO);
 		close(output);

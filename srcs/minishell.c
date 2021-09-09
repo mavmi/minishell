@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/09 18:15:26 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/09 21:10:12 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,19 @@ void test_miltipipe_with_iofiles(char **argv, char **envp)
 	proc_destroy_list(list);
 }
 
+void test_gnl(void)
+{
+	char *line;
+
+	int input_fd = proc_open_input_file("input_text");
+	while(1){
+		if (get_next_line(input_fd, &line) <= 0 || !line)
+			break;
+		printf("%s\n", line);	
+	}
+	close(input_fd);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc; (void)argv; (void)envp;
@@ -117,8 +130,8 @@ int	main(int argc, char **argv, char **envp)
 
 
 	// test_multipipe(argv, envp);
-	test_miltipipe_with_iofiles(argv, envp);
-
+	// test_miltipipe_with_iofiles(argv, envp);
+	test_gnl();
 
 	set_up_signals();
 	while (1)

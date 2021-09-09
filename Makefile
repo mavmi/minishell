@@ -5,14 +5,16 @@ SRCS_DIR	=	srcs
 FUNCS_DIR	=	$(SRCS_DIR)/rebuilt_funcs
 ENV_DIR		=	$(SRCS_DIR)/enviroment
 PIPEX_DIR	=	$(SRCS_DIR)/pipex
+GNL_DIR		=	$(SRCS_DIR)/get_next_line
 HDRS_DIR	=	include
 READLN_DIR	=	readline
 
-HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h)
+HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h get_next_line)
 SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c signals.c utils.c)\
 				$(addprefix $(FUNCS_DIR)/, pwd.c cd.c env.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c)\
-				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c)
+				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c)\
+				$(addprefix $(GNL_DIR)/, get_next_line.c get_next_line_utils.c)
 OBJS		=	$(SRCS:.c=.o)
 
 
