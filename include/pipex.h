@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/08 19:07:05 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/09 18:19:18 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/errno.h>
 
 # include "../libft/libft.h"
 # include "utils.h"
@@ -38,6 +39,12 @@ void		proc_destroy_elem(t_process *process);
 void		proc_destroy_list(t_process *list);
 t_process	*proc_get_new_elem(char *command, char **dirs);
 t_process	*proc_init_list(char **commands, char **envp);
-void		proc_execute_list(t_process *list);
+
+void		proc_execute_default_func(t_process *proc,
+				int input, int output);
+void		proc_execute_list(t_process *list, int input, int output);
+
+int			proc_open_input_file(char *file_path);
+int			proc_open_output_file(char *file_path);
 
 #endif

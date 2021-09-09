@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/08 21:21:34 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/09 18:15:26 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,14 @@ void	parse_command(char *command)
 	free(command_strs);
 }
 
+void print_strings_array(char **strings)
+{
+	while (*strings){
+		printf(" > %s\n", *strings);
+		strings++;
+	}	
+}
+
 void test_env(int argc, char **argv, char **envp)
 {
 	(void)argc; (void)argv; (void)envp;
@@ -79,38 +87,50 @@ void test_env(int argc, char **argv, char **envp)
 	env_destroy(env);	
 }
 
-void print_strings_array(char **strings)
+void test_multipipe(char **argv, char **envp)
 {
-	while (*strings){
-		printf(" > %s\n", *strings);
-		strings++;
-	}	
+	t_process	*list = proc_init_list(argv + 1, envp);
+	proc_execute_list(list, -1, -1);
+	proc_destroy_list(list);
+}
+
+void test_miltipipe_with_iofiles(char **argv, char **envp)
+{
+	int input_fd;
+	int output_fd;
+
+	input_fd = proc_open_input_file("input_text");
+	output_fd = proc_open_output_file("output_text");
+
+	t_process	*list = proc_init_list(argv + 1, envp);
+	proc_execute_list(list, input_fd, output_fd);
+
+	close(input_fd);
+	close(output_fd);
+	proc_destroy_list(list);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc; (void)argv; (void)envp;
-
 	g_data.envp = env_create(envp);
 
-	{
-		t_process	*list = proc_init_list(argv + 1, envp);
-		proc_execute_list(list);
-		proc_destroy_list(list);
-	}
+
+	// test_multipipe(argv, envp);
+	test_miltipipe_with_iofiles(argv, envp);
+
 
 	set_up_signals();
-
 	while (1)
 	{
 		char *str = readline(PORMT);
-		if (!str)
+		if (!str){
 			exit(0);
+		}
 		add_history(str);
 		free(str);
 	}
-	// rl_clear_history();
-
+	rl_clear_history();
 	env_destroy(g_data.envp);
 	return 0;
 }

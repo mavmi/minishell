@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/08 21:21:29 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/09 16:57:24 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,16 @@
 # define EXIT "exit"
 
 # include <stdio.h>
-# include <readline/history.h>
-# include <readline/readline.h>
+# include <fcntl.h>
+
+# include "../readline/chardefs.h"
+# include "../readline/history.h"
+# include "../readline/keymaps.h"
+# include "../readline/readline.h"
+# include "../readline/rlconf.h"
+# include "../readline/rlstdc.h"
+# include "../readline/rltypedefs.h"
+# include "../readline/tilde.h"
 
 # include "../libft/libft.h"
 # include "utils.h"

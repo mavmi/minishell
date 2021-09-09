@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 21:07:21 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/08 21:23:08 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/09 16:25:26 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 static void	signal_handler(int sig)
 {
-	if (sig == SIGINT)			// ctrl + C
-		printf("CTRL + C\n");
-	else if (sig == SIGQUIT) 	// ctrl + /
-		printf("CTRL + \\\n");
+	if (sig == SIGINT)
+	{
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_redisplay();
+	}
 }
 
 void	set_up_signals(void)
