@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 17:34:35 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/08 20:23:21 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 13:49:38 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ struct s_data
 	t_enviroment	*envp;
 };
 
-static t_data	g_data;
+t_data	*g_data;
 
 t_env_elem		*env_get_new_elem(char *str);
 int				env_push_back(t_enviroment *env, char *str);

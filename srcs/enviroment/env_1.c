@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:42:54 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/06 17:43:55 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 15:22:20 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,22 +89,6 @@ int	env_push_back(t_enviroment *env, char *str)
 	return (0);
 }
 
-// Set new value string to evniroment's element with name [name].
-// Return 1 if everything is ok, 0 otherwise
-int	env_set_by_name(t_enviroment *env, char *name, char *new_val)
-{
-	t_env_elem	*elem;
-
-	if (!env || !name || !new_val)
-		return (0);
-	elem = env_get_by_name(env, name);
-	if (!elem)
-		return (0);
-	free(elem->value);
-	elem->value = new_val;
-	return (1);
-}
-
 // Get array of strings from enviroment struct.
 // May return NULL
 char	**env_get_content(t_enviroment *env)
@@ -115,7 +99,7 @@ char	**env_get_content(t_enviroment *env)
 
 	if (!env)
 		return (NULL);
-	result = (char **)malloc(sizeof(char *) * env->size);
+	result = (char **)malloc(sizeof(char *) * (env->size + 1));
 	if (!result)
 		return (NULL);
 	i = 0;

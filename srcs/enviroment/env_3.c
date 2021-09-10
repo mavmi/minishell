@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:43:12 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/06 17:43:57 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 13:52:02 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,22 @@ int	env_set_by_position(t_enviroment *env, size_t pos, char *new_val)
 	if (!env || pos >= env->size || !new_val)
 		return (0);
 	elem = env_get_by_position(env, pos);
+	if (!elem)
+		return (0);
+	free(elem->value);
+	elem->value = new_val;
+	return (1);
+}
+
+// Set new value string to evniroment's element with name [name].
+// Return 1 if everything is ok, 0 otherwise
+int	env_set_by_name(t_enviroment *env, char *name, char *new_val)
+{
+	t_env_elem	*elem;
+
+	if (!env || !name || !new_val)
+		return (0);
+	elem = env_get_by_name(env, name);
 	if (!elem)
 		return (0);
 	free(elem->value);

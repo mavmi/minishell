@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 16:31:39 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/04 19:21:52 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 14:17:26 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 
 # include "minishell.h"
 
-void	set_env(char *name, char *new_value);
 void	pwd(void);
-void	env(void);
 void	cd(int argc, char **argv);
+void	env(void);
 
 #endif
