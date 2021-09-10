@@ -6,11 +6,33 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:43:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/08 16:12:05 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 20:10:42 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/enviroment.h"
+
+void	env_remove_elem(t_enviroment *env, char *name)
+{
+	t_env_elem	*elem;
+	t_env_elem	*prev;
+	t_env_elem	*next;
+
+	if (!env || !name)
+		return ;
+	elem = env_get_by_name(env, name);
+	if (!elem)
+		return ;
+	prev = elem->prev;
+	next = elem->next;
+	if (prev)
+		prev->next = next;
+	if (next)
+		next->prev = prev;
+	free(elem->name);
+	free(elem->value);
+	free(elem);
+}
 
 void	env_destroy(t_enviroment *env)
 {

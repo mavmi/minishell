@@ -6,31 +6,11 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:42:54 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 15:22:20 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 20:14:15 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/enviroment.h"
-
-static char	*create_lone_string(char *s1, char *s2)
-{
-	int		i;
-	char	*str;
-
-	if (!s1 || !s2)
-		return (NULL);
-	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (*s1)
-		str[i++] = *s1++;
-	str[i++] = '=';
-	while (*s2)
-		str[i++] = *s2++;
-	str[i] = 0;
-	return (str);
-}
 
 // Create new t_env_elem struct.
 // May return NULL
@@ -59,6 +39,7 @@ t_env_elem	*env_get_new_elem(char *str)
 		return (NULL);
 	}
 	new_elem->next = NULL;
+	new_elem->prev = NULL;
 	return (new_elem);
 }
 
@@ -78,6 +59,7 @@ int	env_push_back(t_enviroment *env, char *str)
 	if (env->size)
 	{
 		env->end->next = new_elem;
+		new_elem->prev = env->end;
 		env->end = new_elem;
 	}
 	else

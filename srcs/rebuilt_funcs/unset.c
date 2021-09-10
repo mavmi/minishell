@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/05 18:57:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 20:23:47 by pmaryjo          ###   ########.fr       */
+/*   Created: 2021/09/10 18:28:49 by pmaryjo           #+#    #+#             */
+/*   Updated: 2021/09/10 18:43:36 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "../../include/rebuilt_funcs.h"
 
-# include <stdlib.h>
-
-# include "minishell.h"
-
-char	*create_lone_string(char *name, char *value);
-int		is_string_valid(char *str);
-int		cmp_strings(char *s1, char *s2);
-void	destroy_strings_array(char **arr);
-char	**parse_varialbe(char *str);
-
-#endif
+void	unset(int argc, char **argv)
+{
+	if (argc != 2 || !argv[1])
+		return ;
+	env_remove_elem(g_data->envp, argv[1]);
+}

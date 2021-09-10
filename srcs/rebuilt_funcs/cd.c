@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 17:11:47 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 17:55:52 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 20:22:25 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ void	cd(int argc, char **argv)
 		return ;
 	}
 	new_pwd = getcwd(NULL, 0);
-	env_set_by_name(g_data->envp, "PWD", new_pwd);
-	env_set_by_name(g_data->envp, "OLDPWD", old_pwd);
+	if (!env_set_by_name(g_data->envp, "PWD", new_pwd))
+	{
+		tmp = create_lone_string("PWD", new_pwd);
+		env_push_back(g_data->envp, tmp);
+		free(new_pwd);
+		free(tmp);
+	}
+	if (!env_set_by_name(g_data->envp, "OLDPWD", old_pwd))
+	{
+		tmp = create_lone_string("PWD", old_pwd);
+		env_push_back(g_data->envp, old_pwd);
+		free(old_pwd);
+		free(tmp);
+	}
 }

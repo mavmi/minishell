@@ -6,11 +6,32 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 18:56:24 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 17:59:00 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 20:24:02 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/utils.h"
+
+// [name] + [value] ==> "[name]=[value]"
+char	*create_lone_string(char *name, char *value)
+{
+	int		i;
+	char	*str;
+
+	if (!name || !value)
+		return (NULL);
+	str = (char *)malloc(ft_strlen(name) + ft_strlen(value) + 2);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (*name)
+		str[i++] = *name++;
+	str[i++] = '=';
+	while (*value)
+		str[i++] = *value++;
+	str[i] = 0;
+	return (str);
+}
 
 // Check if variable's name in [str] contains only letters,
 // digits and underscores.

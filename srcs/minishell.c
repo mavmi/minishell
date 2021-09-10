@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 17:41:11 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 20:24:14 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	call_func(int argc, char **argv)
 	else if (cmp_strings(func, EXPORT))
 		export(argc, argv);
 	else if (cmp_strings(func, UNSET))
-		(void)strlen;
+		unset(argc, argv);
 	else if (cmp_strings(func, ENV))
 		env();
 	else if (cmp_strings(func, EXIT))
@@ -83,17 +83,29 @@ void test_env(int argc, char **argv, char **envp)
 {
 	(void)argc; (void)argv; (void)envp;
 
-	t_enviroment *env = env_create(envp);
-	if (!env){
-		printf("ENV = NULL\n");
-	} else {
-		t_env_elem *elem = env->begin;
-		while (elem){
-			printf("%s=%s\n", elem->name, elem->value);
-			elem = elem->next;
-		}
-	}	
-	env_destroy(env);	
+	t_env_elem *elem = g_data->envp->begin;
+	while (elem){
+		printf("%s=%s\n", elem->name, elem->value);
+		elem = elem->next;
+	}
+	printf("\n\t >>> ************* <<< \n\n\n");	
+
+
+	parse_command("export PWD=2");
+	elem = g_data->envp->begin;
+	while (elem){
+		printf("%s=%s\n", elem->name, elem->value);
+		elem = elem->next;
+	}
+
+	parse_command("export a=2");
+	elem = g_data->envp->begin;
+	while (elem){
+		printf("%s=%s\n", elem->name, elem->value);
+		elem = elem->next;
+	}
+
+	env_destroy(g_data->envp);	
 }
 
 void test_multipipe(char **argv, char **envp)
@@ -144,6 +156,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc; (void)argv; (void)envp;
 	g_data = (t_data *)malloc(sizeof(t_data));
 	g_data->envp = env_create(envp);
+
+	// test_env(argc, argv, envp);
+	// return (0);
 
 	// printf("oldpwd %s\n", getcwd(0, 0));
 	// chdir("include");
@@ -202,7 +217,8 @@ int	main(int argc, char **argv, char **envp)
 
 	set_up_signals();
 	int i = 0;
-	while (i++ < 6)
+	while (i++ < 10)
+	// while (1)
 	{
 		char *str = readline(PORMT);
 		if (!str){
