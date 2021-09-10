@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 15:29:44 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 17:41:11 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	call_func(int argc, char **argv)
 	else if (cmp_strings(func, PWD))
 		pwd();
 	else if (cmp_strings(func, EXPORT))
-		(void)strlen;
+		export(argc, argv);
 	else if (cmp_strings(func, UNSET))
 		(void)strlen;
 	else if (cmp_strings(func, ENV))
@@ -182,9 +182,27 @@ int	main(int argc, char **argv, char **envp)
 	// free(str);
 	// return 0;
 
+	// char **array = parse_varialbe("12NAME=VALUE");
+	// if (!array){
+	// 	printf("INVALID NAME\n");
+	// 	return(0);
+	// }
+	// char **ptr = array;
+	// while (*ptr){
+	// 	printf("%s\n", *ptr);
+	// 	free(*ptr);
+	// 	ptr++;
+	// }
+	// free(array);
+	// return 0;
+
+
+	// printf("%d\n", is_string_valid("N1AME__=1213asldkfj"));
+	// return (0);
+
 	set_up_signals();
 	int i = 0;
-	while (i++ < 5)
+	while (i++ < 6)
 	{
 		char *str = readline(PORMT);
 		if (!str){

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 16:31:39 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 14:17:26 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/10 16:48:44 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@
 void	pwd(void);
 void	cd(int argc, char **argv);
 void	env(void);
+void	export(int argc, char **argv);
 
 #endif

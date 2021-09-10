@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/03 17:11:47 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 17:55:52 by pmaryjo          ###   ########.fr       */
+/*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
+/*   Updated: 2021/09/10 17:50:54 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rebuilt_funcs.h"
 
-// Change working directory to [argv[1]].
-// At first it tries to use [argv[1]] as absolute path
-void	cd(int argc, char **argv)
+void	export(int argc, char **argv)
 {
-	char	*tmp;
-	char	*old_pwd;
-	char	*new_pwd;
+	char	*new_name;
+	char	*new_val;
+	char	**array;
 
-	if (argc != 2)
+	if (argc != 2 || !argv[1])
 		return ;
-	old_pwd = getcwd(NULL, 0);
-	if (chdir(argv[1]))
+	array = parse_varialbe(argv[1]);
+	if (!array)
+		return ;
+	new_name = ft_strdup(array[0]);
+	new_val = ft_strdup(array[1]);
+	if (env_set_by_name(g_data->envp, new_name, new_val))
 	{
-		free(old_pwd);
-		perror(strerror(errno));
-		return ;
+		free(new_name);
 	}
-	new_pwd = getcwd(NULL, 0);
-	env_set_by_name(g_data->envp, "PWD", new_pwd);
-	env_set_by_name(g_data->envp, "OLDPWD", old_pwd);
+	else
+	{
+		env_push_back(g_data->envp, argv[1]);
+		free(new_name);
+		free(new_val);
+	}
+	free(array[0]);
+	free(array[1]);
+	free(array);
 }
