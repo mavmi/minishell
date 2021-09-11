@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/05 18:56:24 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 20:24:02 by pmaryjo          ###   ########.fr       */
+/*   Created: 2021/09/11 15:55:28 by pmaryjo           #+#    #+#             */
+/*   Updated: 2021/09/11 16:02:30 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/utils.h"
 
-// [name] + [value] ==> "[name]=[value]"
-char	*create_lone_string(char *name, char *value)
+static int	free_and_exit(char *str, int ret_val)
 {
-	int		i;
-	char	*str;
-
-	if (!name || !value)
-		return (NULL);
-	str = (char *)malloc(ft_strlen(name) + ft_strlen(value) + 2);
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (*name)
-		str[i++] = *name++;
-	str[i++] = '=';
-	while (*value)
-		str[i++] = *value++;
-	str[i] = 0;
-	return (str);
+	free(str);
+	return (ret_val);
 }
 
 // Check if variable's name in [str] contains only letters,
@@ -47,20 +32,16 @@ int	is_string_valid(char *str)
 		return (0);
 	name = ft_substr(str, 0, eq - str);
 	if (!name || !ft_strlen(name))
-		return (0);
+		return (free_and_exit(name, 0));
 	i = 0;
 	if (!ft_isalpha(name[i]) && name[i] != '_')
-		return (0);
+		return (free_and_exit(name, 0));
 	while (name[++i])
 	{
 		if (!ft_isalpha(name[i]) && !ft_isdigit(name[i]) && name[i] != '_')
-		{
-			free(name);
-			return (0);
-		}
+			return (free_and_exit(name, 0));
 	}
-	free(name);
-	return (1);
+	return (free_and_exit(name, 1));
 }
 
 // Compare strings.
@@ -97,38 +78,4 @@ void	destroy_strings_array(char **arr)
 		ptr++;
 	}
 	free(arr);
-}
-
-// Get string of value assignment
-// and convert it into array of strings:
-// array[0] = name,
-// array[1] = value.
-// May return NULL if [str] is NULL or 
-// if value name is invalid
-char	**parse_varialbe(char *str)
-{
-	size_t	len;
-	size_t	eq_pos;
-	char	*eq;
-	char	**array;
-
-	len = ft_strlen(str);
-	if (!str || !len || !is_string_valid(str))
-		return (NULL);
-	eq = ft_strchr(str, '=');
-	if (!eq)
-		return (NULL);
-	array = (char **)malloc(sizeof(char *) * 3);
-	if (!array)
-		return (NULL);
-	eq_pos = eq - str;
-	array[0] = ft_substr(str, 0, eq_pos);
-	array[1] = ft_substr(str, eq_pos + 1, len - eq_pos);
-	array[2] = NULL;
-	if (!array[0] || !array[1] || !ft_strlen(array[0]) || !ft_strlen(array[1]))
-	{
-		destroy_strings_array(array);
-		return (NULL);
-	}
-	return (array);
 }
