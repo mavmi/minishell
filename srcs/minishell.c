@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 12:37:36 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/11 12:59:29 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	call_func(int argc, char **argv)
 	func = argv[0];
 	strlen = ft_strlen(func);
 	if (cmp_strings(func, ECHO))
-		(void)strlen;
+		echo(argc, argv);
 	else if (cmp_strings(func, CD))
 		cd(argc, argv);
 	else if (cmp_strings(func, PWD))
@@ -217,7 +217,7 @@ int	main(int argc, char **argv, char **envp)
 
 	set_up_signals();
 	int i = 0;
-	while (i++ < 12)
+	while (i++ < 8)
 	// while (1)
 	{
 		char *str = readline(PORMT);

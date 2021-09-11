@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rebuilt_funcs.h                                    :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/03 16:31:39 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 12:43:59 by pmaryjo          ###   ########.fr       */
+/*   Created: 2021/09/11 12:43:10 by pmaryjo           #+#    #+#             */
+/*   Updated: 2021/09/11 13:02:03 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REBUILT_FUNCS_H
-# define REBUILT_FUNCS_H
+#include "../../include/rebuilt_funcs.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/errno.h>
+void	echo(int argc, char **argv)
+{
+	int	i;
+	int	endl;
 
-# include "minishell.h"
-
-void	pwd(void);
-void	cd(int argc, char **argv);
-void	env(void);
-void	export(int argc, char **argv);
-void	unset(int argc, char **argv);
-void	echo(int argc, char **argv);
-
-#endif
+	if (argc < 1)
+		return ;
+	i = 1;
+	endl = 1;
+	if (cmp_strings(argv[i], "-n"))
+	{
+		endl = 0;
+		i++;
+	}
+	while (i < argc)
+	{
+		printf("%s", argv[i]);
+		if (i != argc - 1)
+			printf(" ");
+		i++;
+	}
+	if (endl)
+		printf("\n");
+}
