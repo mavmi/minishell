@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/09 21:08:01 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/11 18:41:44 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@
 # include "utils.h"
 # include "enviroment.h"
 # include "pipex.h"
-# include "get_next_line.h"
 
 void	set_up_signals(void);
 

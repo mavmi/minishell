@@ -6,12 +6,14 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/09 18:19:18 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/11 16:13:03 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
+
+# define HERE_DOC "here_doc"
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -46,5 +48,7 @@ void		proc_execute_list(t_process *list, int input, int output);
 
 int			proc_open_input_file(char *file_path);
 int			proc_open_output_file(char *file_path);
+
+int			here_doc(void);
 
 #endif
