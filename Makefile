@@ -10,7 +10,7 @@ HDRS_DIR	=	include
 READLN_DIR	=	readline
 
 HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h get_next_line)
-SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c signals.c utils.c)\
+SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c signals.c utils_1.c utils_2.c)\
 				$(addprefix $(FUNCS_DIR)/, pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c)\
 				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c)\
@@ -26,10 +26,6 @@ READLN_HDRS	=	$(addprefix $(READLN_DIR)/, chardefs.h history.h keymaps.h readlin
 READLN		=	$(addprefix $(READLN_DIR)/, libhistory.a libreadline.a)
 
 
-#READLN_DIR	=	readline
-#READLN		=	$(addprefix $(READLN_DIR)/, libhistory.a libreadline.a)
-
-
 FLAGS		=	-Wall -Wextra -Werror -g
 CC			=	gcc
 GCC			=	$(CC) $(FLAGS)
@@ -42,8 +38,6 @@ all:			compile_libft $(NAME)
  
 $(NAME):		$(OBJS)
 				$(GCC) $(OBJS) $(LIBFT) $(READLN) -I $(READLN_DIR) -I $(HDRS_DIR) -ltermcap -o $(NAME)
-#				$(GCC) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
-#				$(GCC) $(OBJS) $(LIBFT) $(READLN) -o $(NAME)
 
 compile_libft:	
 				$(MAKE) -C $(LIBFT_DIR)
@@ -56,6 +50,6 @@ fclean:			clean
 				rm -f $(NAME)
 				$(MAKE) fclean -C $(LIBFT_DIR)
 
-re:				fclean $(NAME)
+re:				fclean all
 
 .PHONY:			all clean fclean re
