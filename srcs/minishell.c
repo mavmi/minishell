@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 20:24:14 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/11 12:37:36 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ int	main(int argc, char **argv, char **envp)
 
 	set_up_signals();
 	int i = 0;
-	while (i++ < 10)
+	while (i++ < 12)
 	// while (1)
 	{
 		char *str = readline(PORMT);
