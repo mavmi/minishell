@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 17:11:47 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 12:38:55 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/11 13:13:28 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	set_values(char *new_pwd, char *old_pwd)
 
 // Change working directory to [argv[1]].
 // At first it tries to use [argv[1]] as absolute path
-void	cd(int argc, char **argv)
+void	my_cd(int argc, char **argv)
 {
 	char	*tmp;
 	char	*old_pwd;

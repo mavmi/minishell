@@ -6,13 +6,13 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 17:50:54 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/11 14:52:08 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rebuilt_funcs.h"
 
-void	export(int argc, char **argv)
+void	my_export(int argc, char **argv)
 {
 	char	*new_name;
 	char	*new_val;
@@ -26,9 +26,7 @@ void	export(int argc, char **argv)
 	new_name = ft_strdup(array[0]);
 	new_val = ft_strdup(array[1]);
 	if (env_set_by_name(g_data->envp, new_name, new_val))
-	{
 		free(new_name);
-	}
 	else
 	{
 		env_push_back(g_data->envp, argv[1]);

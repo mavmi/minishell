@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 12:59:29 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/11 13:21:22 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,22 @@ void	call_func(int argc, char **argv)
 	char	*func;
 	size_t	strlen;
 
-// printf("CALL ARGS\n");
-// char **test = argv;
-// while (*test){
-// 	printf("%s\n", *test);
-// 	test++;
-// }
-
-	(void)argc;
 	func = argv[0];
 	strlen = ft_strlen(func);
 	if (cmp_strings(func, ECHO))
-		echo(argc, argv);
+		my_echo(argc, argv);
 	else if (cmp_strings(func, CD))
-		cd(argc, argv);
+		my_cd(argc, argv);
 	else if (cmp_strings(func, PWD))
-		pwd();
+		my_pwd();
 	else if (cmp_strings(func, EXPORT))
-		export(argc, argv);
+		my_export(argc, argv);
 	else if (cmp_strings(func, UNSET))
-		unset(argc, argv);
+		my_unset(argc, argv);
 	else if (cmp_strings(func, ENV))
-		env();
+		my_env();
 	else if (cmp_strings(func, EXIT))
-		(void)strlen;
+		my_exit();
 	else
 		(void)strlen;
 }
@@ -157,68 +149,8 @@ int	main(int argc, char **argv, char **envp)
 	g_data = (t_data *)malloc(sizeof(t_data));
 	g_data->envp = env_create(envp);
 
-	// test_env(argc, argv, envp);
-	// return (0);
-
-	// printf("oldpwd %s\n", getcwd(0, 0));
-	// chdir("include");
-	// printf("pwd %s\n", getcwd(0, 0));
-	// printf("\n********************************\n\n");
-
-
-	// char **test = env_get_content(g_data.envp);
-	// while (*test){
-	// 	printf("%s\n", *test);
-	// 	test++;
-	// }
-
-	// test_multipipe(argv, envp);
-	// test_miltipipe_with_iofiles(argv, envp);
-	// test_gnl();
-
-	// char **ptr = env_get_content(g_data->envp);
-	// char **ptr_1 = ptr;
-
-	// printf("\n\n\t >>> ***************** <<< \n\n\n");
-
-	// while (*ptr)
-	// {
-	// 	printf("%p\n", *ptr);
-	// 	free(*ptr);
-	// 	ptr++;	
-	// }
-	// printf("%p\n", ptr_1);
-	// free(ptr_1);
-	// return 0;
-
-
-	// char *str = readline(PORMT);
-	// parse_command(str);
-	// free(str);
-	// return 0;
-
-	// char **array = parse_varialbe("12NAME=VALUE");
-	// if (!array){
-	// 	printf("INVALID NAME\n");
-	// 	return(0);
-	// }
-	// char **ptr = array;
-	// while (*ptr){
-	// 	printf("%s\n", *ptr);
-	// 	free(*ptr);
-	// 	ptr++;
-	// }
-	// free(array);
-	// return 0;
-
-
-	// printf("%d\n", is_string_valid("N1AME__=1213asldkfj"));
-	// return (0);
-
 	set_up_signals();
-	int i = 0;
-	while (i++ < 8)
-	// while (1)
+	while (1)
 	{
 		char *str = readline(PORMT);
 		if (!str){
@@ -228,8 +160,5 @@ int	main(int argc, char **argv, char **envp)
 		add_history(str);
 		free(str);
 	}
-	rl_clear_history();
-	env_destroy(g_data->envp);
-	free(g_data);
 	return 0;
 }

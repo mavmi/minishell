@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 16:31:39 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 12:43:59 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/11 13:13:37 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 
 # include "minishell.h"
 
-void	pwd(void);
-void	cd(int argc, char **argv);
-void	env(void);
-void	export(int argc, char **argv);
-void	unset(int argc, char **argv);
-void	echo(int argc, char **argv);
+void	my_pwd(void);
+void	my_cd(int argc, char **argv);
+void	my_env(void);
+void	my_export(int argc, char **argv);
+void	my_unset(int argc, char **argv);
+void	my_echo(int argc, char **argv);
+void	my_exit(void);
 
 #endif

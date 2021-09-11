@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:43:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 20:10:42 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/11 14:37:09 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ void	env_remove_elem(t_enviroment *env, char *name)
 		prev->next = next;
 	if (next)
 		next->prev = prev;
+	env->size--;
+	if (!elem->next)
+		g_data->envp->end = elem->prev;
+	if (!g_data->envp->end)
+		g_data->envp->begin = NULL;
 	free(elem->name);
 	free(elem->value);
 	free(elem);

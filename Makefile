@@ -11,7 +11,7 @@ READLN_DIR	=	readline
 
 HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h get_next_line)
 SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c signals.c utils.c)\
-				$(addprefix $(FUNCS_DIR)/, pwd.c cd.c env.c export.c unset.c echo.c)\
+				$(addprefix $(FUNCS_DIR)/, pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c)\
 				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c)\
 				$(addprefix $(GNL_DIR)/, get_next_line.c get_next_line_utils.c)

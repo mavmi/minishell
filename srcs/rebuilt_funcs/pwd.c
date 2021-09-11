@@ -6,13 +6,13 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 16:47:13 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 12:22:47 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/09/11 13:13:34 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rebuilt_funcs.h"
 
-void	pwd(void)
+void	my_pwd(void)
 {
 	char		*path;
 	t_env_elem	*pwd_elem;
