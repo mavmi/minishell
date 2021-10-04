@@ -1,0 +1,14 @@
+[ввод в терминале] => [во что раскрывается]
+
+1. "text" => text
+2. 'text' => text
+3. "te'xt" => te'xt
+4. 'te"xt' => te"xt
+5. "text""text" => texttext
+6. 'text''text' => texttext
+7. "text\"text" => ошибка
+8. 'text\'text' => ошибка
+9. 'text\"text' => text\"text
+10. "text\'text" => text\'text
+11. 'text'text' => ошибка
+12. "text"text" => ошибка
