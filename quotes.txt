@@ -4,14 +4,22 @@
 2. 'text' => text
 3. "te'xt" => te'xt
 4. 'te"xt' => te"xt
+
 5. "text""text" => texttext
 6. 'text''text' => texttext
-7. "text\"text" => ошибка
-8. 'text\'text' => ошибка
-9. 'text\"text' => text\"text
-10. "text\'text" => text\'text => ошибка
-11. 'text'text' => ошибка
-12. "text"text" => ошибка
+7. "text"'text' => texttext
+8. 'text'"text" => texttext
 
-Ошибки:
-1. Незакрытая кавычка
+9. "text\"text" => ошибка
+10. 'text\'text' => ошибка
+11. 'text\"text' => text\"text  => ошибка
+12. "text\'text" => text\'text => ошибка
+
+13. 'text'text' => ошибка
+14. "text"text" => ошибка
+15. "text'text' => ошибка
+16. 'text"text" => ошибка
+
+17. 'text'"text' => ошибка
+18. "text"'text" => ошибка
+итд
