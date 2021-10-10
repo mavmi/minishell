@@ -9,6 +9,9 @@
 7. "text\"text" => ошибка
 8. 'text\'text' => ошибка
 9. 'text\"text' => text\"text
-10. "text\'text" => text\'text
+10. "text\'text" => text\'text => ошибка
 11. 'text'text' => ошибка
 12. "text"text" => ошибка
+
+Ошибки:
+1. Незакрытая кавычка
