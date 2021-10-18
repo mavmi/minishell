@@ -1,0 +1,1 @@
+clear; gcc test.c handling_quotes.c parser_initial.c parser_operations.c parser.c ../../libft/libft.a -o test.out && ./test.out
