@@ -6,21 +6,21 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:49:58 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/03 15:49:59 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/08 15:20:57 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *new_elem)
 {
 	t_list	*ptr;
 
-	if (!new)
+	if (!new_elem)
 		return ;
 	if (!*lst)
 	{
-		*lst = new;
+		*lst = new_elem;
 		return ;
 	}
 	ptr = *lst;
@@ -28,5 +28,5 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	{
 		ptr = ptr->next;
 	}
-	ptr->next = new;
+	ptr->next = new_elem;
 }

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 16:13:03 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/08 15:09:06 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_process	t_process;
 
 struct s_process
 {
+	pid_t		pid;
 	int			output[2];
 	size_t		num;
 	char		*exec_name;

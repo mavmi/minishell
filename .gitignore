@@ -1,0 +1,6 @@
+minishell
+*.o
+*.a
+*.out
+*.exe
+!.gitignore

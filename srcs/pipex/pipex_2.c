@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 17:55:23 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/08 15:15:03 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	proc_execute_default_func(t_process *proc, int input, int output)
 void	proc_execute_list(t_process *list, int input, int output)
 {
 	int			exit_status;
-	pid_t		pid;
 	t_process	*ptr;
 
 	if (!list)
@@ -64,10 +63,18 @@ void	proc_execute_list(t_process *list, int input, int output)
 	ptr = list;
 	while (ptr)
 	{
-		pid = fork();
-		if (!pid)
-			proc_execute_default_func(ptr, input, output);
-		waitpid(pid, &exit_status, WNOHANG);
+		ptr->pid = fork();
+		if (ptr->pid)
+		{
+			redirect(ptr, input, output);
+			execve(ptr->exec_path, ptr->argv, NULL);
+		}
+		ptr = ptr->next;
+	}
+	ptr = list;
+	while (ptr)
+	{
+		waitpid(ptr->pid, &exit_status, WNOHANG);
 		close(ptr->output[1]);
 		ptr = ptr->next;
 	}
