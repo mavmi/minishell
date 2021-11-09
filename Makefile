@@ -6,6 +6,7 @@ FUNCS_DIR	=	$(SRCS_DIR)/rebuilt_funcs
 ENV_DIR		=	$(SRCS_DIR)/enviroment
 PIPEX_DIR	=	$(SRCS_DIR)/pipex
 GNL_DIR		=	$(SRCS_DIR)/get_next_line
+UTILS_DIR	=	$(SRCS_DIR)/utils
 HDRS_DIR	=	include
 READLN_DIR	=	readline
 
@@ -16,10 +17,11 @@ TESTS_PIPE	=	$(TESTS_DIR)/multi_pipe
 
 HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h get_next_line)
 SRC_MAIN	= 	$(addprefix $(SRCS_DIR)/, minishell.c)
-SRCS		= 	$(addprefix $(SRCS_DIR)/, signals.c utils_1.c utils_2.c)\
-				$(addprefix $(FUNCS_DIR)/, pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
+SRCS		= 	$(addprefix $(SRCS_DIR)/, signals.c)\
+				$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c)\
-				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c here_doc.c)
+				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c pipex_3.c here_doc.c)\
+				$(addprefix $(UTILS_DIR)/, utils_1.c utils_2.c)
 #				$(addprefix $(GNL_DIR)/, get_next_line.c get_next_line_utils.c)
 OBJ_MAIN	=	$(SRC_MAIN:.c=.o)
 OBJS		=	$(SRCS:.c=.o)
@@ -76,6 +78,9 @@ norm:
 
 				@echo "$(BLUE)\n\t*** PIPEX ***$(NC)"
 				@norminette $(PIPEX_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
+
+				@echo "$(BLUE)\n\t*** UTILS ***$(NC)"
+				@norminette $(UTILS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
 				@echo "$(BLUE)\n\t*** GNL ***$(NC)"
 				@norminette $(GNL_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'

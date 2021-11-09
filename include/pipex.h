@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/09 16:20:25 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/09 18:38:51 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # include "../libft/libft.h"
 # include "utils.h"
+# include "rebuilt_funcs.h"
 
 # define BAD_STATUS 10
 
@@ -29,8 +30,8 @@ typedef struct s_process	t_process;
 struct s_process
 {
 	pid_t		pid;
+	int			is_default;
 	int			io_buffer[2];
-	size_t		num;
 	char		*exec_name;
 	char		*exec_path;
 	char		**argv;

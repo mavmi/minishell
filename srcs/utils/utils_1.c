@@ -6,11 +6,11 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 18:56:24 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 16:03:52 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:51:57 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/utils.h"
+#include "../../include/utils.h"
 
 // [name] + [value] ==> "[name]=[value]"
 char	*create_lone_string(char *name, char *value)

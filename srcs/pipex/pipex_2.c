@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/09 17:08:31 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/09 18:48:30 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	redirect(t_process *proc, int input, int output)
 	}
 }
 
-static pid_t	process_execute(t_process *process, int input, int output)
+static pid_t	process_execute_default(t_process *process, int in, int out)
 {
 	pid_t	pid;
 
@@ -51,7 +51,7 @@ static pid_t	process_execute(t_process *process, int input, int output)
 		perror(strerror(errno));
 	if (pid == 0)
 	{
-		redirect(process, input, output);
+		redirect(process, in, out);
 		if (execve(process->exec_path, process->argv, NULL) == -1)
 		{
 			if (process->exec_path)
@@ -67,14 +67,22 @@ static pid_t	process_execute(t_process *process, int input, int output)
 	return (pid);
 }
 
-void	proc_execute_list(t_process *list, int input, int output)
+static pid_t	process_execute_rebuild(t_process *process, int in, int out)
+{
+	
+}
+
+void	proc_execute_list(t_process *list, int in, int out)
 {
 	int			exit_status;
 	t_process	*ptr;
 
 	while (ptr)
 	{
-		ptr->pid = process_execute(ptr, input, output);
+		if (ptr->is_default)
+			ptr->pid = process_execute_default(ptr, in, out);
+		else
+			ptr->pid = process_execute_rebuild(ptr, in, out);
 		if (ptr->pid == -1)
 			return ;
 		ptr = ptr->next;

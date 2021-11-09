@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 16:31:39 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 13:13:37 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/09 18:37:45 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,17 @@
 # include <sys/errno.h>
 
 # include "minishell.h"
+# include "utils.h"
 
+# define ECHO "echo"
+# define CD "cd"
+# define PWD "pwd"
+# define EXPORT "export"
+# define UNSET "unset"
+# define ENV "env"
+# define EXIT "exit"
+
+int		is_rebuild(char *func);
 void	my_pwd(void);
 void	my_cd(int argc, char **argv);
 void	my_env(void);
