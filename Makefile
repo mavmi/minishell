@@ -15,13 +15,13 @@ TESTS_PIPE	=	$(TESTS_DIR)/multi_pipe
 
 
 HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h get_next_line)
-MAIN_SRC	= 	$(addprefix $(SRCS_DIR)/, minishell.c)
+SRC_MAIN	= 	$(addprefix $(SRCS_DIR)/, minishell.c)
 SRCS		= 	$(addprefix $(SRCS_DIR)/, signals.c utils_1.c utils_2.c)\
 				$(addprefix $(FUNCS_DIR)/, pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c)\
 				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c here_doc.c)
 #				$(addprefix $(GNL_DIR)/, get_next_line.c get_next_line_utils.c)
-OBJ_MAIN	=	$(MAIN_SRC:.c=.o)
+OBJ_MAIN	=	$(SRC_MAIN:.c=.o)
 OBJS		=	$(SRCS:.c=.o)
 
 
@@ -80,7 +80,7 @@ norm:
 				@echo "$(BLUE)\n\t*** GNL ***$(NC)"
 				@norminette $(GNL_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
-tests:			
+tests:			compile_libft $(OBJS)
 				g++ -std=c++17 -Wall -Wextra -Werror $(OBJS) $(LIBFT) $(READLN) -I $(READLN_DIR) -ltermcap $(TESTS_PIPE)/test.cpp -o $(TESTS_PIPE)/test.out
 
 .PHONY:			all compile_libft clean fclean re tests norm

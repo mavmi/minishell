@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/08 15:13:30 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/09 16:51:48 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static t_process	*proc_init_list_handler(char **commands, char **dirs)
 	list = proc_get_new_elem(*commands++, dirs);
 	if (!list)
 		return (NULL);
+	pipe(list->io_buffer);
 	ptr = list;
 	while (*commands)
 	{
@@ -86,7 +87,7 @@ static t_process	*proc_init_list_handler(char **commands, char **dirs)
 			proc_destroy_elem(list);
 			return (NULL);
 		}
-		pipe(ptr->output);
+		pipe(ptr->io_buffer);
 		ptr->next = new_elem;
 		new_elem->prev = ptr;
 		ptr = new_elem;

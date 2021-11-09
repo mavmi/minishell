@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 18:33:11 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/09 16:29:51 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,19 +131,14 @@ void test_miltipipe_with_iofiles(char **argv, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc; (void)argv; (void)envp;
-	g_data = (t_data *)malloc(sizeof(t_data));
-	g_data->envp = env_create(envp);
+	t_process* process_list = proc_init_list(argv + 1, envp);
 
-	set_up_signals();
-	while (1)
-	{
-		char *str = readline(PORMT);
-		if (!str){
-			exit(0);
-		}
-		parse_command(str);
-		add_history(str);
-		free(str);
-	}
-	return 0;
+	//t_process* elem = process_list;
+	//while (elem){
+	//	printf("%s: %p\n", elem->exec_name, elem->exec_path);
+	//	elem = elem->next;
+	//}
+
+	proc_execute_list(process_list, -1, -1);
+	proc_destroy_list(process_list);
 }
