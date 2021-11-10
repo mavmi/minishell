@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 19:36:44 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:02:12 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	here_doc(void)
 	while (1)
 	{
 		line = readline("> ");
-		if (cmp_strings(line, stop_word))
+		if (utils_cmp_strings(line, stop_word))
 		{
 			free(line);
 			break ;

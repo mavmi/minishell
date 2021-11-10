@@ -1,6 +1,8 @@
 minishell
+.*
 *.o
 *.a
 *.out
 *.exe
+print_separator
 !.gitignore

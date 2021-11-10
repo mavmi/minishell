@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 17:11:47 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 13:13:28 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:41:11 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ static void	set_values(char *new_pwd, char *old_pwd)
 {
 	char	*tmp;
 
-	if (!env_set_by_name(g_data->envp, "PWD", new_pwd))
+	if (!env_set_by_name(g_data.envp, "PWD", new_pwd))
 	{
-		tmp = create_lone_string("PWD", new_pwd);
-		env_push_back(g_data->envp, tmp);
+		tmp = utils_create_lone_string("PWD", new_pwd);
+		env_push_back(g_data.envp, tmp);
 		free(new_pwd);
 		free(tmp);
 	}
-	if (!env_set_by_name(g_data->envp, "OLDPWD", old_pwd))
+	if (!env_set_by_name(g_data.envp, "OLDPWD", old_pwd))
 	{
-		tmp = create_lone_string("OLDPWD", old_pwd);
-		env_push_back(g_data->envp, tmp);
+		tmp = utils_create_lone_string("OLDPWD", old_pwd);
+		env_push_back(g_data.envp, tmp);
 		free(old_pwd);
 		free(tmp);
 	}
@@ -34,7 +34,7 @@ static void	set_values(char *new_pwd, char *old_pwd)
 
 // Change working directory to [argv[1]].
 // At first it tries to use [argv[1]] as absolute path
-void	my_cd(int argc, char **argv)
+void	rebuilt_cd(int argc, char **argv)
 {
 	char	*tmp;
 	char	*old_pwd;

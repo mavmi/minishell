@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:43:12 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 20:09:39 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:02:12 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_env_elem	*env_get_by_name(t_enviroment *env, char *name)
 	elem = env->begin;
 	while (elem)
 	{
-		if (cmp_strings(elem->name, name))
+		if (utils_cmp_strings(elem->name, name))
 			return (elem);
 		elem = elem->next;
 	}

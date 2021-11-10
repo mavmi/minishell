@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/09 18:38:51 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:05:42 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@
 # include "../libft/libft.h"
 # include "utils.h"
 # include "rebuilt_funcs.h"
+# include "enviroment.h"
 
-# define BAD_STATUS 10
+# define BAD_STATUS 1
 
 typedef struct s_process	t_process;
 

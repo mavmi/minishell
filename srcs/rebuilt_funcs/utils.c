@@ -6,29 +6,52 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:47:57 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/09 17:53:25 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:37:12 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rebuilt_funcs.h"
 
-int	is_rebuild(char *func)
+int	rebuit_is_rebuilt(char *func)
 {
 	if (!func)
 		return (0);
-	if (cmp_strings(ECHO, func))
+	if (utils_cmp_strings(ECHO, func))
 		return (1);
-	if (cmp_strings(CD, func))
+	if (utils_cmp_strings(CD, func))
 		return (1);
-	if (cmp_strings(PWD, func))
+	if (utils_cmp_strings(PWD, func))
 		return (1);
-	if (cmp_strings(EXPORT, func))
+	if (utils_cmp_strings(EXPORT, func))
 		return (1);
-	if (cmp_strings(UNSET, func))
+	if (utils_cmp_strings(UNSET, func))
 		return (1);
-	if (cmp_strings(ENV, func))
+	if (utils_cmp_strings(ENV, func))
 		return (1);
-	if (cmp_strings(EXIT, func))
+	if (utils_cmp_strings(EXIT, func))
 		return (1);
 	return (0);
+}
+
+// Call rebuilt or original function with [argv[0]] name
+void	rebuilt_call_func(int argc, char **argv)
+{
+	char	*func;
+	size_t	strlen;
+
+	func = argv[0];
+	if (utils_cmp_strings(func, ECHO))
+		rebuilt_echo(argc, argv);
+	else if (utils_cmp_strings(func, CD))
+		rebuilt_cd(argc, argv);
+	else if (utils_cmp_strings(func, PWD))
+		rebuilt_pwd();
+	else if (utils_cmp_strings(func, EXPORT))
+		rebuilt_export(argc, argv);
+	else if (utils_cmp_strings(func, UNSET))
+		rebuilt_unset(argc, argv);
+	else if (utils_cmp_strings(func, ENV))
+		rebuilt_env();
+	else if (utils_cmp_strings(func, EXIT))
+		rebuilt_exit();
 }

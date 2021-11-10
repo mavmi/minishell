@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 13:47:21 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:03:36 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	proc_get_new_elem_handler(t_process *proc, char **argv, char **dirs)
 	proc->exec_path = NULL;
 	proc->argv = argv;
 	proc->exec_name = ft_strdup(argv[0]);
-	if (is_rebuild(argv[0]))
+	if (rebuit_is_rebuilt(argv[0]))
 		proc->is_default = 0;
 	else
 		proc->is_default = 1;
@@ -49,7 +49,7 @@ t_process	*proc_get_new_elem(char *command, char **dirs)
 	if (!process || !argv)
 	{
 		free(process);
-		destroy_strings_array(argv);
+		utils_destroy_strings_array(argv);
 		return (NULL);
 	}
 	if (proc_get_new_elem_handler(process, argv, dirs))
@@ -99,11 +99,11 @@ t_process	*proc_init_list(char **commands, char **envp)
 	list = proc_get_new_elem(*commands++, dirs);
 	if (!list || pipe(list->io_buffer))
 	{
-		destroy_strings_array(dirs);
+		utils_destroy_strings_array(dirs);
 		proc_destroy_elem(list);
 		return (NULL);
 	}
 	proc_init_list_handler(&list, commands, dirs);
-	destroy_strings_array(dirs);
+	utils_destroy_strings_array(dirs);
 	return (list);
 }

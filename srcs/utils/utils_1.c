@@ -6,14 +6,14 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 18:56:24 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/09 17:51:57 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:38:21 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/utils.h"
 
 // [name] + [value] ==> "[name]=[value]"
-char	*create_lone_string(char *name, char *value)
+char	*utils_create_lone_string(char *name, char *value)
 {
 	int		i;
 	char	*str;
@@ -39,7 +39,7 @@ char	*create_lone_string(char *name, char *value)
 // array[1] = value.
 // May return NULL if [str] is NULL or 
 // if value name is invalid
-char	**parse_varialbe(char *str)
+char	**utils_parse_varialbe(char *str)
 {
 	size_t	len;
 	size_t	eq_pos;
@@ -47,7 +47,7 @@ char	**parse_varialbe(char *str)
 	char	**array;
 
 	len = ft_strlen(str);
-	if (!str || !len || !is_string_valid(str))
+	if (!str || !len || !utils_is_string_valid(str))
 		return (NULL);
 	eq = ft_strchr(str, '=');
 	if (!eq)
@@ -61,7 +61,7 @@ char	**parse_varialbe(char *str)
 	array[2] = NULL;
 	if (!array[0] || !array[1] || !ft_strlen(array[0]) || !ft_strlen(array[1]))
 	{
-		destroy_strings_array(array);
+		utils_destroy_strings_array(array);
 		return (NULL);
 	}
 	return (array);

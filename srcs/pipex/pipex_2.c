@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 13:45:54 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:46:00 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,28 @@ static pid_t	process_execute_default(t_process *process, int in, int out)
 	return (pid);
 }
 
-static pid_t	process_execute_rebuild(t_process *process, int in, int out)
+static pid_t	process_execute_rebuilt(t_process *process, int in, int out)
 {
-	(void)process; (void)in; (void)out;
-	return (0);
+	int		argc;
+	pid_t	pid;
+	char	**ptr;
+
+	pid = fork();
+	if (pid == -1)
+		perror(strerror(errno));
+	if (pid == 0)
+	{
+		redirect(process, in, out);
+		argc = 0;
+		ptr = process->argv;
+		while (*ptr)
+		{
+			ptr++;
+			argc++;
+		}
+		rebuilt_call_func(argc, process->argv);
+	}
+	return (pid);
 }
 
 void	proc_execute_list(t_process *list, int in, int out)
@@ -83,7 +101,7 @@ void	proc_execute_list(t_process *list, int in, int out)
 		if (ptr->is_default)
 			ptr->pid = process_execute_default(ptr, in, out);
 		else
-			ptr->pid = process_execute_rebuild(ptr, in, out);
+			ptr->pid = process_execute_rebuilt(ptr, in, out);
 		if (ptr->pid == -1)
 			return ;
 		ptr = ptr->next;
@@ -91,10 +109,10 @@ void	proc_execute_list(t_process *list, int in, int out)
 	ptr = list;
 	while (ptr)
 	{
-		waitpid(ptr->pid, &exit_status, 0);
-		if (WIFEXITED(exit_status))
-			exit_status = WEXITSTATUS(exit_status);
-		close(ptr->io_buffer[1]);
+		waitpid(ptr->pid, &exit_status, 0);				// Какая-то херня с закрытием дескриптора.
+		if (WIFEXITED(exit_status))						// На нуле с последним кэтом или ребилдом
+			exit_status = WEXITSTATUS(exit_status);		// ждет инпут.
+		close(ptr->io_buffer[1]);						// На единице не ждет, но тогда и кэт не работает
 		ptr = ptr->next;
 	}
 }

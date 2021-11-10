@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:42:54 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/11 14:50:42 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:01:59 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	**env_get_content(t_enviroment *env)
 	elem = env->begin;
 	while (elem)
 	{
-		result[i] = create_lone_string(elem->name, elem->value);
+		result[i] = utils_create_lone_string(elem->name, elem->value);
 		if (!result[i])
 		{
 			while (i >= 0)

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 15:55:28 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/09 17:51:52 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:38:21 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	free_and_exit(char *str, int ret_val)
 // Check if variable's name in [str] contains only letters,
 // digits and underscores.
 // Return if [str] is valid, 0 otherwise
-int	is_string_valid(char *str)
+int	utils_is_string_valid(char *str)
 {
 	char	*name;
 	char	*eq;
@@ -47,7 +47,7 @@ int	is_string_valid(char *str)
 // Compare strings.
 // Return 1 if strings are equal,
 // 0 otherwise
-int	cmp_strings(char *s1, char *s2)
+int	utils_cmp_strings(char *s1, char *s2)
 {
 	size_t	s1_len;
 	size_t	s2_len;
@@ -65,7 +65,7 @@ int	cmp_strings(char *s1, char *s2)
 	return (0);
 }
 
-void	destroy_strings_array(char **arr)
+void	utils_destroy_strings_array(char **arr)
 {
 	char	**ptr;
 

@@ -28,21 +28,25 @@ ostream& operator<<(ostream& out, t_process* list){
 	return out;
 }
 
+ostream& operator<<(ostream& out, char** arr){
+	while (*arr){
+		out << *arr << endl;
+		arr++;
+	}
+	return out;
+}
+
 int main(int argc, char** argv, char** envp){
 	if (argc == 1){
 		cout << "No args: exit" << endl;
 		return 0;
 	}
 
+	g_data.envp = env_create(envp);
 	t_process* process_list = proc_init_list(argv + 1, envp);
-	//cout << process_list;
-
-	//t_process* elem = process_list;
-	//while (elem){
-	//	printf("%s: %p\n", elem->exec_name, elem->exec_path);
-	//	elem = elem->next;
-	//}
 
 	proc_execute_list(process_list, -1, -1);
+	
 	proc_destroy_list(process_list);
+	env_destroy(g_data.envp);
 }

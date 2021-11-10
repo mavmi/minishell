@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/09 18:36:31 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:02:17 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	proc_destroy_elem(t_process *process)
 		return ;
 	free(process->exec_name);
 	free(process->exec_path);
-	destroy_strings_array(process->argv);
+	utils_destroy_strings_array(process->argv);
 	free(process);
 }
 

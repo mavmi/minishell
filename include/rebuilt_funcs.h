@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 16:31:39 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/09 18:37:45 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:36:09 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,15 @@
 # define ENV "env"
 # define EXIT "exit"
 
-int		is_rebuild(char *func);
-void	my_pwd(void);
-void	my_cd(int argc, char **argv);
-void	my_env(void);
-void	my_export(int argc, char **argv);
-void	my_unset(int argc, char **argv);
-void	my_echo(int argc, char **argv);
-void	my_exit(void);
+int		rebuit_is_rebuilt(char *func);
+void	rebuilt_call_func(int argc, char **argv);
+
+void	rebuilt_pwd(void);
+void	rebuilt_cd(int argc, char **argv);
+void	rebuilt_env(void);
+void	rebuilt_export(int argc, char **argv);
+void	rebuilt_unset(int argc, char **argv);
+void	rebuilt_echo(int argc, char **argv);
+void	rebuilt_exit(void);
 
 #endif

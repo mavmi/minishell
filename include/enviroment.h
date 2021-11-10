@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 17:52:03 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/10 18:13:49 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:32:53 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 typedef struct s_env_elem	t_env_elem;
 typedef struct s_enviroment	t_enviroment;
 typedef struct s_data		t_data;
-
-t_data						*g_data;
 
 struct s_env_elem
 {
@@ -43,6 +41,8 @@ struct s_data
 {
 	t_enviroment	*envp;
 };
+
+t_data						g_data;
 
 t_env_elem		*env_get_new_elem(char *str);
 int				env_push_back(t_enviroment *env, char *str);
