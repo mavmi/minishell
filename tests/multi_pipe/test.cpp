@@ -11,7 +11,7 @@ ostream& operator<<(ostream& out, t_process* list){
 	while (list){
 		out 
 			<< boolalpha
-			<< "is default: " << list->is_default << endl
+			<< "is default: " << list->is_built_in << endl
 			<< "name: " << list->exec_name << endl
 			<< "path: " << list->exec_path << endl
 			<< "args: ";

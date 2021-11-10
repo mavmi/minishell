@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 17:52:03 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 14:32:53 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 15:47:19 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ struct s_enviroment
 
 struct s_data
 {
+	int				exit_status;
 	t_enviroment	*envp;
 };
 

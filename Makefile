@@ -20,7 +20,7 @@ SRC_MAIN	= 	$(addprefix $(SRCS_DIR)/, minishell.c)
 SRCS		= 	$(addprefix $(SRCS_DIR)/, signals.c)\
 				$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c)\
-				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c pipex_3.c here_doc.c)\
+				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c pipex_3.c pipex_4.c here_doc.c)\
 				$(addprefix $(UTILS_DIR)/, utils_1.c utils_2.c)
 #				$(addprefix $(GNL_DIR)/, get_next_line.c get_next_line_utils.c)
 OBJ_MAIN	=	$(SRC_MAIN:.c=.o)

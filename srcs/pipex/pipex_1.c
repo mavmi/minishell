@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 14:03:36 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 15:19:01 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ static int	proc_get_new_elem_handler(t_process *proc, char **argv, char **dirs)
 	proc->argv = argv;
 	proc->exec_name = ft_strdup(argv[0]);
 	if (rebuit_is_rebuilt(argv[0]))
-		proc->is_default = 0;
+		proc->is_built_in = 0;
 	else
-		proc->is_default = 1;
-	if (proc->is_default)
+		proc->is_built_in = 1;
+	if (proc->is_built_in)
 		proc->exec_path = proc_find_executable(dirs, argv[0]);
-	if (!proc->exec_name || (proc->is_default && !proc->exec_path))
+	if (!proc->exec_name || (proc->is_built_in && !proc->exec_path))
 		return (1);
 	return (0);
 }

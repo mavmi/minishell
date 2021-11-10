@@ -6,32 +6,81 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 14:02:17 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 15:56:25 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/pipex.h"
 
-void	proc_destroy_elem(t_process *process)
+// STDIN_FILENO = 0
+// STDOUT_FILENO = 1
+// pipe[0] -> read
+// pipe[1] -> write
+static void	redirect(t_process *proc, int input, int output)
 {
-	if (!process)
-		return ;
-	free(process->exec_name);
-	free(process->exec_path);
-	utils_destroy_strings_array(process->argv);
-	free(process);
+	if (proc->prev)
+	{
+		dup2(proc->prev->io_buffer[0], STDIN_FILENO);
+		close(proc->prev->io_buffer[0]);
+		close(proc->prev->io_buffer[1]);
+	}
+	else if (input != -1 && input != STDIN_FILENO)
+	{
+		dup2(input, STDIN_FILENO);
+		close(input);
+	}
+	if (proc->next)
+	{
+		dup2(proc->io_buffer[1], STDOUT_FILENO);
+		close(proc->io_buffer[0]);
+		close(proc->io_buffer[1]);
+	}
+	else if (output != -1 && output != STDOUT_FILENO)
+	{
+		dup2(output, STDOUT_FILENO);
+		close(output);
+	}
 }
 
-void	proc_destroy_list(t_process *list)
+pid_t	process_execute_built_in(t_process *process, int in, int out)
 {
-	t_process	*tmp_ptr;
+	pid_t	pid;
 
-	if (!list)
-		return ;
-	while (list)
+	pid = fork();
+	if (pid == -1)
+		perror(strerror(errno));
+	if (pid == 0)
 	{
-		tmp_ptr = list->next;
-		proc_destroy_elem(list);
-		list = tmp_ptr;
+		redirect(process, in, out);
+		if (execve(process->exec_path, process->argv, NULL) == -1)
+		{
+			if (process->exec_path)
+				perror(strerror(errno));
+			else
+			{
+				ft_putstr_fd(process->exec_name, STDERR_FILENO);
+				ft_putendl_fd(": programm not found", STDERR_FILENO);
+			}
+			exit(BAD_STATUS);
+		}
 	}
+	return (pid);
+}
+
+pid_t	process_execute_rebuilt(t_process *process, int in, int out)
+{
+	int		argc;
+	pid_t	pid;
+	char	**ptr;
+
+	//redirect(process, in, out);		// Вот эта вот херня вызывает у меня вопросы
+	argc = 0;
+	ptr = process->argv;
+	while (*ptr)
+	{
+		ptr++;
+		argc++;
+	}
+	rebuilt_call_func(argc, process->argv);
+	return (pid);
 }
