@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 15:28:13 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 17:06:25 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define BAD_STATUS 1
 
 typedef struct s_process	t_process;
+typedef struct s_here_doc	t_here_doc;
 
 struct s_process
 {

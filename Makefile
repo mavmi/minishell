@@ -13,6 +13,7 @@ READLN_DIR	=	readline
 
 TESTS_DIR	=	tests
 TESTS_PIPE	=	$(TESTS_DIR)/multi_pipe
+TESTS_HE_DO	=	$(TESTS_DIR)/here_doc
 
 
 HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h get_next_line)
@@ -87,5 +88,6 @@ norm:
 
 tests:			compile_libft $(OBJS)
 				g++ -std=c++17 -Wall -Wextra -Werror $(OBJS) $(LIBFT) $(READLN) -I $(READLN_DIR) -ltermcap $(TESTS_PIPE)/test.cpp -o $(TESTS_PIPE)/test.out
+				g++ -std=c++17 -Wall -Wextra -Werror $(OBJS) $(LIBFT) $(READLN) -I $(READLN_DIR) -ltermcap $(TESTS_HE_DO)/test.cpp -o $(TESTS_HE_DO)/test.out
 
 .PHONY:			all compile_libft clean fclean re tests norm

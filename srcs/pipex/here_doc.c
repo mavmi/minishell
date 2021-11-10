@@ -6,38 +6,39 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 14:02:12 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 17:22:07 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/pipex.h"
 
-// Read here_doc input and write it to "here_doc" file.
-// Return "here_doc"s fd
+// Read here_doc input, write it to the pipe and
+// return it's fd.
+// Return fd to read line from
+// or -1 if an error occured.
 int	here_doc(void)
 {
-	int		here_doc_fd;
-	int		val;
+	int		io_buffer[2];
 	char	endl;
-	char	*line;
 	char	*stop_word;
+	char	*line;
 
-	here_doc_fd = open(HERE_DOC, O_WRONLY | O_TRUNC | O_CREAT, 0600);
-	if (here_doc_fd < 0)
+	if (pipe(io_buffer))
 		return (-1);
-	stop_word = readline("stop_word: ");
 	endl = '\n';
+	stop_word = readline("stop_word: ");
 	while (1)
 	{
 		line = readline("> ");
 		if (utils_cmp_strings(line, stop_word))
 		{
+			free(stop_word);
 			free(line);
-			break ;
+			close(io_buffer[STDOUT_FILENO]);
+			return (io_buffer[STDIN_FILENO]);
 		}
-		write(here_doc_fd, line, ft_strlen(line));
-		write(here_doc_fd, &endl, 1);
+		write(io_buffer[STDOUT_FILENO], line, ft_strlen(line));
+		write(io_buffer[STDOUT_FILENO], &endl, 1);
 		free(line);
 	}
-	return (open(HERE_DOC, O_RDONLY));
 }
