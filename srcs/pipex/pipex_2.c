@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 14:46:00 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:53:18 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,10 @@ void	proc_execute_list(t_process *list, int in, int out)
 	ptr = list;
 	while (ptr)
 	{
-		waitpid(ptr->pid, &exit_status, 0);				// Какая-то херня с закрытием дескриптора.
-		if (WIFEXITED(exit_status))						// На нуле с последним кэтом или ребилдом
-			exit_status = WEXITSTATUS(exit_status);		// ждет инпут.
-		close(ptr->io_buffer[1]);						// На единице не ждет, но тогда и кэт не работает
+		waitpid(ptr->pid, &exit_status, WNOHANG | WUNTRACED);	// Какая-то херня с закрытием дескриптора.
+		if (WIFEXITED(exit_status))								// На нуле с последним кэтом или ребилдом
+			exit_status = WEXITSTATUS(exit_status);				// ждет инпут.
+		close(ptr->io_buffer[1]);								// На единице не ждет, но тогда и кэт не работает
 		ptr = ptr->next;
 	}
 }
