@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/09 18:48:30 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 13:45:54 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ static pid_t	process_execute_default(t_process *process, int in, int out)
 
 static pid_t	process_execute_rebuild(t_process *process, int in, int out)
 {
-	
+	(void)process; (void)in; (void)out;
+	return (0);
 }
 
 void	proc_execute_list(t_process *list, int in, int out)

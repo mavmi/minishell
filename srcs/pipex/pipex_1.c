@@ -6,48 +6,33 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/09 18:47:49 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/10 13:47:21 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/pipex.h"
 
-// Fill process element with default values and parsed command
-// to execute built-in function
-static void	proc_fill_default(t_process **process, char **argv, char **dirs)
+// Parh of proc_get_new_elem function.
+// Return 0 if everything is ok,
+// 1 otherwise
+static int	proc_get_new_elem_handler(t_process *proc, char **argv, char **dirs)
 {
-	if (!*process || !argv || !dirs)
-		return ;
-	(*process)->is_default = 1;
-	(*process)->next = NULL;
-	(*process)->prev = NULL;
-	(*process)->argv = argv;
-	(*process)->exec_name = ft_strdup((*process)->argv[0]);
-	(*process)->exec_path = proc_find_executable(dirs, (*process)->argv[0]);
-	if (!(*process)->exec_name || !(*process)->exec_path)
-	{
-		proc_destroy_elem(*process);
-		*process = NULL;
-	}
-}
-
-// Fill process element with default values and parsed command
-// to execute rebuild function (echo, pwd etc.)
-static void	proc_fill_rebuild(t_process **process, char **argv)
-{
-	if (!*process || !argv)
-		return ;
-	(*process)->is_default = 0;
-	(*process)->exec_name = ft_strdup(argv[0]);
-	(*process)->exec_path = NULL;
-	(*process)->next = NULL;
-	(*process)->prev = NULL;
-	(*process)->argv = argv;
-	if (!(*process)->exec_name)
-	{
-		proc_destroy_elem(*process);
-		*process = NULL;
-	}
+	if (!proc || !argv || !dirs)
+		return (1);
+	proc->next = NULL;
+	proc->prev = NULL;
+	proc->exec_path = NULL;
+	proc->argv = argv;
+	proc->exec_name = ft_strdup(argv[0]);
+	if (is_rebuild(argv[0]))
+		proc->is_default = 0;
+	else
+		proc->is_default = 1;
+	if (proc->is_default)
+		proc->exec_path = proc_find_executable(dirs, argv[0]);
+	if (!proc->exec_name || (proc->is_default && !proc->exec_path))
+		return (1);
+	return (0);
 }
 
 // Create new t_process struct.
@@ -67,13 +52,9 @@ t_process	*proc_get_new_elem(char *command, char **dirs)
 		destroy_strings_array(argv);
 		return (NULL);
 	}
-	if (is_rebuild(argv[0]))
-		proc_fill_rebuild(&process, argv);
-	else
-		proc_fill_default(&process, argv, dirs);
-	if (!process)
+	if (proc_get_new_elem_handler(process, argv, dirs))
 	{
-		destroy_strings_array(argv);
+		proc_destroy_elem(process);
 		return (NULL);
 	}
 	return (process);

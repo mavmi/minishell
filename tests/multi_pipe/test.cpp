@@ -7,6 +7,27 @@ extern "C"{
 
 using namespace std;
 
+ostream& operator<<(ostream& out, t_process* list){
+	while (list){
+		out 
+			<< boolalpha
+			<< "is default: " << list->is_default << endl
+			<< "name: " << list->exec_name << endl
+			<< "path: " << list->exec_path << endl
+			<< "args: ";
+
+			char **ptr = list->argv;
+			while (*ptr){
+				out << *ptr << " ";
+				ptr++;
+			}
+			out << endl << endl;
+
+			list = list->next;
+	}
+	return out;
+}
+
 int main(int argc, char** argv, char** envp){
 	if (argc == 1){
 		cout << "No args: exit" << endl;
@@ -14,6 +35,7 @@ int main(int argc, char** argv, char** envp){
 	}
 
 	t_process* process_list = proc_init_list(argv + 1, envp);
+	//cout << process_list;
 
 	//t_process* elem = process_list;
 	//while (elem){

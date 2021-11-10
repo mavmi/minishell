@@ -57,7 +57,7 @@ compile_libft:
 				$(MAKE) -C $(LIBFT_DIR)
 
 clean:				
-				rm -f $(OBJS)
+				rm -f $(OBJS) $(OBJ_MAIN)
 				$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean:			clean
