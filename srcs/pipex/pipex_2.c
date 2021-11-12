@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 16:01:21 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/12 13:47:37 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	proc_execute_built_ins(t_process **ptr, int in, int out)
 		(*ptr) = (*ptr)->next;
 	}
 	(*ptr) = first;
-	while (ptr)
+	while (*ptr && (*ptr)->is_built_in)
 	{
 		waitpid((*ptr)->pid, &g_data.exit_status, WNOHANG | WUNTRACED);
 		if (WIFEXITED(g_data.exit_status))
@@ -59,7 +59,7 @@ void	proc_execute_list(t_process *list, int in, int out)
 			proc_execute_built_ins(&ptr, in, out);
 		while (ptr && !ptr->is_built_in)
 		{
-			ptr->pid = process_execute_rebuilt(ptr, in, out);
+			ptr->pid = process_execute_rebuilt(ptr, out);
 			if (ptr->pid == -1)
 				return ;
 			ptr = ptr->next;

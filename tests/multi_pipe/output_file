@@ -1,0 +1,14 @@
+.
+..
+.git
+.gitignore
+.vscode
+Makefile
+en.subject.pdf
+include
+libft
+minishell
+print_separator
+readline
+srcs
+tests

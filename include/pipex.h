@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 17:06:25 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/12 14:13:02 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_process	*proc_init_list(char **commands, char **envp);
 void		proc_execute_list(t_process *list, int input, int output);
 
 pid_t		process_execute_built_in(t_process *process, int in, int out);
-pid_t		process_execute_rebuilt(t_process *process, int in, int out);
+pid_t		process_execute_rebuilt(t_process *process, int out);
 
 void		proc_destroy_elem(t_process *process);
 void		proc_destroy_list(t_process *list);
@@ -58,6 +58,6 @@ char		*proc_find_executable(char **dirs, char *file_name);
 int			proc_open_input_file(char *file_path);
 int			proc_open_output_file(char *file_path);
 
-int			here_doc(void);
+int			proc_here_doc(void);
 
 #endif

@@ -17,7 +17,7 @@ const int buffer_size = 1024;
 int main(){
 	char buffer[buffer_size];
 
-	int hd = here_doc();
+	int hd = proc_here_doc();
 	int count = read(hd, buffer, buffer_size);
 	if (count < 1){
 		perror(strerror(errno));

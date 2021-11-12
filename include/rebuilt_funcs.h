@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 16:31:39 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 14:36:09 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/12 12:50:10 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@
 # define EXIT "exit"
 
 int		rebuit_is_rebuilt(char *func);
-void	rebuilt_call_func(int argc, char **argv);
+void	rebuilt_call_func(int argc, char **argv, int fd_out);
 
-void	rebuilt_pwd(void);
+void	rebuilt_pwd(int fd_out);
 void	rebuilt_cd(int argc, char **argv);
-void	rebuilt_env(void);
+void	rebuilt_env(int fd_out);
 void	rebuilt_export(int argc, char **argv);
 void	rebuilt_unset(int argc, char **argv);
-void	rebuilt_echo(int argc, char **argv);
+void	rebuilt_echo(int argc, char **argv, int fd_out);
 void	rebuilt_exit(void);
 
 #endif

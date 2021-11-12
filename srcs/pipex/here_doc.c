@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 17:22:07 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/12 14:13:02 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // return it's fd.
 // Return fd to read line from
 // or -1 if an error occured.
-int	here_doc(void)
+int	proc_here_doc(void)
 {
 	int		io_buffer[2];
 	char	endl;
