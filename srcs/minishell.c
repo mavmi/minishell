@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/12 12:59:22 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/14 12:51:21 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	parse_command(char *command)
 	char	**command_strs;
 
 	command_strs = ft_split(command, ' ');
-	if (!command_strs || !ft_strlen(command)){
+	if (!command_strs || !ft_strlen(command))
+	{
 		utils_destroy_strings_array(command_strs);
 		return ;
 	}
@@ -33,11 +34,13 @@ void	parse_command(char *command)
 		argc++;
 		tmp_ptr++;
 	}
-	rebuilt_call_func(argc, command_strs, /* заглушка */ STDOUT_FILENO);
+	rebuilt_call_func(argc, command_strs, STDOUT_FILENO);
 	utils_destroy_strings_array(command_strs);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void)argc; (void)argv; (void)envp;
+	(void)argc;
+	(void)argv;
+	(void)envp;
 }
