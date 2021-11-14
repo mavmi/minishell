@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 12:41:39 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/14 13:04:53 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/14 13:26:00 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_var	*var_get_new_elem(char *name, char *value)
 void	var_destroy_elem(t_var *elem)
 {
 	if (!elem)
-		return (NULL);
+		return ;
 	free(elem->name);
 	free(elem->value);
 	free(elem);
