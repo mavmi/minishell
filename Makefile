@@ -18,7 +18,7 @@ TESTS_HE_DO	=	$(TESTS_DIR)/here_doc
 TESTS_VARS	=	$(TESTS_DIR)/vars
 
 
-HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h get_next_line)
+HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h)
 SRC_MAIN	= 	$(addprefix $(SRCS_DIR)/, minishell.c)
 SRCS		= 	$(addprefix $(SRCS_DIR)/, signals.c)\
 				$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\

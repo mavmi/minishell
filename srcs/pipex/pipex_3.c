@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/12 14:11:02 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/14 14:17:01 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	proc_redirect(t_process *proc, int input, int output)
 		close(proc->prev->io_buffer[0]);
 		close(proc->prev->io_buffer[1]);
 	}
-	else if (input != -1 && input != STDIN_FILENO)
+	else if (input != STDIN_FILENO)
 	{
 		dup2(input, STDIN_FILENO);
 		close(input);
@@ -35,7 +35,7 @@ static void	proc_redirect(t_process *proc, int input, int output)
 		close(proc->io_buffer[0]);
 		close(proc->io_buffer[1]);
 	}
-	else if (output != -1 && output != STDOUT_FILENO)
+	else if (output != STDOUT_FILENO)
 	{
 		dup2(output, STDOUT_FILENO);
 		close(output);
@@ -67,10 +67,9 @@ pid_t	process_execute_built_in(t_process *process, int in, int out)
 	return (pid);
 }
 
-pid_t	process_execute_rebuilt(t_process *process, int out)
+void	process_execute_rebuilt(t_process *process, int out)
 {
 	int		argc;
-	pid_t	pid;
 	char	**ptr;
 
 	argc = 0;
@@ -88,9 +87,8 @@ pid_t	process_execute_rebuilt(t_process *process, int out)
 	}
 	else
 	{
-		rebuilt_call_func(argc, process->argv, STDOUT_FILENO);
+		rebuilt_call_func(argc, process->argv, out);
 		close(process->io_buffer[STDIN_FILENO]);
 		close(process->io_buffer[STDOUT_FILENO]);
 	}
-	return (pid);
 }

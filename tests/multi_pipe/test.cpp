@@ -103,14 +103,16 @@ void open_files(char*** argv, int& input_fd, int& output_fd){
 			exit(1);
 		}
 		(*argv) += 2;
+	} else if (status == STATUS::none){
+		(*argv)++;
 	}
 }
 
 int main(int argc, char** argv, char** envp){
 	check_input(argc);
 
-	int input_fd = -1;
-	int output_fd = -1;
+	int input_fd = STDIN_FILENO;
+	int output_fd = STDOUT_FILENO;
 	open_files(&argv, input_fd, output_fd);
 
 	g_data.envp = env_create(envp);

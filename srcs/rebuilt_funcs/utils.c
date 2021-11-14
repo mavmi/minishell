@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:47:57 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/12 12:50:22 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/14 13:51:25 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	rebuit_is_rebuilt(char *func)
 void	rebuilt_call_func(int argc, char **argv, int fd_out)
 {
 	char	*func;
-	size_t	strlen;
 
 	func = argv[0];
 	if (utils_cmp_strings(func, ECHO))

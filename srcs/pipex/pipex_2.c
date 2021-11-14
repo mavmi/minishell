@@ -6,24 +6,11 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/12 13:47:37 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/14 14:15:36 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/pipex.h"
-
-static t_process	*proc_find_first_built_in(t_process *proc)
-{
-	if (!proc)
-		return (NULL);
-	while (proc)
-	{
-		if (proc->is_built_in)
-			return (proc);
-		proc = proc->next;
-	}
-	return (NULL);
-}
 
 static void	proc_execute_built_ins(t_process **ptr, int in, int out)
 {
@@ -40,7 +27,7 @@ static void	proc_execute_built_ins(t_process **ptr, int in, int out)
 	(*ptr) = first;
 	while (*ptr && (*ptr)->is_built_in)
 	{
-		waitpid((*ptr)->pid, &g_data.exit_status, WNOHANG | WUNTRACED);
+		waitpid((*ptr)->pid, &g_data.exit_status, WNOHANG & WUNTRACED);
 		if (WIFEXITED(g_data.exit_status))
 			g_data.exit_status = WEXITSTATUS(g_data.exit_status);
 		close((*ptr)->io_buffer[1]);
@@ -59,9 +46,7 @@ void	proc_execute_list(t_process *list, int in, int out)
 			proc_execute_built_ins(&ptr, in, out);
 		while (ptr && !ptr->is_built_in)
 		{
-			ptr->pid = process_execute_rebuilt(ptr, out);
-			if (ptr->pid == -1)
-				return ;
+			process_execute_rebuilt(ptr, out);
 			ptr = ptr->next;
 		}
 	}

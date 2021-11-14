@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 17:11:47 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/12 12:49:35 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/14 13:51:38 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	set_values(char *new_pwd, char *old_pwd)
 // At first it tries to use [argv[1]] as absolute path
 void	rebuilt_cd(int argc, char **argv)
 {
-	char	*tmp;
 	char	*old_pwd;
 	char	*new_pwd;
 
