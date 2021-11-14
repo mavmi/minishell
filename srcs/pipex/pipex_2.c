@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/14 14:15:36 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/14 14:19:14 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	proc_execute_list(t_process *list, int in, int out)
 {
 	t_process	*ptr;
 
+	if (in < 0 || out < 0)
+		return ;
 	ptr = list;
 	while (ptr)
 	{
