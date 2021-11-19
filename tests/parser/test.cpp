@@ -25,12 +25,13 @@ ostream& operator<<(ostream& out, t_par_list* list){
 		return out;
 	}
 
-	out << "size: " << list->size << endl;
+	out << "\t list size: " << list->size << endl;
 
 	t_par_elem* elem = list->begin;
 	while (elem){
 		out << elem << endl;
-		if (elem->next){
+		elem = elem->next;
+		if (elem){
 			out << endl;
 		}
 	}
@@ -38,6 +39,27 @@ ostream& operator<<(ostream& out, t_par_list* list){
 	return out;
 }
 
-int main(){
+ostream& operator<<(ostream& out, char** arr){
+	if (!arr){
+		return out;
+	}
 
+	while (*arr){
+		out << *arr;
+		if (*(arr + 1)){
+			out << endl;
+		}
+		arr++;
+	}
+	
+	return out;
+}
+
+int main(){
+	{
+		char cmd[] = "cmd1 >> >>>> >>> ls ||| cat $$ ===";
+		t_par_list* list = par_split(cmd);
+		cout << list << endl;
+		par_destroy_all(list);
+	}
 }

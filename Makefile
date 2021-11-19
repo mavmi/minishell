@@ -8,6 +8,7 @@ PIPEX_DIR	=	$(SRCS_DIR)/pipex
 UTILS_DIR	=	$(SRCS_DIR)/utils
 VARS_DIR	=	$(SRCS_DIR)/variables
 PARS_DIR	=	$(SRCS_DIR)/parser
+PARS_DIR_	=	$(SRCS_DIR)/parser_
 HDRS_DIR	=	include
 READLN_DIR	=	readline
 
@@ -17,9 +18,10 @@ TESTS_PIPE	=	$(TESTS_DIR)/multi_pipe
 TESTS_HE_DO	=	$(TESTS_DIR)/here_doc
 TESTS_VARS	=	$(TESTS_DIR)/vars
 TESTS_PARS	=	$(TESTS_DIR)/parser
+TESTS_PARS_	=	$(TESTS_DIR)/parser_
 
 
-HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h parser.h)
+HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h parser.h parser_.h)
 SRC_MAIN	= 	$(addprefix $(SRCS_DIR)/, minishell.c)
 SRCS		= 	$(addprefix $(SRCS_DIR)/, signals.c)\
 				$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
@@ -27,7 +29,8 @@ SRCS		= 	$(addprefix $(SRCS_DIR)/, signals.c)\
 				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c pipex_3.c pipex_4.c here_doc.c)\
 				$(addprefix $(UTILS_DIR)/, utils_1.c utils_2.c)\
 				$(addprefix $(VARS_DIR)/, variables_1.c variables_2.c)\
-				$(addprefix $(PARS_DIR)/, handling_quotes.c parser.c parser_initial.c parser_operations.c parser_work_with_mallocs.c)
+				$(addprefix $(PARS_DIR)/, handling_quotes.c parser.c parser_initial.c parser_operations.c parser_work_with_mallocs.c)\
+				$(addprefix $(PARS_DIR_)/, parser_1.c parser_2.c parser_utils.c)
 OBJ_MAIN	=	$(SRC_MAIN:.c=.o)
 OBJS		=	$(SRCS:.c=.o)
 
@@ -99,6 +102,9 @@ norm:
 
 				@echo "$(BLUE)\n\t*** PARSER ***$(NC)"
 				@norminette $(PARS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
+				
+				@echo "$(BLUE)\n\t*** MY PARSER ***$(NC)"
+				@norminette $(PARS_DIR_) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
 tests:			compile_libft $(OBJS)
 				$(eval CUR_TEST := $(TESTS_PIPE))
@@ -111,6 +117,9 @@ tests:			compile_libft $(OBJS)
 				$(GPP)
 
 				$(eval CUR_TEST := $(TESTS_PARS))
+				$(GPP)
+
+				$(eval CUR_TEST := $(TESTS_PARS_))
 				$(GPP)
 
 .PHONY:			all compile_libft clean fclean re tests norm
