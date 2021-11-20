@@ -42,6 +42,23 @@ ostream& operator<<(ostream& out, s_pars_list* list){
 	return out;
 }
 
+ostream& operator<<(ostream& out, t_strings* list){
+	if (!list){
+		return out;
+	}
+
+	while (list){
+		out 
+			<< "string: " << string(list->string) << endl;
+		if (list->next){
+			out << endl;
+		}
+		list = list->next;
+	}
+
+	return out;
+}
+
 void TEST_GET_OPERATORS(){
 	Debugger d(__FUNCTION__);
 
@@ -50,7 +67,7 @@ void TEST_GET_OPERATORS(){
 	free (arr);
 }
 
-void TEST_LIST(){
+void TEST_ELEM_LIST(){
 	Debugger d(__FUNCTION__);
 
 	{
@@ -80,6 +97,58 @@ void TEST_LIST(){
 		
 		cout << list << endl;
 		pars_destroy_list(list);
+	}
+}
+
+void TEST_STR_LIST(){
+	Debugger d(__FUNCTION__);
+
+	{
+		char val_1[] = "111";
+		char val_2[] = "\"$var\"";
+		char val_3[] = "222";
+
+		t_strings* list = pars_get_new_str_elem(val_1);
+		pars_push_back_str(list, pars_get_new_str_elem(val_2));
+		pars_push_back_str(list, pars_get_new_str_elem(val_3));
+
+		char* output_str = pars_get_whole_string(list);
+		cout << "whole string: " << string(output_str) << endl;
+		free(output_str);
+
+		pars_destroy_str_list(list);
+	}
+
+	{
+		char val_1[] = "111";
+		char val_2[] = "\"000$var 000\"";
+		char val_3[] = "222";
+
+		t_strings* list = pars_get_new_str_elem(val_1);
+		pars_push_back_str(list, pars_get_new_str_elem(val_2));
+		pars_push_back_str(list, pars_get_new_str_elem(val_3));
+
+		char* output_str = pars_get_whole_string(list);
+		cout << "whole string: " << string(output_str) << endl;
+		free(output_str);
+
+		pars_destroy_str_list(list);
+	}
+
+	{
+		char val_1[] = "111";
+		char val_2[] = "\"000$ 000\"";
+		char val_3[] = "222";
+
+		t_strings* list = pars_get_new_str_elem(val_1);
+		pars_push_back_str(list, pars_get_new_str_elem(val_2));
+		pars_push_back_str(list, pars_get_new_str_elem(val_3));
+
+		char* output_str = pars_get_whole_string(list);
+		cout << "whole string: " << string(output_str) << endl;
+		free(output_str);
+
+		pars_destroy_str_list(list);
 	}
 }
 
@@ -117,8 +186,18 @@ void TEST_PARSER(){
 	}
 }
 
-int main(){
+int main(int argc, char** argv, char** envp){
+	(void)argc; (void)argv;
+	g_data.envp = env_create(envp);
+	char var[] = "var=123";
+	env_push_back(g_data.envp, var);
+
+
 	TEST_GET_OPERATORS();
-	TEST_LIST();
+	TEST_ELEM_LIST();
+	TEST_STR_LIST();
 	TEST_PARSER();
+
+
+	env_destroy(g_data.envp);
 }

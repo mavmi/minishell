@@ -6,31 +6,11 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:10:43 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/19 19:19:33 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/20 13:08:06 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser_.h"
-
-// Create array of defined operators.
-// May return NULL
-char	**pars_get_operators(void)
-{
-	char	**arr;
-
-	arr = (char **)malloc(sizeof(char *) * (OPERATORS + 1));
-	if (!arr)
-		return (NULL);
-	arr[REDIR_OUT_N] = REDIR_OUT_S;
-	arr[REDIR_INP_N] = REDIR_INP_S;
-	arr[REDIR_OUT_APP_N] = REDIR_OUT_APP_S;
-	arr[HERE_DOC_N] = HERE_DOR_S;
-	arr[PIPE_N] = PIPE_S;
-	arr[DOLL_N] = DOLL_S;
-	arr[EQUAL_N] = EQUAL_S;
-	arr[7] = NULL;
-	return (arr);
-}
 
 // Create new t_pars_list elem.
 // May return NULL

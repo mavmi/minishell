@@ -6,11 +6,31 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:22:44 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/19 19:43:17 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/20 13:08:09 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser_.h"
+
+// Create array of defined operators.
+// May return NULL
+char	**pars_get_operators(void)
+{
+	char	**arr;
+
+	arr = (char **)malloc(sizeof(char *) * (OPERATORS + 1));
+	if (!arr)
+		return (NULL);
+	arr[REDIR_OUT_N] = REDIR_OUT_S;
+	arr[REDIR_INP_N] = REDIR_INP_S;
+	arr[REDIR_OUT_APP_N] = REDIR_OUT_APP_S;
+	arr[HERE_DOC_N] = HERE_DOR_S;
+	arr[PIPE_N] = PIPE_S;
+	arr[DOLL_N] = DOLL_S;
+	arr[EQUAL_N] = EQUAL_S;
+	arr[7] = NULL;
+	return (arr);
+}
 
 // If cmd is operator, return it's position in opers array,
 // -1 otherwise
@@ -84,4 +104,20 @@ int	pars_get_substr_len(char *cmd, char **opers)
 		size++;
 	}
 	return (size);
+}
+
+// Check if command contains forbidden symbols.
+// Return 1 if it does,
+// 0 otherwise
+int	pars_is_forbidden(char *cmd)
+{
+	if (!cmd)
+		return (1);
+	while (*cmd)
+	{
+		if (*cmd == '\\' || *cmd == ';')
+			return (1);
+		cmd++;
+	}
+	return (0);
 }

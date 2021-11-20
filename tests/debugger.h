@@ -9,7 +9,7 @@ public:
 	}
 
 	~Debugger(){
-		std::cout << "\t***** END OF " << name << " *****" << std::endl;
+		std::cout << "\t***** END OF " << name << " *****" << std::endl << std::endl;
 	}
 
 private:
