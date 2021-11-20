@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:08:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/20 13:25:39 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/20 19:21:52 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,6 @@ struct s_pars_list
 	t_pars_list	*next;
 };
 
-struct s_strings
-{
-	char		*string;
-	t_strings	*next;	
-};
-
 t_pars_list	*pars_get_new_elem(int type, char *value);
 void		pars_push_back(t_pars_list *list, t_pars_list *elem);
 void		pars_destroy_elem(t_pars_list *elem);
@@ -65,11 +59,6 @@ int			pars_insert_elem(t_pars_list **list, char *str, int type);
 int			pars_get_substr_len(char *cmd, char **opers);
 int			pars_is_forbidden(char *cmd);
 
-t_strings	*pars_get_new_str_elem(char *str);
-void		pars_destroy_str_elem(t_strings *elem);
-void		pars_destroy_str_list(t_strings *list);
-void		pars_push_back_str(t_strings *list, t_strings *elem);
-
-char		*pars_get_whole_string(t_strings *list);
+char		*pars_get_whole_string(char *input);
 
 #endif

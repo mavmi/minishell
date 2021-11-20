@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_2.c                                         :+:      :+:    :+:   */
+/*   parser_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:22:13 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/20 12:58:02 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/20 19:17:14 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	pars_handle_strings(t_pars_list **list, char **cmd, char **opers)
 	len = pars_get_substr_len(*cmd, opers);
 	if (len)
 	{
-		substr = ft_substr(*cmd, 0, len);
+		substr = ft_substr(*cmd, 0, len); // 
 		if (!substr || pars_insert_elem(list, substr, DEFAULT_N))
 		{
 			free(opers);
