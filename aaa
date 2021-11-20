@@ -13,3 +13,5 @@
   c) cmd {args_1} >/>> [file_name] {args_2}
 4. < [file_name] [cmd] {args}
 5. << stop_word [cmd] {args}
+
+SHLVL
