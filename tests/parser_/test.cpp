@@ -59,14 +59,6 @@ void TEST_ELEM_LIST(){
 
 		t_pars_list* elem = pars_get_new_elem(123, val);
 		cout << elem << endl;
-		pars_destroy_elem(elem);
-	}
-
-	{
-		char val[] = "value";
-
-		t_pars_list* elem = pars_get_new_elem(123, val);
-		cout << elem << endl;
 		pars_destroy_list(elem);
 	}
 
@@ -124,7 +116,7 @@ void TEST_STR_LIST(){
 	}
 }
 
-void TEST_PARSER(){
+void TEST_SPLIT(){
 	Debugger d(__FUNCTION__);
 
 	{
@@ -156,6 +148,47 @@ void TEST_PARSER(){
 		cout << list << endl;
 		pars_destroy_list(list);
 	}
+
+	{
+		Debugger de("cat \"ls\"         man");
+
+		char cmd[] = "cat \"ls\"         man";
+
+		t_pars_list* list = pars_split(cmd);
+		cout << list << endl;
+		pars_destroy_list(list);
+	}
+
+	{
+		Debugger de("cat\"ls\"         man");
+
+		char cmd[] = "cat\"ls\"         man";
+
+		t_pars_list* list = pars_split(cmd);
+		cout << list << endl;
+		pars_destroy_list(list);
+	}
+
+	{
+		Debugger de("cat\"ls\"\'$var\'         man");
+
+		char cmd[] = "cat\"ls\"\'$var\'         man";
+
+		t_pars_list* list = pars_split(cmd);
+		cout << list << endl;
+		pars_destroy_list(list);
+	}
+
+	{
+		Debugger de("cat\'ls\'\"$var\"         man");
+
+		char cmd[] = "cat\'ls\'\"$var\"         man";
+
+		t_pars_list* list = pars_split(cmd);
+		cout << list << endl;
+		pars_destroy_list(list);
+	}
+
 }
 
 int main(int argc, char** argv, char** envp){
@@ -167,8 +200,8 @@ int main(int argc, char** argv, char** envp){
 
 	//TEST_GET_OPERATORS();
 	//TEST_ELEM_LIST();
-	TEST_STR_LIST();
-	//TEST_PARSER();
+	//TEST_STR_LIST();
+	TEST_SPLIT();
 
 
 	env_destroy(g_data.envp);
