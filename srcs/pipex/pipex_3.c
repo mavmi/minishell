@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/14 14:17:01 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/21 17:16:28 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ pid_t	process_execute_built_in(t_process *process, int in, int out)
 	if (pid == 0)
 	{
 		proc_redirect(process, in, out);
-		if (execve(process->exec_path, process->argv, NULL) == -1)
+		if (execve(process->exec_path, process->argv,
+				env_get_content(g_data.envp)) == -1)
 		{
 			if (process->exec_path)
 				perror(strerror(errno));
