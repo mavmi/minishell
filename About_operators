@@ -50,4 +50,15 @@ More one space take as one space
       *sorting fl1.txt fl2.txt flN.txt*
       ------------------------------------------------
       
+5. | (Pipe) - pulls input from a file. (cmd1 | cmd2) Doing cmd2 with cmd1)
+
+      ______________________Example__________________
+      bash: cat new_file
+      E f j
+      A b c
       
+      bash: cat new_file | sort
+      
+      A b c
+      E f j
+      ------------------------------------------------
