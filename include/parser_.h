@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:08:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 16:08:27 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/21 16:48:55 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define DEFAULT_N -1
 # define DOLL_S "$"
+# define QUES_S "?"
 
 # define REDIR_OUT_N 0
 # define REDIR_INP_N 1
@@ -22,6 +23,7 @@
 # define HERE_DOC_N 3
 # define PIPE_N 4
 # define EQUAL_N 5
+# define EXEC_N 6
 
 # define REDIR_OUT_S ">"
 # define REDIR_INP_S "<"
@@ -29,8 +31,9 @@
 # define HERE_DOR_S "<<"
 # define PIPE_S "|"
 # define EQUAL_S "="
+# define EXEC_S "./"
 
-# define OPERATORS 6
+# define OPERATORS 7
 
 # include "../libft/libft.h"
 # include "utils.h"

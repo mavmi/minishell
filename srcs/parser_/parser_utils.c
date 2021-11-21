@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:22:44 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 16:08:39 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/21 16:51:15 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char	**pars_get_operators(void)
 	arr[HERE_DOC_N] = HERE_DOR_S;
 	arr[PIPE_N] = PIPE_S;
 	arr[EQUAL_N] = EQUAL_S;
+	arr[EXEC_N] = EXEC_S;
 	arr[OPERATORS] = NULL;
 	return (arr);
 }
@@ -92,12 +93,8 @@ int	pars_get_substr_len(char *cmd, char **opers)
 		if (cmd[size] == ' ')
 			return (size);
 		i = 0;
-		while (i < OPERATORS)
-		{
-			if (cmd[size] == opers[i][0])
-				return (size);
-			i++;
-		}
+		if (pars_cmp_with_opers(cmd + size, opers) != -1)
+			return (size);
 		size++;
 	}
 	return (size);

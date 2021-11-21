@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:27:34 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 13:59:53 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/21 16:50:06 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static int	pars_value_substr(char *str, char **result, int *begin, int *end)
 	env_elem = env_get_by_name(g_data.envp, tmp);
 	if (env_elem)
 		utils_append_string(result, env_elem->value);
+	else if (!env_elem && utils_cmp_strings(tmp, QUES_S))
+		utils_append_string(result, ft_itoa(g_data.exit_status));
 	else
 		utils_append_string(result, "");
 	*begin += *end - *begin;

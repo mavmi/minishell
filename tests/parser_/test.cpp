@@ -129,8 +129,6 @@ void TEST_SPLIT(){
 	Debugger d(__FUNCTION__);
 
 	{
-		Debugger de(">> << || >>> <<<<< $$=$.");
-
 		char cmd[] = ">> << || >>> <<<<< $$=$.";
 
 		t_pars_list* list = pars_split(cmd);
@@ -139,19 +137,9 @@ void TEST_SPLIT(){
 	}
 
 	{
-		Debugger de("cat ls         man");
+		cout << "\t=========\n";
 
-		char cmd[] = "cat ls         man";
-
-		t_pars_list* list = pars_split(cmd);
-		cout << list << endl;
-		pars_destroy_list(list);
-	}
-
-	{
-		Debugger de("cat>>>ls<<man<$=$$.");
-
-		char cmd[] = "cat>>>ls<<man<$=$$.";
+		char cmd[] = "cat ls         man  .-./";
 
 		t_pars_list* list = pars_split(cmd);
 		cout << list << endl;
@@ -159,7 +147,17 @@ void TEST_SPLIT(){
 	}
 
 	{
-		Debugger de("cat \"ls\"         man");
+		cout << "\t=========\n";
+
+		char cmd[] = "cat>>>ls<<man<$=$$";
+
+		t_pars_list* list = pars_split(cmd);
+		cout << list << endl;
+		pars_destroy_list(list);
+	}
+
+	{
+		cout << "\t=========\n";
 
 		char cmd[] = "cat \"ls\"         man";
 
@@ -169,8 +167,8 @@ void TEST_SPLIT(){
 	}
 
 	{
-		Debugger de("cat\"ls\"         man");
-
+		cout << "\t=========\n";
+		
 		char cmd[] = "cat\"ls\"         man";
 
 		t_pars_list* list = pars_split(cmd);
@@ -179,7 +177,7 @@ void TEST_SPLIT(){
 	}
 
 	{
-		Debugger de("cat\"ls\"\'$var\'         man");
+		cout << "\t=========\n";
 
 		char cmd[] = "cat\"ls\"\'$var\'         man";
 
@@ -189,7 +187,7 @@ void TEST_SPLIT(){
 	}
 
 	{
-		Debugger de("cat\"ls\"$var\"");
+		cout << "\t=========\n";
 
 		char cmd[] = "cat\"ls\"\"$var\"";
 
@@ -198,6 +196,35 @@ void TEST_SPLIT(){
 		pars_destroy_list(list);
 	}
 
+	{
+		cout << "\t=========\n";
+
+		char cmd[] = "\"$var\"\'$cat\'\"ls\"$";
+
+		t_pars_list* list = pars_split(cmd);
+		cout << list << endl;
+		pars_destroy_list(list);
+	}
+
+	{
+		cout << "\t=========\n";
+
+		char cmd[] = "\'  $  \'";
+
+		t_pars_list* list = pars_split(cmd);
+		cout << list << endl;
+		pars_destroy_list(list);
+	}
+
+	{
+		cout << "\t=========\n";
+
+		char cmd[] = "           m$?";
+
+		t_pars_list* list = pars_split(cmd);
+		cout << list << endl;
+		pars_destroy_list(list);
+	}
 }
 
 int main(int argc, char** argv, char** envp){
