@@ -3,11 +3,13 @@ More one space take as one space
 1. < (Redirecting input) - Input is read from file, instead of terminal 
       
       a) if one agument (cmd < file.txt) - work with the argument
-      b) if more one argument (cmd < fl1.txt fl2.txt ... flN.txt) - work with all arguments exept first (fl1.txt) 
-      _______Example________
-      bash: sort < file.txt
-      *file contents*
-      ----------------------
+      b) if more one argument (cmd < fl1.txt fl2.txt ... flN.txt   /or/   cmd fl1.txt < fl2.txt ... flN.txt) - work with all arguments exept first (fl1.txt) 
+      _______Example__________________________
+      bash: sort < fl1.txt fl2.txt ... flN.txt
+      *fl2 contents*
+      ...
+      *flN contents*
+      ----------------------------------------
       
 2. << (Redirecting input - here documents) - Input is read from terminal or file before take stop word
 
@@ -27,4 +29,11 @@ More one space take as one space
  
 3. > (Redirecting output – stdout) - redirect cmd's output from stdout to somewhere else
 
-      a) 
+      a) cmd > redirect_in_this cmd_argument1 cmd_argument2 ... cmd_argumentN
+      b) cmd cmd_argument1 > redirect_in_this cmd_argument2 ... cmd_argumentN
+      ____________________________________Example____________________________________________________
+      bash: sort < fl1.txt fl2.txt ... flN.txt > new_file
+      bash: cat new_file
+      *sorting fl1.txt fl2.txt flN.txt*
+      ------------------------------------------------------------------------------------------------
+      
