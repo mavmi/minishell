@@ -14,4 +14,8 @@
 4. < [file_name] [cmd] {args}
 5. << stop_word [cmd] {args}
 
-SHLVL
+1. << [stopword]/[<, >, >>] [filename] [cmd] {argv}
+2. [cmd] << [stopword]/[<, >, >>] [filename] {argv}
+3. [cmd] {argv} << [stopword]/[<, >, >>] [filename]
+4. [cmd] {argv_1} << [stopword]/[<, >, >>] [filename] {argv_2}
+ 
