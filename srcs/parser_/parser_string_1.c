@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:12:46 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 14:32:56 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/21 16:08:04 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static char	*pars_substr_handler(char **input)
 
 	quote_1 = ft_strchr(*input, '\'');
 	quote_2 = ft_strchr(*input, '\"');
-	if (quote_1 && quote_2 && quote_2 - quote_1 < 0)
+	if ((quote_1 && quote_2 && quote_2 - quote_1 < 0)
+		|| (!quote_1 && quote_2))
 		quote_1 = quote_2;
 	if (quote_1)
 		return (ft_substr(*input, 0, quote_1 - *input));

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:08:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 14:53:26 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/21 16:08:27 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # define REDIR_OUT_APP_N 2
 # define HERE_DOC_N 3
 # define PIPE_N 4
-//# define DOLL_N 5
 # define EQUAL_N 5
 
 # define REDIR_OUT_S ">"

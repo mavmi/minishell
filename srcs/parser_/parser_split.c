@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:22:13 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 14:56:11 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/21 16:08:54 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 static int	pars_handle_strings(t_pars_list **list, char **cmd, char **opers)
 {
 	int		len;
+	char	*tmp;
 	char	*substr;
 
 	if (!cmd || !opers)
@@ -25,7 +26,9 @@ static int	pars_handle_strings(t_pars_list **list, char **cmd, char **opers)
 	len = pars_get_substr_len(*cmd, opers);
 	if (len)
 	{
-		substr = pars_get_whole_string(ft_substr(*cmd, 0, len));
+		tmp = ft_substr(*cmd, 0, len);
+		substr = pars_get_whole_string(tmp);
+		free(tmp);
 		if (!substr || pars_insert_elem(list, substr, DEFAULT_N))
 		{
 			free(opers);
@@ -77,8 +80,6 @@ static int	pars_split_handler(t_pars_list **list, char *cmd, char **opers)
 			cmd += 1;
 			continue ;
 		}
-		//if (*cmd == '\'' || *cmd == '\"')
-		//{}
 		i = pars_handle_opers(list, &cmd, opers);
 		if (i == -1)
 			return (1);

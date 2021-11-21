@@ -114,6 +114,15 @@ void TEST_STR_LIST(){
 		assert(string(output_str) == "value888$value888$");
 		free(output_str);
 	}
+
+	{
+		char val_1[] = "\"value\"\"$var\"";
+
+		char* output_str = pars_get_whole_string(val_1);
+		cout << "whole string: " << string(output_str) << endl;
+		assert(string(output_str) == "value888");
+		free(output_str);
+	}
 }
 
 void TEST_SPLIT(){
@@ -180,9 +189,9 @@ void TEST_SPLIT(){
 	}
 
 	{
-		Debugger de("cat\'ls\'\"$var\"         man");
+		Debugger de("cat\"ls\"$var\"");
 
-		char cmd[] = "cat\'ls\'\"$var\"         man";
+		char cmd[] = "cat\"ls\"\"$var\"";
 
 		t_pars_list* list = pars_split(cmd);
 		cout << list << endl;
