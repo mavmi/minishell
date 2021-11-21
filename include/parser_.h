@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:08:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/20 19:21:52 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/21 13:48:45 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ int			pars_get_substr_len(char *cmd, char **opers);
 int			pars_is_forbidden(char *cmd);
 
 char		*pars_get_whole_string(char *input);
+char		*pars_handle_substr(char *str);
 
 #endif

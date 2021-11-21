@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 15:55:28 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/20 14:05:50 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/21 14:01:36 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,6 @@ int	utils_cmp_strings(char *s1, char *s2)
 	return (0);
 }
 
-void	utils_destroy_strings_array(char **arr)
-{
-	char	**ptr;
-
-	if (!arr)
-		return ;
-	ptr = arr;
-	while (*ptr)
-	{
-		free(*ptr);
-		ptr++;
-	}
-	free(arr);
-}
-
 char	*utils_sum_strings(char *s1, char *s2)
 {
 	size_t	i;
@@ -99,7 +84,7 @@ char	*utils_sum_strings(char *s1, char *s2)
 	return (result);
 }
 
-void 	utils_append_string(char **str, char *value)
+void	utils_append_string(char **str, char *value)
 {
 	char	*tmp;
 

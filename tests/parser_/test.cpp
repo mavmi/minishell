@@ -4,6 +4,7 @@ extern "C" {
 
 #include "../debugger.h"
 
+#include <assert.h>
 #include <iostream>
 #include <string>
 
@@ -91,6 +92,7 @@ void TEST_STR_LIST(){
 
 		char* output_str = pars_get_whole_string(val_1);
 		cout << "whole string: " << string(output_str) << endl;
+		assert(string(output_str) == "value");
 		free(output_str);
 	}
 
@@ -99,6 +101,7 @@ void TEST_STR_LIST(){
 
 		char* output_str = pars_get_whole_string(val_1);
 		cout << "whole string: " << string(output_str) << endl;
+		assert(string(output_str) == "value $ 888  ");
 		free(output_str);
 	}
 
@@ -107,6 +110,7 @@ void TEST_STR_LIST(){
 
 		char* output_str = pars_get_whole_string(val_1);
 		cout << "whole string: " << string(output_str) << endl;
+		assert(string(output_str) == "value 888");
 		free(output_str);
 	}
 
@@ -115,6 +119,7 @@ void TEST_STR_LIST(){
 
 		char* output_str = pars_get_whole_string(val_1);
 		cout << "whole string: " << string(output_str) << endl;
+		assert(string(output_str) == "value888$value888$");
 		free(output_str);
 	}
 }
