@@ -27,13 +27,27 @@ More one space take as one space
       c                                      |
       ------------------------------------------------------------------------------------------------
  
-3. > (Redirecting output – stdout) - redirect cmd's output from stdout to somewhere else
+3. > (Redirecting output – stdout - overwriting) - redirect cmd's output from stdout to somewhere else with overwitings
 
       a) cmd > redirect_in_this cmd_argument1 cmd_argument2 ... cmd_argumentN
       b) cmd cmd_argument1 > redirect_in_this cmd_argument2 ... cmd_argumentN
-      ____________________________________Example____________________________________________________
+      ____________________________________Example__________________
       bash: sort < fl1.txt fl2.txt ... flN.txt > new_file
       bash: cat new_file
       *sorting fl1.txt fl2.txt flN.txt*
-      ------------------------------------------------------------------------------------------------
+      --------------------------------------------------------------
+      
+4. >> (Redirecting output – stdout - add) - redirect cmd's output from stdout to somewhere else. It's add instead of overwriting
+
+      a, b) the same as for >
+      ______________________Example__________________
+      bash: cat new_file
+      1 2 3 4 5
+      bash: echo 6 7 8 >> new_file
+      bash: cat new_file
+      1 2 3 4 5 
+      6 7 8
+      *sorting fl1.txt fl2.txt flN.txt*
+      ------------------------------------------------
+      
       
