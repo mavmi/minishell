@@ -1,0 +1,30 @@
+More one space take as one space
+
+1. < (Redirecting input) - Input is read from file, instead of terminal 
+      
+      a) if one agument (cmd < file.txt) - work with the argument
+      b) if more one argument (cmd < fl1.txt fl2.txt ... flN.txt) - work with all arguments exept first (fl1.txt) 
+      _______Example________
+      bash: sort < file.txt
+      *file contents*
+      ----------------------
+      
+2. << (Redirecting input - here documents) - Input is read from terminal or file before take stop word
+
+      a) cmd << STOP_WORD argument_for_cmd1 argument_for_cmd2 ... argument_for_cmdN
+      b) cmd argument_for_cmd << STOP_WORD
+      c) cmd argument_for_cmd << STOP_WORD argument_for_cmd1 argument_for_cmd2 ... argument_for_cmdN
+      ____________________________________Example____________________________________________________
+      bash: sort << STOP                     |                  bash: cat file1.txt << STOP file1.txt
+      > a                                    |                  > adafs
+      > c                                    |                  > ertyu
+      > b                                    |                  > swertyu
+      > STOP                                 |                  > STOP
+      a                                      |                  *file1 contents**file2 contents*
+      b                                      |
+      c                                      |
+      ------------------------------------------------------------------------------------------------
+ 
+3. > (Redirecting output – stdout) - redirect cmd's output from stdout to somewhere else
+
+      a) 
