@@ -30,7 +30,7 @@ SRCS		= 	$(addprefix $(SRCS_DIR)/, signals.c)\
 				$(addprefix $(UTILS_DIR)/, utils_1.c utils_2.c utils_3.c)\
 				$(addprefix $(VARS_DIR)/, variables_1.c variables_2.c)\
 				$(addprefix $(PARS_DIR)/, handling_quotes.c parser.c parser_initial.c parser_operations.c parser_work_with_mallocs.c)\
-				$(addprefix $(PARS_DIR_)/, pars_list.c parser_split.c parser_utils.c parser_string_1.c parser_string_2.c)
+				$(addprefix $(PARS_DIR_)/, pars_list.c parser_split.c parser_utils.c parser_string_1.c parser_string_2.c pars_inter.c)
 OBJ_MAIN	=	$(SRC_MAIN:.c=.o)
 OBJS		=	$(SRCS:.c=.o)
 
