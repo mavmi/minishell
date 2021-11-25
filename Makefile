@@ -100,8 +100,8 @@ norm:
 				@echo "$(BLUE)\n\t*** VARS ***$(NC)"
 				@norminette $(VARS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
-				@echo "$(BLUE)\n\t*** PARSER ***$(NC)"
-				@norminette $(PARS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
+#				@echo "$(BLUE)\n\t*** PARSER ***$(NC)"
+#				@norminette $(PARS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 				
 				@echo "$(BLUE)\n\t*** MY PARSER ***$(NC)"
 				@norminette $(PARS_DIR_) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'

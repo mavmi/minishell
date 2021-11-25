@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 17:16:28 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/25 15:38:14 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,31 @@
 // pipe[1] -> write
 static void	proc_redirect(t_process *proc, int input, int output)
 {
-	if (proc->prev)
+	if (input != STDIN_FILENO && input != NON_FD)
+	{
+		dup2(input, STDIN_FILENO);
+		close(input);
+	}
+	else if (proc->prev)
 	{
 		dup2(proc->prev->io_buffer[0], STDIN_FILENO);
 		close(proc->prev->io_buffer[0]);
 		close(proc->prev->io_buffer[1]);
 	}
-	else if (input != STDIN_FILENO)
+	if (output != STDOUT_FILENO && output != NON_FD)
 	{
-		dup2(input, STDIN_FILENO);
-		close(input);
+		dup2(output, STDOUT_FILENO);
+		close(output);
 	}
-	if (proc->next)
+	else if (proc->next)
 	{
 		dup2(proc->io_buffer[1], STDOUT_FILENO);
 		close(proc->io_buffer[0]);
 		close(proc->io_buffer[1]);
 	}
-	else if (output != STDOUT_FILENO)
-	{
-		dup2(output, STDOUT_FILENO);
-		close(output);
-	}
 }
 
-pid_t	process_execute_built_in(t_process *process, int in, int out)
+pid_t	process_execute_built_in(t_process *process)
 {
 	pid_t	pid;
 
@@ -51,7 +51,8 @@ pid_t	process_execute_built_in(t_process *process, int in, int out)
 		perror(strerror(errno));
 	if (pid == 0)
 	{
-		proc_redirect(process, in, out);
+		proc_redirect(process, proc_open_file(process->input_file, READ),
+			proc_open_file(process->output_file, WRITE_APP));
 		if (execve(process->exec_path, process->argv,
 				env_get_content(g_data.envp)) == -1)
 		{
@@ -68,7 +69,33 @@ pid_t	process_execute_built_in(t_process *process, int in, int out)
 	return (pid);
 }
 
-void	process_execute_rebuilt(t_process *process, int out)
+void	process_execute_rebuilt_handler(t_process *process, int argc)
+{
+	int	out;
+
+	out = proc_open_file(process->output_file, WRITE_APP);
+	if (out != NON_FD)
+	{
+		rebuilt_call_func(argc, process->argv, out);
+		close(process->io_buffer[STDIN_FILENO]);
+		close(process->io_buffer[STDOUT_FILENO]);
+		close(out);
+	}
+	else if (!process->next)
+	{
+		rebuilt_call_func(argc, process->argv, STDOUT_FILENO);
+		close(process->io_buffer[STDIN_FILENO]);
+		close(process->io_buffer[STDOUT_FILENO]);
+	}
+	else
+	{
+		rebuilt_call_func(argc, process->argv,
+			process->io_buffer[STDOUT_FILENO]);
+		close(process->io_buffer[STDOUT_FILENO]);
+	}
+}
+
+void	process_execute_rebuilt(t_process *process)
 {
 	int		argc;
 	char	**ptr;
@@ -80,16 +107,5 @@ void	process_execute_rebuilt(t_process *process, int out)
 		ptr++;
 		argc++;
 	}
-	if (process->next)
-	{
-		rebuilt_call_func(argc, process->argv,
-			process->io_buffer[STDOUT_FILENO]);
-		close(process->io_buffer[STDOUT_FILENO]);
-	}
-	else
-	{
-		rebuilt_call_func(argc, process->argv, out);
-		close(process->io_buffer[STDIN_FILENO]);
-		close(process->io_buffer[STDOUT_FILENO]);
-	}
+	process_execute_rebuilt_handler(process, argc);
 }

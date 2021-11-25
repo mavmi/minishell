@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/14 14:05:43 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/25 14:23:49 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,16 @@ static int	proc_get_new_elem_handler(t_process *proc, char **argv, char **dirs)
 
 // Create new t_process struct.
 // May return NULL
-t_process	*proc_get_new_elem(char *command, char **dirs)
+// command = "[cmd] {arg_1} ... {arg_n}" - may not contain arguments
+t_process	*proc_get_new_elem(char *cmd, char **dirs, char *in, char *out)
 {
 	char		**argv;
 	t_process	*process;
 
-	if (!command || !dirs)
+	if (!cmd || !dirs)
 		return (NULL);
 	process = (t_process *)malloc(sizeof(t_process));
-	argv = ft_split(command, ' ');
+	argv = ft_split(cmd, ' ');
 	if (!process || !argv)
 	{
 		free(process);
@@ -57,6 +58,8 @@ t_process	*proc_get_new_elem(char *command, char **dirs)
 		proc_destroy_elem(process);
 		return (NULL);
 	}
+	process->input_file = in;
+	process->output_file = out;
 	return (process);
 }
 
@@ -71,7 +74,7 @@ static void	proc_init_list_handler(t_process **list, char **cmds, char **dirs)
 	ptr = *list;
 	while (*cmds)
 	{
-		new_elem = proc_get_new_elem(*cmds++, dirs);
+		new_elem = proc_get_new_elem(*cmds++, dirs, NULL, NULL);
 		if (!new_elem || pipe(new_elem->io_buffer))
 		{
 			proc_destroy_list(*list);
@@ -96,7 +99,7 @@ t_process	*proc_init_list(char **commands, char **envp)
 	dirs = proc_get_paths_array(envp);
 	if (!dirs)
 		return (NULL);
-	list = proc_get_new_elem(*commands++, dirs);
+	list = proc_get_new_elem(*commands++, dirs, NULL, NULL);
 	if (!list || pipe(list->io_buffer))
 	{
 		utils_destroy_strings_array(dirs);
@@ -106,4 +109,21 @@ t_process	*proc_init_list(char **commands, char **envp)
 	proc_init_list_handler(&list, commands, dirs);
 	utils_destroy_strings_array(dirs);
 	return (list);
+}
+
+void	proc_push_back(t_process **list, t_process *elem)
+{
+	t_process	*ptr;
+
+	if (!list || !elem)
+		return ;
+	if (!*list)
+	{
+		*list = elem;
+		return ;
+	}
+	ptr = *list;
+	while (ptr->next)
+		ptr = ptr->next;
+	ptr->next = elem;
 }
