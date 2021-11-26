@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/25 16:23:11 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 16:03:48 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 // Parh of proc_get_new_elem function.
 // Return 0 if everything is ok,
 // 1 otherwise
-static int	proc_get_new_elem_handler(t_process *proc, char **argv, char **dirs)
+static int	proc_get_new_elem_handler(t_process *proc, char **argv)
 {
-	if (!proc || !argv || !dirs)
+	if (!proc || !argv)
 		return (1);
 	proc->next = NULL;
 	proc->prev = NULL;
@@ -29,21 +29,21 @@ static int	proc_get_new_elem_handler(t_process *proc, char **argv, char **dirs)
 	else
 		proc->is_built_in = 1;
 	if (proc->is_built_in)
-		proc->exec_path = proc_find_executable(dirs, argv[0]);			// Сделать статичную функцию вместо proc_find_executable, 
-	if (!proc->exec_name || (proc->is_built_in && !proc->exec_path))	// которая будет искать исполняемый
-		return (1);														// файл в папках PATH, по абсолютному
-	return (0);															// и относительному пути
+		proc->exec_path = proc_parse_cmd(argv[0]);
+	if (!proc->exec_name || (proc->is_built_in && !proc->exec_path))
+		return (1);
+	return (0);
 }
 
 // Create new t_process struct.
 // May return NULL
 // command = "[cmd] {arg_1} ... {arg_n}" - may not contain arguments
-t_process	*proc_get_new_elem(char *cmd, char **dirs, char *in, char *out)
+t_process	*proc_get_new_elem(char *cmd, int in, int out)
 {
 	char		**argv;
 	t_process	*process;
 
-	if (!cmd || !dirs)
+	if (!cmd)
 		return (NULL);
 	process = (t_process *)malloc(sizeof(t_process));
 	argv = ft_split(cmd, ' ');
@@ -53,28 +53,28 @@ t_process	*proc_get_new_elem(char *cmd, char **dirs, char *in, char *out)
 		utils_destroy_strings_array(argv);
 		return (NULL);
 	}
-	if (proc_get_new_elem_handler(process, argv, dirs))
+	if (proc_get_new_elem_handler(process, argv))
 	{
 		proc_destroy_elem(process);
 		return (NULL);
 	}
-	process->input_file = in;
-	process->output_file = out;
+	process->input_fd = in;
+	process->output_fd = out;
 	return (process);
 }
 
 // Part of proc_init_list function
-static void	proc_init_list_handler(t_process **list, char **cmds, char **dirs)
+static void	proc_init_list_handler(t_process **list, char **cmds)
 {
 	t_process	*ptr;
 	t_process	*new_elem;
 
-	if (!list || !cmds || !dirs)
+	if (!list || !cmds)
 		return ;
 	ptr = *list;
 	while (*cmds)
 	{
-		new_elem = proc_get_new_elem(*cmds++, dirs, NULL, NULL);
+		new_elem = proc_get_new_elem(*cmds++, NON_FD, NON_FD);
 		if (!new_elem || pipe(new_elem->io_buffer))
 		{
 			proc_destroy_list(*list);
@@ -92,22 +92,16 @@ static void	proc_init_list_handler(t_process **list, char **cmds, char **dirs)
 t_process	*proc_init_list(char **commands, char **envp)
 {
 	t_process	*list;
-	char		**dirs;
 
 	if (!commands || !envp)
 		return (NULL);
-	dirs = proc_get_paths_array(envp);
-	if (!dirs)
-		return (NULL);
-	list = proc_get_new_elem(*commands++, dirs, NULL, NULL);
+	list = proc_get_new_elem(*commands++, NON_FD, NON_FD);
 	if (!list || pipe(list->io_buffer))
 	{
-		utils_destroy_strings_array(dirs);
 		proc_destroy_elem(list);
 		return (NULL);
 	}
-	proc_init_list_handler(&list, commands, dirs);
-	utils_destroy_strings_array(dirs);
+	proc_init_list_handler(&list, commands);
 	return (list);
 }
 

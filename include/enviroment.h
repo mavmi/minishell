@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 17:52:03 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/14 13:57:40 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 14:31:51 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 # include "../libft/libft.h"
 # include "utils.h"
-# include "variables.h"
 
 typedef struct s_env_elem	t_env_elem;
 typedef struct s_enviroment	t_enviroment;

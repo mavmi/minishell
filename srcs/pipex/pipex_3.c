@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/25 15:38:14 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 16:06:01 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ pid_t	process_execute_built_in(t_process *process)
 		perror(strerror(errno));
 	if (pid == 0)
 	{
-		proc_redirect(process, proc_open_file(process->input_file, READ),
-			proc_open_file(process->output_file, WRITE_APP));
+		proc_redirect(process, process->input_fd, process->output_fd);
 		if (execve(process->exec_path, process->argv,
 				env_get_content(g_data.envp)) == -1)
 		{
@@ -69,17 +68,14 @@ pid_t	process_execute_built_in(t_process *process)
 	return (pid);
 }
 
-void	process_execute_rebuilt_handler(t_process *process, int argc)
+static void	process_execute_rebuilt_handler(t_process *process, int argc)
 {
-	int	out;
-
-	out = proc_open_file(process->output_file, WRITE_APP);
-	if (out != NON_FD)
+	if (process->output_fd != NON_FD)
 	{
-		rebuilt_call_func(argc, process->argv, out);
+		rebuilt_call_func(argc, process->argv, process->output_fd);
 		close(process->io_buffer[STDIN_FILENO]);
 		close(process->io_buffer[STDOUT_FILENO]);
-		close(out);
+		close(process->output_fd);
 	}
 	else if (!process->next)
 	{

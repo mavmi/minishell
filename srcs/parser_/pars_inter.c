@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:52:01 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/25 16:13:49 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 16:21:30 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,40 @@
 
 static char	**proc_get_dirs(void)
 {
+	char	**dirs;
 	char	**envp;
 
 	envp = env_get_content(g_data.envp);
-	if (!envp)
-		return (NULL);
-	return (proc_get_paths_array(envp));	
+	dirs = proc_get_paths_array(envp);
+	utils_destroy_strings_array(envp);
+	return (dirs);	
 }
 
 // Convert parser list to process list.
 // May return NULL
-t_process	*proc_intepret(t_pars_list *pars_list)
+t_process	*pars_intepret(t_pars_list *pars_list)
 {
+	int			in_fd;
+	int			out_fd;
 	char		*cmd;
 	char		**dirs;
+	t_process	*elem;
 	t_process	*proc_list;
 
 	if (!pars_list)
 		return (NULL);
-	proc_list = NULL;
 	dirs = proc_get_dirs();
 	if (!dirs)
 		return (NULL);
+	cmd = NULL;
+	in_fd = NON_FD;
+	out_fd = NON_FD;
+	proc_list = NULL;
 	while (pars_list)
 	{		
 		if (pars_list->type == DEFAULT_N)
 		{
+			utils_append_string(&cmd, " ");
 			utils_append_string(&cmd, pars_list->value);
 			if (!cmd)
 			{
@@ -47,27 +55,36 @@ t_process	*proc_intepret(t_pars_list *pars_list)
 				return (NULL);
 			}
 		}
-		else if (pars_list->type == REDIR_OUT_N
+		if (pars_list->type == REDIR_OUT_N
 			|| pars_list->type == REDIR_OUT_APP_N)
 		{
-			// Взять название файла из следующего элемента парс_листа
-			// и положить его в output элемента проц_листа.
-			// Не забыть про флаг аппенда
+			pars_list = pars_list->next;
+			if (pars_list->type == REDIR_OUT_N)
+				out_fd = open(pars_list->value, O_WRONLY);
+			else
+				out_fd = open(pars_list->value, O_WRONLY | O_TRUNC);
 		}
-		else if (pars_list->type == REDIR_INP_N)
+		if (pars_list->type == REDIR_INP_N)
 		{
-			// Взять название файла из следующего элемента парс_листа
-			// и положить его в input элемента проц_листа.
+			pars_list = pars_list->next;
+			in_fd = open(pars_list->value, O_RDONLY);
 		}
-		else if (pars_list->type == HERE_DOC_N)
+		if (pars_list->type == HERE_DOC_N)
 		{
-			// Вызвать хер_док и сохранить его дескриптор
-			// в элемент проц_листа
+			pars_list = pars_list->next;
+			in_fd = proc_here_doc(pars_list->value);
 		}
-		else if (pars_list->type == PIPE_N)
+		if (pars_list->type == PIPE_N || pars_list->next == NULL)
 		{
-			// Добавить парс_элемент в список и создать новый элемент
+			elem = proc_get_new_elem(cmd, in_fd, out_fd);
+			proc_push_back(&proc_list, elem);
+			free(cmd);
+			cmd = NULL;
+			in_fd = NON_FD;
+			out_fd = NON_FD;
 		}
+		pars_list = pars_list->next;
 	}
+	utils_destroy_strings_array(dirs);
 	return (proc_list);
 }

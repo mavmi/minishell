@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 18:24:19 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 16:14:31 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,15 @@
 // return it's fd.
 // Return fd to read line from
 // or -1 if an error occured.
-int	proc_here_doc(void)
+int	proc_here_doc(char *stop_word)
 {
 	int		io_buffer[2];
 	char	endl;
-	char	*stop_word;
 	char	*line;
 
-	if (pipe(io_buffer))
+	if (!stop_word || pipe(io_buffer))
 		return (-1);
 	endl = '\n';
-	stop_word = readline("stop_word: ");
 	while (1)
 	{
 		line = readline("> ");

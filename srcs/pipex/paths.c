@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:49:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/09/08 16:22:49 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 14:49:57 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ char	**proc_get_paths_array(char **envp)
 // Find path to the executable file [file_name]
 // in the list of directories [dirs].
 // May return NULL
-char	*proc_find_executable(char **dirs, char *file_name)
+static char	*proc_find_PATH_exec(char **dirs, char *file_name)
 {
 	int		iter;
 	char	*path;
 
+	if (!dirs || !file_name)
+		return (NULL);
 	iter = 0;
 	while (*(dirs + iter))
 	{
@@ -68,4 +70,25 @@ char	*proc_find_executable(char **dirs, char *file_name)
 		free(path);
 	}
 	return (NULL);
+}
+
+// Check if [cmd] is bash command or path.
+// Return path to the executable.
+// May return NULL
+char	*proc_parse_cmd(char *cmd)
+{
+	char	*path;
+	char	**dirs;
+	char	**envp;
+
+	if (!cmd || !ft_strlen(cmd))
+		return (NULL);
+	if (ft_strchr(cmd, '/'))
+		return (ft_strdup(cmd));
+	envp = env_get_content(g_data.envp);
+	dirs = proc_get_paths_array(envp);
+	path = proc_find_PATH_exec(dirs, cmd);
+	utils_destroy_strings_array(envp);
+	utils_destroy_strings_array(dirs);
+	return (path);
 }

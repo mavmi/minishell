@@ -111,14 +111,14 @@ void open_files(char*** argv, int& input_fd, int& output_fd){
 int main(int argc, char** argv, char** envp){
 	check_input(argc);
 
-	int input_fd = STDIN_FILENO;
-	int output_fd = STDOUT_FILENO;
+	int input_fd = STDIN_FILENO; (void)input_fd;
+	int output_fd = STDOUT_FILENO; (void)output_fd;
 	open_files(&argv, input_fd, output_fd);
 
 	g_data.envp = env_create(envp);
 	t_process* process_list = proc_init_list(argv, envp);
 
-	proc_execute_list(process_list, input_fd, output_fd);
+	proc_execute_list(process_list);
 
 	proc_destroy_list(process_list);
 	env_destroy(g_data.envp);

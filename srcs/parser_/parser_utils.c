@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:22:44 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 16:51:15 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 14:14:29 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	**pars_get_operators(void)
 	arr[HERE_DOC_N] = HERE_DOR_S;
 	arr[PIPE_N] = PIPE_S;
 	arr[EQUAL_N] = EQUAL_S;
-	arr[EXEC_N] = EXEC_S;
 	arr[OPERATORS] = NULL;
 	return (arr);
 }

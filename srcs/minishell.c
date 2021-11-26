@@ -6,23 +6,36 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/25 17:06:55 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 16:22:20 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/rebuilt_funcs.h"
 
-void test_print_list(t_process* list){
+void print_pars_list(t_pars_list* list){
 	if (!list){
-		printf("List ptr is NULL\n");
+		printf("Pars list ptr is NULL\n");
+		return;
+	}
+
+	while (list){
+		printf("type: %d\n", list->type);
+		printf("value: %s\n", list->value);
+		list = list->next;
+	}
+}
+
+void print_proc_list(t_process* list){
+	if (!list){
+		printf("Proc list ptr is NULL\n");
 		return;
 	}
 
 	while (list){
 		printf("is built-in: %d\n", list->is_built_in);
-		printf("input file: %s\n", list->input_file);
-		printf("output file: %s\n", list->output_file);
+		printf("input fd: %d\n", list->input_fd);
+		printf("output fd: %d\n", list->output_fd);
 		printf("exec name: %s\n", list->exec_name);
 		printf("exec path: %s\n", list->exec_path);
 		
@@ -38,57 +51,10 @@ void test_print_list(t_process* list){
 	}
 }
 
-void test_double_redirect(char** envp, char *input_file, char *output_file){
-	(void) input_file; (void) output_file;
-
-	char** dirs = proc_get_paths_array(envp);
-
-	t_process* list = proc_get_new_elem("env", dirs, NULL, output_file);
-	proc_push_back(&list, proc_get_new_elem("git", dirs, NULL, NULL));
-
-	proc_execute_list(list);
-
-	proc_destroy_list(list);
-	utils_destroy_strings_array(dirs);
-}
-
-void find_exec(char *cmd, char **dirs)
-{
-	char	*cwd;
-	char	*path;
-
-	if (!cmd)
-		return ;
-	if (ft_strlen(cmd) && cmd[0] == '.')
-	{
-		if (!access(cmd + 1, X_OK)){
-			printf("\tАбсолютный путь: %s\n", cmd + 1);
-			return ;
-		}
-		
-		cwd = getcwd(0, 0);
-		path = utils_sum_strings(cwd, cmd + 1);
-		if (!access(path, X_OK))
-		{
-			printf("\tОтносительный путь: %s\n", path);
-			free(cwd);
-			free(path);
-			return ;
-		}
-		free(cwd);
-		free(path);
-	}
-	else
-	{
-		path = proc_find_executable(dirs, cmd);
-		if (path)
-		{
-			printf("\tPATH: %s\n", path);
-			free(path);
-			return ;
-		}
-	}
-	printf("\tФайл %s не найден\n", cmd + 1);
+void test_paths(){
+	char* path = proc_parse_cmd("../minishell/minishell");
+	printf("\t >> %s\n", path);
+	free(path);
 }
 
 // ********************************** //
@@ -128,9 +94,31 @@ int	main(int argc, char **argv, char **envp)
 
 	char **dirs = proc_get_paths_array(envp);
 
-	//test_double_redirect(envp, "input", "output");
-	find_exec("cat", dirs);
-	
+
+	while (1)
+	{
+		char *str = readline(PROMT);
+		add_history(str);
+		
+		t_pars_list* pars_list = pars_split(str);
+		t_process* proc_list = pars_intepret(pars_list);
+		
+		printf("\tPARS_LIST\n");
+		print_pars_list(pars_list);
+		
+		printf("\n\tPROC_LIST\n");
+		print_proc_list(proc_list);
+		printf("\t*********\n\n");
+
+		proc_execute_list(proc_list);
+		
+		pars_destroy_list(pars_list);
+		proc_destroy_list(proc_list);
+
+		free(str);
+	}	
+	rl_clear_history();
+
 
 	utils_destroy_strings_array(dirs);
 	env_destroy(g_data.envp);	
