@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/12 12:50:07 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 16:45:05 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 void	rebuilt_export(int argc, char **argv)
 {
+	char	*str;
 	char	*new_name;
 	char	*new_val;
 	char	**array;
 
-	if (argc != 2 || !argv[1])
+	if (argc != 3 || !argv[1] || !argv[2])
 		return ;
-	array = utils_parse_varialbe(argv[1]);
-	if (!array)
-		return ;
-	new_name = ft_strdup(array[0]);
-	new_val = ft_strdup(array[1]);
+	str = NULL;
+	new_name = ft_strdup(argv[1]);
+	new_val = ft_strdup(argv[2]);
 	if (env_set_by_name(g_data.envp, new_name, new_val))
 		free(new_name);
 	else
 	{
-		env_push_back(g_data.envp, argv[1]);
+		utils_append_string(&str, new_name);
+		utils_append_string(&str, "=");
+		utils_append_string(&str, new_val);
+		env_push_back(g_data.envp, str);
+		free(str);
 		free(new_name);
 		free(new_val);
 	}
-	free(array[0]);
-	free(array[1]);
-	free(array);
 }
