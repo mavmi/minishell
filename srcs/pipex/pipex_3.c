@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 16:06:01 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 18:14:33 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void	proc_redirect(t_process *proc, int input, int output)
 	}
 	else if (proc->prev)
 	{
-		dup2(proc->prev->io_buffer[0], STDIN_FILENO);
-		close(proc->prev->io_buffer[0]);
-		close(proc->prev->io_buffer[1]);
+		dup2(proc->prev->io_buffer[STDIN_FILENO], STDIN_FILENO);
+		close(proc->prev->io_buffer[STDIN_FILENO]);
+		close(proc->prev->io_buffer[STDOUT_FILENO]);
 	}
 	if (output != STDOUT_FILENO && output != NON_FD)
 	{
@@ -36,9 +36,9 @@ static void	proc_redirect(t_process *proc, int input, int output)
 	}
 	else if (proc->next)
 	{
-		dup2(proc->io_buffer[1], STDOUT_FILENO);
-		close(proc->io_buffer[0]);
-		close(proc->io_buffer[1]);
+		dup2(proc->io_buffer[STDOUT_FILENO], STDOUT_FILENO);
+		close(proc->io_buffer[STDIN_FILENO]);
+		close(proc->io_buffer[STDOUT_FILENO]);
 	}
 }
 

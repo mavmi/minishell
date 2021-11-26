@@ -6,11 +6,33 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/25 14:39:54 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 18:29:25 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/pipex.h"
+
+//static void	proc_execute_built_ins(t_process **ptr)
+//{
+//	t_process	*first;
+//	first = *ptr;
+//	while (*ptr && (*ptr)->is_built_in)
+//	{
+//		(*ptr)->pid = process_execute_built_in(*ptr);
+//		if ((*ptr)->pid == -1)
+//			return ;
+//		(*ptr) = (*ptr)->next;
+//	}
+//	(*ptr) = first;
+//	while (*ptr && (*ptr)->is_built_in)
+//	{
+//		waitpid((*ptr)->pid, &g_data.exit_status, WNOHANG & WUNTRACED);
+//		if (WIFEXITED(g_data.exit_status))
+//			g_data.exit_status = WEXITSTATUS(g_data.exit_status);
+//		close((*ptr)->io_buffer[STDOUT_FILENO]);
+//		(*ptr) = (*ptr)->next;
+//	}
+//}
 
 static void	proc_execute_built_ins(t_process **ptr)
 {
@@ -22,15 +44,10 @@ static void	proc_execute_built_ins(t_process **ptr)
 		(*ptr)->pid = process_execute_built_in(*ptr);
 		if ((*ptr)->pid == -1)
 			return ;
-		(*ptr) = (*ptr)->next;
-	}
-	(*ptr) = first;
-	while (*ptr && (*ptr)->is_built_in)
-	{
 		waitpid((*ptr)->pid, &g_data.exit_status, WNOHANG & WUNTRACED);
 		if (WIFEXITED(g_data.exit_status))
 			g_data.exit_status = WEXITSTATUS(g_data.exit_status);
-		close((*ptr)->io_buffer[1]);
+		close((*ptr)->io_buffer[STDOUT_FILENO]);
 		(*ptr) = (*ptr)->next;
 	}
 }

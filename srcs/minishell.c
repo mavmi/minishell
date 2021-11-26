@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 16:33:41 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 18:29:14 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@ void print_proc_list(t_process* list){
 	}
 
 	while (list){
+		printf(" >> addr: %p\n", list);
 		printf("is built-in: %d\n", list->is_built_in);
 		printf("input fd: %d\n", list->input_fd);
 		printf("output fd: %d\n", list->output_fd);
 		printf("exec name: %s\n", list->exec_name);
 		printf("exec path: %s\n", list->exec_path);
+		printf("prev: %p\n", list->prev);
+		printf("next: %p\n", list->next);
 		
 		char **ptr = list->argv;
 		printf("argv: ");
@@ -86,6 +89,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("Can not create local enviroment\n");
 		return (1);
 	}
+	signals_set_up();
 	update_shlvl();
 	g_data.vars = NULL;
 	g_data.exit_status = 0;
@@ -103,10 +107,10 @@ int	main(int argc, char **argv, char **envp)
 		t_pars_list* pars_list = pars_split(str);
 		t_process* proc_list = pars_intepret(pars_list);
 		
-		//printf("\tPARS_LIST\n");
+		//printf("\t** PARS_LIST **\n");
 		//print_pars_list(pars_list);
 		
-		//printf("\n\tPROC_LIST\n");
+		//printf("\n\t** PROC_LIST **\n");
 		//print_proc_list(proc_list);
 		//printf("\t*********\n\n");
 

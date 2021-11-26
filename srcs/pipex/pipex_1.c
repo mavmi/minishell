@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 16:03:48 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 18:22:07 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static int	proc_get_new_elem_handler(t_process *proc, char **argv)
 		proc->is_built_in = 1;
 	if (proc->is_built_in)
 		proc->exec_path = proc_parse_cmd(argv[0]);
-	if (!proc->exec_name || (proc->is_built_in && !proc->exec_path))
+	if (!proc->exec_name || (proc->is_built_in && !proc->exec_path)
+		|| pipe(proc->io_buffer))
 		return (1);
 	return (0);
 }
@@ -75,7 +76,7 @@ static void	proc_init_list_handler(t_process **list, char **cmds)
 	while (*cmds)
 	{
 		new_elem = proc_get_new_elem(*cmds++, NON_FD, NON_FD);
-		if (!new_elem || pipe(new_elem->io_buffer))
+		if (!new_elem)
 		{
 			proc_destroy_list(*list);
 			*list = NULL;
@@ -96,7 +97,7 @@ t_process	*proc_init_list(char **commands, char **envp)
 	if (!commands || !envp)
 		return (NULL);
 	list = proc_get_new_elem(*commands++, NON_FD, NON_FD);
-	if (!list || pipe(list->io_buffer))
+	if (!list)
 	{
 		proc_destroy_elem(list);
 		return (NULL);
@@ -120,4 +121,5 @@ void	proc_push_back(t_process **list, t_process *elem)
 	while (ptr->next)
 		ptr = ptr->next;
 	ptr->next = elem;
+	elem->prev = ptr;
 }

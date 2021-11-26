@@ -5,4 +5,6 @@ minishell
 *.out
 *.exe
 print_separator
+input_file
+output_file
 !.gitignore
