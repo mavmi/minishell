@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:52:01 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 16:21:30 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/26 18:49:08 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static char	**proc_get_dirs(void)
 // May return NULL
 t_process	*pars_intepret(t_pars_list *pars_list)
 {
+	int			type;
 	int			in_fd;
 	int			out_fd;
 	char		*cmd;
@@ -58,11 +59,12 @@ t_process	*pars_intepret(t_pars_list *pars_list)
 		if (pars_list->type == REDIR_OUT_N
 			|| pars_list->type == REDIR_OUT_APP_N)
 		{
+			type = pars_list->type;
 			pars_list = pars_list->next;
-			if (pars_list->type == REDIR_OUT_N)
-				out_fd = open(pars_list->value, O_WRONLY);
+			if (type == REDIR_OUT_N)
+				out_fd = open(pars_list->value, O_WRONLY | O_CREAT, 0700);
 			else
-				out_fd = open(pars_list->value, O_WRONLY | O_TRUNC);
+				out_fd = open(pars_list->value, O_WRONLY | O_TRUNC | O_CREAT, 0700);
 		}
 		if (pars_list->type == REDIR_INP_N)
 		{
