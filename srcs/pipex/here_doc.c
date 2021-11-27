@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 16:14:31 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 12:37:26 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	proc_here_doc(char *stop_word)
 		line = readline("> ");
 		if (utils_cmp_strings(line, stop_word))
 		{
-			free(stop_word);
 			free(line);
 			close(io_buffer[STDOUT_FILENO]);
 			return (io_buffer[STDIN_FILENO]);

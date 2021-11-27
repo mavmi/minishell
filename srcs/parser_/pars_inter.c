@@ -6,39 +6,71 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:52:01 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 18:49:08 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 14:51:11 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser_.h"
 
-static char	**proc_get_dirs(void)
+// Append commande with list's value and
+// return 0 if everything is ok,
+// 1 otherwise
+static int	pars_append_cmd(char **cmd, t_pars_list *pars_list)
 {
-	char	**dirs;
-	char	**envp;
+	utils_append_string(cmd, " ");
+	utils_append_string(cmd, pars_list->value);
+	if (!*cmd)
+		return (1);
+	return (0);
+}
 
-	envp = env_get_content(g_data.envp);
-	dirs = proc_get_paths_array(envp);
-	utils_destroy_strings_array(envp);
-	return (dirs);	
+static void	pars_redirect(t_pars_list **pars_list, int *in_fd, int *out_fd)
+{
+	int	type;
+
+	type = (*pars_list)->type;
+	(*pars_list) = (*pars_list)->next;
+	if (type == REDIR_OUT)
+		*out_fd = open((*pars_list)->value,
+				O_WRONLY | O_CREAT | O_TRUNC, 0700);
+	else if (type == REDIR_OUT_APP)
+		*out_fd = open((*pars_list)->value,
+				O_WRONLY | O_CREAT | O_APPEND, 0700);
+	else if (type == REDIR_INP)
+		*in_fd = open((*pars_list)->value, O_RDONLY);
+	else if (type == HERE_DOC_)
+		*in_fd = proc_here_doc((*pars_list)->value);
+}
+
+static void	pars_pipe(t_process **proc_list, char **cmd,
+		int *in_fd, int *out_fd)
+{
+	t_process	*proc_elem;
+
+	proc_elem = proc_get_new_elem(*cmd, *in_fd, *out_fd);
+	proc_push_back(proc_list, proc_elem);
+	free(*cmd);
+	*cmd = NULL;
+	*in_fd = NON_FD;
+	*out_fd = NON_FD;
+}
+
+static t_process	*pars_kostil(t_process *proc_list)
+{
+	proc_destroy_list(proc_list);
+	return (NULL);
 }
 
 // Convert parser list to process list.
 // May return NULL
 t_process	*pars_intepret(t_pars_list *pars_list)
 {
-	int			type;
 	int			in_fd;
 	int			out_fd;
 	char		*cmd;
-	char		**dirs;
-	t_process	*elem;
 	t_process	*proc_list;
 
 	if (!pars_list)
-		return (NULL);
-	dirs = proc_get_dirs();
-	if (!dirs)
 		return (NULL);
 	cmd = NULL;
 	in_fd = NON_FD;
@@ -46,47 +78,14 @@ t_process	*pars_intepret(t_pars_list *pars_list)
 	proc_list = NULL;
 	while (pars_list)
 	{		
-		if (pars_list->type == DEFAULT_N)
-		{
-			utils_append_string(&cmd, " ");
-			utils_append_string(&cmd, pars_list->value);
-			if (!cmd)
-			{
-				proc_destroy_list(proc_list);
-				return (NULL);
-			}
-		}
-		if (pars_list->type == REDIR_OUT_N
-			|| pars_list->type == REDIR_OUT_APP_N)
-		{
-			type = pars_list->type;
-			pars_list = pars_list->next;
-			if (type == REDIR_OUT_N)
-				out_fd = open(pars_list->value, O_WRONLY | O_CREAT, 0700);
-			else
-				out_fd = open(pars_list->value, O_WRONLY | O_TRUNC | O_CREAT, 0700);
-		}
-		if (pars_list->type == REDIR_INP_N)
-		{
-			pars_list = pars_list->next;
-			in_fd = open(pars_list->value, O_RDONLY);
-		}
-		if (pars_list->type == HERE_DOC_N)
-		{
-			pars_list = pars_list->next;
-			in_fd = proc_here_doc(pars_list->value);
-		}
-		if (pars_list->type == PIPE_N || pars_list->next == NULL)
-		{
-			elem = proc_get_new_elem(cmd, in_fd, out_fd);
-			proc_push_back(&proc_list, elem);
-			free(cmd);
-			cmd = NULL;
-			in_fd = NON_FD;
-			out_fd = NON_FD;
-		}
+		if (pars_list->type == DEFAULT && pars_append_cmd(&cmd, pars_list))
+			return (pars_kostil(proc_list));
+		if (pars_list->type == REDIR_OUT || pars_list->type == REDIR_OUT_APP
+			|| pars_list->type == REDIR_INP || pars_list->type == HERE_DOC_)
+			pars_redirect(&pars_list, &in_fd, &out_fd);
+		if (pars_list->type == PIPE || pars_list->next == NULL)
+			pars_pipe(&proc_list, &cmd, &in_fd, &out_fd);
 		pars_list = pars_list->next;
 	}
-	utils_destroy_strings_array(dirs);
 	return (proc_list);
 }

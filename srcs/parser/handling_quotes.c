@@ -24,7 +24,7 @@ int	par_compar_cNo(char *cmd, t_par_count *coun, char **arr)
 	n_str = 0;
 	n_el = 0;
 	coun->size = 0;
-	coun->num = DEFAULT_N;
+	coun->num = DEFAULT;
 	if (!cmd || !coun || !arr)
 		return (0);
 	while (arr[n_str])

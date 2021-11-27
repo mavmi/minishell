@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:22:13 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 16:08:54 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 14:39:22 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	pars_handle_strings(t_pars_list **list, char **cmd, char **opers)
 		tmp = ft_substr(*cmd, 0, len);
 		substr = pars_get_whole_string(tmp);
 		free(tmp);
-		if (!substr || pars_insert_elem(list, substr, DEFAULT_N))
+		if (!substr || pars_insert_elem(list, substr, DEFAULT))
 		{
 			free(opers);
 			free(substr);

@@ -58,7 +58,7 @@ static char	*find_end_of_argum_str(char *cmd, t_par_count *count,
 	safe_i_elem = count->i_elem;
 	OPER_fl = par_compar_cNo(cmd + count->i_elem, count, arr_redir);
 	while (cmd[count->i_elem] && cmd[count->i_elem] != ' '
-		&& (OPER_fl == DEFAULT_N || OPER_fl == OPER_DOLL_N))
+		&& (OPER_fl == DEFAULT || OPER_fl == OPER_DOLL_N))
 	{
 		if (cmd[count->i_elem] == '\'' || cmd[count->i_elem] == '\"')
 		{
@@ -88,7 +88,7 @@ static char	*get_elems(char *cmd, char **arr_redir, t_par_count *coun)
 	while (1)
 	{
 		compar_res = par_compar_cNo(cmd + coun->i_elem, coun, arr_redir);
-		if (cmd[coun->i_elem] && compar_res != DEFAULT_N
+		if (cmd[coun->i_elem] && compar_res != DEFAULT
 			&& compar_res != OPER_DOLL_N)
 		{
 			coun->i_elem += ft_strlen(arr_redir[compar_res]);

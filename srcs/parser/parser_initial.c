@@ -94,7 +94,7 @@ t_par_count	count_initial(void)
 	t_par_count	coun;
 
 	coun.size = 0;
-	coun.num = DEFAULT_N;
+	coun.num = DEFAULT;
 	coun.i_elem = 0;
 	return (coun);
 }

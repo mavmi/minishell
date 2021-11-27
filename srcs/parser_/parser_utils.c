@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:22:44 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 14:14:29 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 14:40:19 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ char	**pars_get_operators(void)
 	arr = (char **)malloc(sizeof(char *) * (OPERATORS + 1));
 	if (!arr)
 		return (NULL);
-	arr[REDIR_OUT_N] = REDIR_OUT_S;
-	arr[REDIR_INP_N] = REDIR_INP_S;
-	arr[REDIR_OUT_APP_N] = REDIR_OUT_APP_S;
-	arr[HERE_DOC_N] = HERE_DOR_S;
-	arr[PIPE_N] = PIPE_S;
-	arr[EQUAL_N] = EQUAL_S;
+	arr[REDIR_OUT] = REDIR_OUT_S;
+	arr[REDIR_INP] = REDIR_INP_S;
+	arr[REDIR_OUT_APP] = REDIR_OUT_APP_S;
+	arr[HERE_DOC_] = HERE_DOR_S;
+	arr[PIPE] = PIPE_S;
 	arr[OPERATORS] = NULL;
 	return (arr);
 }
