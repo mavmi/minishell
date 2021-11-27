@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   paths.c                                            :+:      :+:    :+:   */
+/*   proc_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:49:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 17:37:18 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:08:31 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex.h"
+#include "../../include/processes.h"
 
 // Get absolute path.
 // "dir_name" + "file_name" = /dir_name/file_name.
@@ -73,7 +73,7 @@ static char	*proc_find_PATH_exec(char **dirs, char *file_name)
 }
 
 // Check if [cmd] is bash command or path.
-// Return path to the executable.
+// Return path to the executable file.
 // May return NULL
 char	*proc_parse_cmd(char *cmd)
 {

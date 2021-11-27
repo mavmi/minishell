@@ -1,17 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_string_2.c                                  :+:      :+:    :+:   */
+/*   pars_string_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:27:34 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 16:50:06 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 16:59:11 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser_.h"
 
+// Part of pars_handle_substr.
+// Get substr without values.
+// Return 0 if everything is ok,
+// 1 otherwise
 static int	pars_trivial_substr(char *str, char **result, int *begin, int *end)
 {
 	char	*tmp;
@@ -28,6 +32,10 @@ static int	pars_trivial_substr(char *str, char **result, int *begin, int *end)
 	return (0);
 }
 
+// Part of pars_handle_substr.
+// Handle values.
+// Return 0 if everything is ok
+// 1 otherwise
 static int	pars_value_substr(char *str, char **result, int *begin, int *end)
 {
 	char		*tmp;
@@ -54,6 +62,8 @@ static int	pars_value_substr(char *str, char **result, int *begin, int *end)
 	return (0);
 }
 
+// Get substring and replace names of values with values.
+// May return NULL
 char	*pars_handle_substr(char *str)
 {
 	int			begin;

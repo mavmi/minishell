@@ -6,13 +6,13 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:52:01 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 14:51:11 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:03:05 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser_.h"
 
-// Append commande with list's value and
+// Append command with list's value and
 // return 0 if everything is ok,
 // 1 otherwise
 static int	pars_append_cmd(char **cmd, t_pars_list *pars_list)
@@ -24,6 +24,7 @@ static int	pars_append_cmd(char **cmd, t_pars_list *pars_list)
 	return (0);
 }
 
+// Open files and here_doc's and update input and output file descriptors
 static void	pars_redirect(t_pars_list **pars_list, int *in_fd, int *out_fd)
 {
 	int	type;
@@ -42,6 +43,8 @@ static void	pars_redirect(t_pars_list **pars_list, int *in_fd, int *out_fd)
 		*in_fd = proc_here_doc((*pars_list)->value);
 }
 
+// Convert existing information into new process element and
+// push back it into the process list
 static void	pars_pipe(t_process **proc_list, char **cmd,
 		int *in_fd, int *out_fd)
 {
@@ -55,6 +58,8 @@ static void	pars_pipe(t_process **proc_list, char **cmd,
 	*out_fd = NON_FD;
 }
 
+// Just free and return NULL.
+// Thx norminette
 static t_process	*pars_kostil(t_process *proc_list)
 {
 	proc_destroy_list(proc_list);

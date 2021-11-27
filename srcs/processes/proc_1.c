@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_1.c                                          :+:      :+:    :+:   */
+/*   proc_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 18:22:07 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:06:47 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex.h"
+#include "../../include/processes.h"
 
 // Parh of proc_get_new_elem function.
 // Return 0 if everything is ok,
@@ -106,6 +106,7 @@ t_process	*proc_init_list(char **commands, char **envp)
 	return (list);
 }
 
+// Add new element to the end of process list
 void	proc_push_back(t_process **list, t_process *elem)
 {
 	t_process	*ptr;

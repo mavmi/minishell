@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:08:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 14:40:20 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:10:28 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 
 # include "../libft/libft.h"
 # include "utils.h"
-# include "pipex.h"
+# include "processes.h"
 
 typedef struct s_pars_list	t_pars_list;
 typedef struct s_strings	t_strings;
@@ -45,23 +45,29 @@ struct s_pars_list
 	t_pars_list	*next;
 };
 
-t_pars_list			*pars_get_new_elem(int type, char *value);
-void				pars_push_back(t_pars_list *list, t_pars_list *elem);
-void				pars_destroy_elem(t_pars_list *elem);
-void				pars_destroy_list(t_pars_list *list);
+// pars_list.c
+t_pars_list	*pars_get_new_elem(int type, char *value);
+void		pars_push_back(t_pars_list *list, t_pars_list *elem);
+void		pars_destroy_elem(t_pars_list *elem);
+void		pars_destroy_list(t_pars_list *list);
 
-t_pars_list			*pars_split(char *cmd);
+// pars_split.c
+t_pars_list	*pars_split(char *cmd);
 
-char				**pars_get_operators(void);
-int					pars_cmp_with_opers(char *cmd, char **opers);
-int					pars_insert_elem(t_pars_list **list, char *str, int type);
-int					pars_get_substr_len(char *cmd, char **opers);
-int					pars_is_forbidden(char *cmd);
+// pars_utils.c
+char		**pars_get_operators(void);
+int			pars_cmp_with_opers(char *cmd, char **opers);
+int			pars_insert_elem(t_pars_list **list, char *str, int type);
+int			pars_get_substr_len(char *cmd, char **opers);
+int			pars_is_forbidden(char *cmd);
 
-char				*pars_get_whole_string(char *input);
+// pars_string_1.c
+char		*pars_handle_substring(char *input);
 
-char				*pars_handle_substr(char *str);
+// pars_string_2.c
+char		*pars_handle_substr(char *str);
 
-struct s_process	*pars_intepret(t_pars_list *pars_list);
+// pars_inter.c
+t_process	*pars_intepret(t_pars_list *pars_list);
 
 #endif

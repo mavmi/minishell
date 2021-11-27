@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:10:43 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 13:26:45 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:04:39 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_pars_list	*pars_get_new_elem(int type, char *value)
 	return (elem);
 }
 
+// Add new element to the end of process list
 void	pars_push_back(t_pars_list *list, t_pars_list *elem)
 {
 	t_pars_list	*ptr;
@@ -46,6 +47,7 @@ void	pars_push_back(t_pars_list *list, t_pars_list *elem)
 	ptr->next = elem;
 }
 
+// Destroy pars element
 void	pars_destroy_elem(t_pars_list *elem)
 {
 	if (!elem)
@@ -54,6 +56,7 @@ void	pars_destroy_elem(t_pars_list *elem)
 	free(elem);
 }
 
+// Destroy whole pars list
 void	pars_destroy_list(t_pars_list *list)
 {
 	t_pars_list	*ptr;

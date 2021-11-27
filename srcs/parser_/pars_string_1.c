@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_string_1.c                                  :+:      :+:    :+:   */
+/*   pars_string_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:12:46 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/21 16:08:04 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:10:24 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser_.h"
 
+// Part of pars_substr function
 static int	pars_quotes_handler(char **input, char **string,
 	char **substr, int quote_num)
 {
@@ -35,6 +36,9 @@ static int	pars_quotes_handler(char **input, char **string,
 	return (0);
 }
 
+// Parse substring with quotes and handle variables.
+// Return 0 if everything is ok,
+// 1 otherwise
 static int	pars_quotes(char **input, char **string, int quote_num)
 {
 	char	*tmp;
@@ -60,6 +64,7 @@ static int	pars_quotes(char **input, char **string, int quote_num)
 	return (0);
 }
 
+// Part of pars_substr function
 static char	*pars_substr_handler(char **input)
 {
 	char	*quote_1;
@@ -76,6 +81,10 @@ static char	*pars_substr_handler(char **input)
 		return (ft_strdup(*input));
 }
 
+// Get next substring without quotes and
+// handle variables.
+// Return 0 if everything is ok,
+// 1 otherwise
 static int	pars_substr(char **input, char **string)
 {
 	char	*substr;
@@ -100,7 +109,10 @@ static int	pars_substr(char **input, char **string)
 	return (0);
 }
 
-char	*pars_get_whole_string(char *input)
+// Get command's substring and handle quotes
+// and shell variables.
+// May return NULL
+char	*pars_handle_substring(char *input)
 {
 	int		quote_num;
 	char	*string;

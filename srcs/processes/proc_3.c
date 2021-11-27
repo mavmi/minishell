@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_3.c                                          :+:      :+:    :+:   */
+/*   proc_3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 18:14:33 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:07:06 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex.h"
+#include "../../include/processes.h"
 
 // STDIN_FILENO = 0
 // STDOUT_FILENO = 1
@@ -42,6 +42,7 @@ static void	proc_redirect(t_process *proc, int input, int output)
 	}
 }
 
+// Execute one built-in process and return it's PID
 pid_t	process_execute_built_in(t_process *process)
 {
 	pid_t	pid;
@@ -68,6 +69,7 @@ pid_t	process_execute_built_in(t_process *process)
 	return (pid);
 }
 
+// Part of process_execute_rebuilt function
 static void	process_execute_rebuilt_handler(t_process *process, int argc)
 {
 	if (process->output_fd != NON_FD)
@@ -91,6 +93,7 @@ static void	process_execute_rebuilt_handler(t_process *process, int argc)
 	}
 }
 
+// Execute one rebuilt process
 void	process_execute_rebuilt(t_process *process)
 {
 	int		argc;

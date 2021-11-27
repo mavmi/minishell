@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 16:31:39 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/12 12:50:10 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 15:48:43 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <string.h>
 # include <sys/errno.h>
 
-# include "minishell.h"
+# include "enviroment.h"
 # include "utils.h"
 
 # define ECHO "echo"
@@ -30,6 +30,7 @@
 # define ENV "env"
 # define EXIT "exit"
 
+// utils.c
 int		rebuit_is_rebuilt(char *func);
 void	rebuilt_call_func(int argc, char **argv, int fd_out);
 

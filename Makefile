@@ -4,7 +4,7 @@ NAME		=	minishell
 SRCS_DIR	=	srcs
 FUNCS_DIR	=	$(SRCS_DIR)/rebuilt_funcs
 ENV_DIR		=	$(SRCS_DIR)/enviroment
-PIPEX_DIR	=	$(SRCS_DIR)/pipex
+PROC_DIR	=	$(SRCS_DIR)/processes
 UTILS_DIR	=	$(SRCS_DIR)/utils
 PARS_DIR	=	$(SRCS_DIR)/parser
 PARS_DIR_	=	$(SRCS_DIR)/parser_
@@ -19,15 +19,13 @@ TESTS_PARS	=	$(TESTS_DIR)/parser
 TESTS_PARS_	=	$(TESTS_DIR)/parser_
 
 
-HDRS		=	$(addprefix $(HDRS_DIR)/, minishell.h rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h parser.h parser_.h)
+HDRS		=	$(addprefix $(HDRS_DIR)/, rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h parser_.h)
 SRC_MAIN	= 	$(addprefix $(SRCS_DIR)/, minishell.c)
-SRCS		= 	$(addprefix $(SRCS_DIR)/, signals.c)\
-				$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
+SRCS		= 	$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c)\
-				$(addprefix $(PIPEX_DIR)/, files_checker.c paths.c pipex_1.c pipex_2.c pipex_3.c pipex_4.c here_doc.c)\
-				$(addprefix $(UTILS_DIR)/, utils_1.c utils_2.c utils_3.c)\
-				$(addprefix $(PARS_DIR)/, handling_quotes.c parser.c parser_initial.c parser_operations.c parser_work_with_mallocs.c)\
-				$(addprefix $(PARS_DIR_)/, pars_list.c parser_split.c parser_utils.c parser_string_1.c parser_string_2.c pars_inter.c)
+				$(addprefix $(PROC_DIR)/, proc_files.c proc_paths.c proc_1.c proc_2.c proc_3.c proc_4.c proc_here_doc.c)\
+				$(addprefix $(UTILS_DIR)/, utils_1.c)\
+				$(addprefix $(PARS_DIR_)/, pars_list.c pars_split.c pars_utils.c pars_string_1.c pars_string_2.c pars_inter.c)
 OBJ_MAIN	=	$(SRC_MAIN:.c=.o)
 OBJS		=	$(SRCS:.c=.o)
 
@@ -89,7 +87,7 @@ norm:
 				@norminette $(ENV_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
 				@echo "$(BLUE)\n\t*** PIPEX ***$(NC)"
-				@norminette $(PIPEX_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
+				@norminette $(PROC_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
 				@echo "$(BLUE)\n\t*** UTILS ***$(NC)"
 				@norminette $(UTILS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'

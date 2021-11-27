@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*   pars_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 19:22:44 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 14:40:19 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:00:22 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	pars_insert_elem(t_pars_list **list, char *str, int type)
 	return (0);
 }
 
+// Return size of command's substring delimited by
+// quotes and operators
 int	pars_get_substr_len(char *cmd, char **opers)
 {
 	int	i;

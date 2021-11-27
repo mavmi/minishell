@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 17:52:03 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 14:31:51 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 15:48:18 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,27 @@ struct s_enviroment
 struct s_data
 {
 	int				exit_status;
-	struct s_var	*vars;
 	t_enviroment	*envp;
 };
 
 t_data						g_data;
 
+// env_1.c
 t_env_elem		*env_get_new_elem(char *str);
 int				env_push_back(t_enviroment *env, char *str);
+char			**env_get_content(t_enviroment *env);
+
+// env_2.c
+void			env_remove_elem(t_enviroment *env, char *name);
+void			env_destroy(t_enviroment *env);
+t_enviroment	*env_create_empty(void);
+t_enviroment	*env_create(char **envp);
+
+// env_3.c
 t_env_elem		*env_get_by_position(t_enviroment *env, size_t pos);
 t_env_elem		*env_get_by_name(t_enviroment *env, char *name);
 int				env_set_by_position(t_enviroment *env,
 					size_t pos, char *new_val);
 int				env_set_by_name(t_enviroment *env, char *name, char *new_val);
-char			**env_get_content(t_enviroment *env);
-void			env_remove_elem(t_enviroment *env, char *name);
-void			env_destroy(t_enviroment *env);
-t_enviroment	*env_create_empty(void);
-t_enviroment	*env_create(char **envp);
 
 #endif

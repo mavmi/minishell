@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_4.c                                          :+:      :+:    :+:   */
+/*   proc_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 15:24:41 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 16:33:34 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:05:45 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex.h"
+#include "../../include/processes.h"
 
+// Destroy process element
 void	proc_destroy_elem(t_process *process)
 {
 	if (!process)
@@ -22,6 +23,7 @@ void	proc_destroy_elem(t_process *process)
 	free(process);
 }
 
+// Destroy whole process list
 void	proc_destroy_list(t_process *list)
 {
 	t_process	*tmp_ptr;

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 18:56:24 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 14:38:21 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 15:57:28 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,73 @@ char	*utils_create_lone_string(char *name, char *value)
 	return (str);
 }
 
-// Get string of value assignment
-// and convert it into array of strings:
-// array[0] = name,
-// array[1] = value.
-// May return NULL if [str] is NULL or 
-// if value name is invalid
-char	**utils_parse_varialbe(char *str)
+// Compare strings.
+// Return 1 if strings are equal,
+// 0 otherwise
+int	utils_cmp_strings(char *s1, char *s2)
 {
-	size_t	len;
-	size_t	eq_pos;
-	char	*eq;
-	char	**array;
+	size_t	s1_len;
+	size_t	s2_len;
 
-	len = ft_strlen(str);
-	if (!str || !len || !utils_is_string_valid(str))
-		return (NULL);
-	eq = ft_strchr(str, '=');
-	if (!eq)
-		return (NULL);
-	array = (char **)malloc(sizeof(char *) * 3);
-	if (!array)
-		return (NULL);
-	eq_pos = eq - str;
-	array[0] = ft_substr(str, 0, eq_pos);
-	array[1] = ft_substr(str, eq_pos + 1, len - eq_pos);
-	array[2] = NULL;
-	if (!array[0] || !array[1] || !ft_strlen(array[0]) || !ft_strlen(array[1]))
+	if (!s1 || !s2)
 	{
-		utils_destroy_strings_array(array);
-		return (NULL);
+		return (0);
 	}
-	return (array);
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	if (s1_len == s2_len && !ft_strncmp(s1, s2, s1_len))
+	{
+		return (1);
+	}
+	return (0);
+}
+
+char	*utils_sum_strings(char *s1, char *s2)
+{
+	size_t	i;
+	char	*result;
+
+	if (!s1 || !s2)
+		return (NULL);
+	result = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (*s1)
+		result[i++] = *s1++;
+	while (*s2)
+		result[i++] = *s2++;
+	result[i] = 0;
+	return (result);
+}
+
+void	utils_append_string(char **str, char *value)
+{
+	char	*tmp;
+
+	if (!str || !value)
+		return ;
+	if (!*str)
+	{
+		*str = ft_strdup(value);
+		return ;
+	}
+	tmp = utils_sum_strings(*str, value);
+	free(*str);
+	*str = tmp;
+}
+
+void	utils_destroy_strings_array(char **arr)
+{
+	char	**ptr;
+
+	if (!arr)
+		return ;
+	ptr = arr;
+	while (*ptr)
+	{
+		free(*ptr);
+		ptr++;
+	}
+	free(arr);
 }

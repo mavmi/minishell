@@ -6,12 +6,13 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:43:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 14:33:24 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 16:15:19 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/enviroment.h"
 
+// Remove element with specified name from the enviroment
 void	env_remove_elem(t_enviroment *env, char *name)
 {
 	t_env_elem	*elem;
@@ -39,6 +40,7 @@ void	env_remove_elem(t_enviroment *env, char *name)
 	free(elem);
 }
 
+// Destroy whole enviroment list
 void	env_destroy(t_enviroment *env)
 {
 	t_env_elem	*elem;

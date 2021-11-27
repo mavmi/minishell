@@ -82,7 +82,7 @@ void TEST_STR_LIST(){
 	{
 		char val_1[] = "\'value\'";
 
-		char* output_str = pars_get_whole_string(val_1);
+		char* output_str = pars_handle_string(val_1);
 		cout << "whole string: " << string(output_str) << endl;
 		assert(string(output_str) == "value");
 		free(output_str);
@@ -91,7 +91,7 @@ void TEST_STR_LIST(){
 	{
 		char val_1[] = "\"value $ $var  \"";
 
-		char* output_str = pars_get_whole_string(val_1);
+		char* output_str = pars_handle_string(val_1);
 		cout << "whole string: " << string(output_str) << endl;
 		assert(string(output_str) == "value $ 888  ");
 		free(output_str);
@@ -100,7 +100,7 @@ void TEST_STR_LIST(){
 	{
 		char val_1[] = "value $var";
 
-		char* output_str = pars_get_whole_string(val_1);
+		char* output_str = pars_handle_string(val_1);
 		cout << "whole string: " << string(output_str) << endl;
 		assert(string(output_str) == "value 888");
 		free(output_str);
@@ -109,7 +109,7 @@ void TEST_STR_LIST(){
 	{
 		char val_1[] = "\"value\"$var\'$value'\"$var\"$";
 
-		char* output_str = pars_get_whole_string(val_1);
+		char* output_str = pars_handle_string(val_1);
 		cout << "whole string: " << string(output_str) << endl;
 		assert(string(output_str) == "value888$value888$");
 		free(output_str);
@@ -118,7 +118,7 @@ void TEST_STR_LIST(){
 	{
 		char val_1[] = "\"value\"\"$var\"";
 
-		char* output_str = pars_get_whole_string(val_1);
+		char* output_str = pars_handle_string(val_1);
 		cout << "whole string: " << string(output_str) << endl;
 		assert(string(output_str) == "value888");
 		free(output_str);

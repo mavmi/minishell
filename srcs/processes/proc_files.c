@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   files_checker.c                                    :+:      :+:    :+:   */
+/*   proc_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 18:11:25 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/25 16:19:11 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:08:05 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/pipex.h"
+#include "../../include/processes.h"
 
+// Open file with specified mode
 int	proc_open_file(char *path, t_file_mode file_mode)
 {
 	if (!path)

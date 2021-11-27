@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_split.c                                     :+:      :+:    :+:   */
+/*   pars_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 17:22:13 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 14:39:22 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:10:30 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Try to parse string.
 // Return 0 if evetything is done,
 // -1 if an error occured
-static int	pars_handle_strings(t_pars_list **list, char **cmd, char **opers)
+static int	pars_handle_string(t_pars_list **list, char **cmd, char **opers)
 {
 	int		len;
 	char	*tmp;
@@ -27,7 +27,7 @@ static int	pars_handle_strings(t_pars_list **list, char **cmd, char **opers)
 	if (len)
 	{
 		tmp = ft_substr(*cmd, 0, len);
-		substr = pars_get_whole_string(tmp);
+		substr = pars_handle_substring(tmp);
 		free(tmp);
 		if (!substr || pars_insert_elem(list, substr, DEFAULT))
 		{
@@ -67,6 +67,7 @@ static int	pars_handle_opers(t_pars_list **list, char **cmd, char **opers)
 	return (1);
 }
 
+// Part of pars_split function.
 // Return 0 if everything is ok,
 // 1 otherwise
 static int	pars_split_handler(t_pars_list **list, char *cmd, char **opers)
@@ -85,12 +86,15 @@ static int	pars_split_handler(t_pars_list **list, char *cmd, char **opers)
 			return (1);
 		if (i == 0)
 			continue ;
-		if (pars_handle_strings(list, &cmd, opers))
+		if (pars_handle_string(list, &cmd, opers))
 			return (1);
 	}
 	return (0);
 }
 
+// Split shell command into the list of
+// [t_pars_list] structs.
+// May return NULL
 t_pars_list	*pars_split(char *cmd)
 {
 	char		**opers;

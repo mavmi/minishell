@@ -6,57 +6,35 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 14:05:58 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 16:13:24 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include "../include/rebuilt_funcs.h"
+#include "../include/enviroment.h"
+#include "../include/parser_.h"
+#include "../include/processes.h"
 
-void	print_pars_list(t_pars_list *list)
+// Signals call this function
+static void	signal_handler(int sig)
 {
-	if (!list)
-		return ;
-	while (list)
+	if (sig == SIGINT)
 	{
-		printf("type: %d\n", list->type);
-		printf("value: %s\n", list->value);
-		list = list->next;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_redisplay();
 	}
 }
 
-void	print_proc_list(t_process *list)
+// Just set up signals
+static void	signals_set_up(void)
 {
-	char	**ptr;	
-
-	if (!list)
-		return ;
-	while (list)
-	{
-		printf(" >> addr: %p\n", list);
-		printf("is built-in: %d\n", list->is_built_in);
-		printf("input fd: %d\n", list->input_fd);
-		printf("output fd: %d\n", list->output_fd);
-		printf("exec name: %s\n", list->exec_name);
-		printf("exec path: %s\n", list->exec_path);
-		printf("prev: %p\n", list->prev);
-		printf("next: %p\n", list->next);
-		ptr = list->argv;
-		printf("argv: ");
-		while (*ptr)
-		{
-			printf("%s  ", *ptr);
-			ptr++;
-		}
-		printf("\n\n");
-		list = list->next;
-	}
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 }
 
-// ********************************** //
-// ********************************** //
-
-void	update_shlvl(void)
+// Increase enviroment's SHLVL value when programm starts 
+static void	update_shlvl(void)
 {
 	int			shlvl;
 	t_env_elem	*env_elem;
@@ -72,7 +50,8 @@ void	update_shlvl(void)
 	}
 }
 
-void	run(void)
+// Calls parser and executor untill exit
+static void	run(void)
 {
 	char		*str;
 	t_process	*proc_list;
@@ -102,7 +81,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	signals_set_up();
 	update_shlvl();
-	g_data.vars = NULL;
 	g_data.exit_status = 0;
 	run();
 	env_destroy(g_data.envp);
