@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:11:22 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/10 14:41:42 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 19:10:16 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@ void	rebuilt_exit(void)
 {
 	rl_clear_history();
 	env_destroy(g_data.envp);
+sleep(100000); // не забыть удалить
 	exit(0);
 }

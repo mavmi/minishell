@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:08:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 17:10:28 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:40:21 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ char		*pars_handle_substring(char *input);
 // pars_string_2.c
 char		*pars_handle_substr(char *str);
 
-// pars_inter.c
+// pars_inter_1.c
 t_process	*pars_intepret(t_pars_list *pars_list);
+
+// pars_inter_2.c
+int			pars_check_list_validity(t_pars_list *pars_list);
 
 #endif

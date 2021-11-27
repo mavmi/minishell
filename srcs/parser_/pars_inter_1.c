@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars_inter.c                                       :+:      :+:    :+:   */
+/*   pars_inter_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:52:01 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 17:03:05 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 18:11:44 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_process	*pars_intepret(t_pars_list *pars_list)
 	char		*cmd;
 	t_process	*proc_list;
 
-	if (!pars_list)
+	if (!pars_list || !pars_check_list_validity(pars_list))
 		return (NULL);
 	cmd = NULL;
 	in_fd = NON_FD;

@@ -6,11 +6,25 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 12:43:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/12 13:06:09 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 18:58:07 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rebuilt_funcs.h"
+
+static int	is_flag(char *str)
+{
+	if (!str || !ft_strlen(str) || *str != '-')
+		return (0);
+	str++;
+	while (*str)
+	{
+		if (*str != 'n')
+			return (0);
+		str++;
+	}
+	return (1);
+}
 
 void	rebuilt_echo(int argc, char **argv, int fd_out)
 {
@@ -21,7 +35,7 @@ void	rebuilt_echo(int argc, char **argv, int fd_out)
 		return ;
 	i = 1;
 	endl = 1;
-	if (utils_cmp_strings(argv[i], "-n"))
+	if (is_flag(argv[i]))
 	{
 		endl = 0;
 		i++;

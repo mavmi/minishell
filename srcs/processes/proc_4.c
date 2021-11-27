@@ -6,15 +6,18 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 17:07:44 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/27 17:37:30 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/processes.h"
 
+// Part of proc_execute_list function.
+// Execute only built-in's
 //static void	proc_execute_built_ins(t_process **ptr)
 //{
 //	t_process	*first;
+
 //	first = *ptr;
 //	while (*ptr && (*ptr)->is_built_in)
 //	{
@@ -26,6 +29,7 @@
 //	(*ptr) = first;
 //	while (*ptr && (*ptr)->is_built_in)
 //	{
+//		close((*ptr)->io_buffer[STDIN_FILENO]);
 //		close((*ptr)->io_buffer[STDOUT_FILENO]);
 //		waitpid((*ptr)->pid, &g_data.exit_status, 0);
 //		if (WIFEXITED(g_data.exit_status))
