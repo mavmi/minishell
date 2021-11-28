@@ -1,4 +1,4 @@
-NAME		=	minishell
+sadfNAME		=	minishell
 
 
 SRCS_DIR	=	srcs
