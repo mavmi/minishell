@@ -1,5 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_operations.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/10/26 19:29:55 by msalena           #+#    #+#             */
+/*   Updated: 2021/10/26 19:29:56 by msalena          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/parser.h"
 
+/*put new elem at the end of list
+--> return 1 if everyfing good
+	and 0 if input argums didn't come*/
 int	par_push_back(t_par_elem *new_back, t_par_list *list)
 {
 	if (!new_back || !list)
@@ -13,56 +28,81 @@ int	par_push_back(t_par_elem *new_back, t_par_list *list)
 	else
 	{
 		list->begin = new_back;
-		list->next - new_back;
+		list->end = new_back;
 	}
-	new_back->next = NULL;
 	list->size++;
 	return (1);
 }
 
-t_par_elem	*par_take_by_pos(t_par_list *list, int position)
+static void	par_rem_conditions(t_par_list *list, t_par_elem *elem)
 {
-	int			i;
-	t_par_elem	*removed_elem;
-
-	removed_elem = list->begin;
-	i = 1;
-	if (position > list->size || position < 0 || !list)
-		return (NULL);
-	while (i < position)
+	if (list->size == 1)
 	{
-		removed_elem = removed_elem->next;
-		i++;
+		list->begin = NULL;
+		list->end = NULL;
 	}
-	return (removed_elem);
+	else if (elem == list->begin)
+	{
+		elem->next->prev = NULL;
+		list->begin = elem->next;
+	}
+	else if (elem == list->end)
+	{
+		elem->prev->next = NULL;
+		list->end = elem->prev;
+	}
+	else
+	{
+		elem->prev->next = elem->next;
+		elem->next->prev = elem->prev;
+	}
 }
 
+/*remove elem by position*/
 void	par_remove_by_pos(t_par_list *list, size_t position)
 {
-	int			i;
 	t_par_elem	*removed_elem;
 
-	removed_elem = NULL;
-	i = 1;
-	if (position > list->size || position < 0 || !list)
+	if (!list || position >= list->size)
 		return ;
-	removed_elem = par_take_by_pos(list, position);
-	free(removed_elem->value); // по факту это единственное, что надо разрушать
-	removed_elem->next->prev = removed_elem->prev;
+	removed_elem = par_get_by_pos(list, position);
+	if (!removed_elem)
+		return ;
+	par_rem_conditions(list, removed_elem);
+	par_destroy_elem(removed_elem);
 	list->size--;
 }
 
-void	par_destroy(t_par_list *list)
+/*free list'elems*/
+void	par_destroy_elem(t_par_elem *elem)
 {
-	t_par_elem *elem;
+	free(elem->value);
+	free(elem);
+}
 
-	elem = NULL;
+/*destroy all list's elems and list too*/
+void	par_destroy_all(t_par_list *list)
+{
+	t_par_elem	*elem;
+	t_par_elem	*tmp;
+
 	if (!list)
 		return ;
+	if (!list->begin && !list->end)
+	{
+		free(list);
+		return ;
+	}
 	elem = list->begin;
+	tmp = NULL;
+	list->begin = NULL;
+	list->end = NULL;
 	while (elem->next)
 	{
-		free (elem->value); // по факту это единственное, для чего надо разрушать
-		elem = line->next;
+		tmp = elem->next;
+		par_destroy_elem(elem);
+		elem = tmp;
 	}
+	par_destroy_elem(elem);
+	free (list);
 }
