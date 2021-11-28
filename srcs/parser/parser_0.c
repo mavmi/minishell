@@ -129,6 +129,7 @@ t_par_list	*par_split(char *cmd)
 	char		*substr;
 	char		**oper_arr;
 	t_par_count	coun;
+	size_t	count = 0;
 
 	if (!cmd)
 		return (NULL);
@@ -142,12 +143,13 @@ t_par_list	*par_split(char *cmd)
 		return (par_free_out(oper_arr, list));
 	while (substr)
 	{
-		par_push_back(par_get_new_elem(coun.num, substr), list);
+		par_push_back(par_get_new_elem(coun.num, substr, count), list);
 		if (coun.num == DEFAULT_N || coun.num == OPER_DOLL_N)
 			free (substr);
 		substr = get_elems(cmd, oper_arr, &coun);
 		if (!substr && (int)ft_strlen(cmd) != coun.i_elem)
 			return (par_free_out(oper_arr, list));
+		count++;
 	}
 	free (oper_arr);
 	return (list);

@@ -174,14 +174,14 @@ int	main(void)
 	elem = list->begin;
 
 	/////////for_par_split_outputing////////////
-	// while (elem->next)
-	// {
-	// 	printf ("type_str= %d  ---------          ", elem->type);
-	// 	printf("str_of_arr =%s                 len = %d\n", elem->value, elem->len);
-	// 	elem = elem->next;
-	// }
-	// printf ("type_str= %d  ---------          ", elem->type);
-	// printf("str_of_arr =%s\n", elem->value);
+	while (elem->next)
+	{
+		printf ("type_str= %d  ---------          ", elem->type);
+		printf("str_of_arr =%s                 num = %d\n", elem->value, elem->number_pos);
+		elem = elem->next;
+	}
+	printf ("type_str= %d  ---------          ", elem->type);
+	printf("str_of_arr =%s\n", elem->value);
 
 	///////////////////////////////////////////
 
@@ -193,17 +193,19 @@ int	main(void)
 	/////////////////////////////////////////////////
 
 
-	char	**arr = arr_cmd_formation(list);
-	int		i = 0;
+	// char	**arr = arr_cmd_formation(list);
+	// int		i = 0;
 
-	while (arr && arr[i])
-	{
-		printf ("arr[%d]: %s\n", i, arr[i]);
-		i++;
-	}
-	for (int i=0; arr && arr[i]; i++)
-		free (arr[i]);
-	free (arr);
+	// while (arr && arr[i])
+	// {
+	// 	printf ("arr[%d]: %s\n", i, arr[i]);
+	// 	i++;
+	// }
+	// for (int i=0; arr && arr[i]; i++)
+	// 	free (arr[i]);
+	// free (arr);
+
+
 	par_destroy_all(list);
 // sleep (1000);
 	return (0);

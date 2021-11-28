@@ -32,6 +32,7 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 # include "utils.h"
+# include "processes.h"
 
 typedef struct s_par_elem	t_par_elem;
 typedef struct s_par_list	t_par_list;
@@ -41,7 +42,7 @@ struct s_par_elem
 {
 	int			type;
 	char		*value;
-	int			len;
+	size_t		number_pos;
 	t_par_elem	*next;
 	t_par_elem	*prev;
 };
@@ -61,7 +62,7 @@ struct s_par_count
 };
 
 t_par_list	*par_initial_empty_list(void);
-t_par_elem	*par_get_new_elem(int type, char *value);
+t_par_elem	*par_get_new_elem(int type, char *value, size_t num);
 char		**par_get_redirect(void);
 t_par_elem	*par_get_by_pos(t_par_list *list, size_t position);
 t_par_count	count_initial(void);

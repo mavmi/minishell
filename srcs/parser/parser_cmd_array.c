@@ -6,13 +6,13 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:51:02 by msalena           #+#    #+#             */
-/*   Updated: 2021/11/28 16:46:03 by msalena          ###   ########.fr       */
+/*   Updated: 2021/11/28 18:27:04 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static char	**arr_add_realloc(char *added_str, char **arr_str)
+static char	**arr_cmd_add_realloc(char *added_str, char **arr_str)
 {
 	char	**new_arr;
 	int		tmp_i;
@@ -57,7 +57,7 @@ static t_par_elem	*cmd_handler(t_par_elem *substr, char ***cmd_substr)
 				substr = substr->next;
 		}
 	}
-	*cmd_substr = arr_add_realloc(str, *cmd_substr);
+	*cmd_substr = arr_cmd_add_realloc(str, *cmd_substr);
 	str = NULL;
 	return (substr);
 }
