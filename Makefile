@@ -6,7 +6,6 @@ FUNCS_DIR	=	$(SRCS_DIR)/rebuilt_funcs
 ENV_DIR		=	$(SRCS_DIR)/enviroment
 PROC_DIR	=	$(SRCS_DIR)/processes
 UTILS_DIR	=	$(SRCS_DIR)/utils
-PARS_DIR	=	$(SRCS_DIR)/parser
 PARS_DIR_	=	$(SRCS_DIR)/parser_
 HDRS_DIR	=	include
 READLN_DIR	=	readline

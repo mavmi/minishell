@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:52:01 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 18:11:44 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/28 16:46:22 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ static void	pars_redirect(t_pars_list **pars_list, int *in_fd, int *out_fd)
 
 	type = (*pars_list)->type;
 	(*pars_list) = (*pars_list)->next;
-	if (type == REDIR_OUT)
+	if (type == REDIR_OUT_)
 		*out_fd = open((*pars_list)->value,
 				O_WRONLY | O_CREAT | O_TRUNC, 0700);
-	else if (type == REDIR_OUT_APP)
+	else if (type == REDIR_OUT_APP_)
 		*out_fd = open((*pars_list)->value,
 				O_WRONLY | O_CREAT | O_APPEND, 0700);
-	else if (type == REDIR_INP)
+	else if (type == REDIR_INP_)
 		*in_fd = open((*pars_list)->value, O_RDONLY);
 	else if (type == HERE_DOC_)
 		*in_fd = proc_here_doc((*pars_list)->value);
@@ -85,10 +85,10 @@ t_process	*pars_intepret(t_pars_list *pars_list)
 	{		
 		if (pars_list->type == DEFAULT && pars_append_cmd(&cmd, pars_list))
 			return (pars_kostil(proc_list));
-		if (pars_list->type == REDIR_OUT || pars_list->type == REDIR_OUT_APP
-			|| pars_list->type == REDIR_INP || pars_list->type == HERE_DOC_)
+		if (pars_list->type == REDIR_OUT_ || pars_list->type == REDIR_OUT_APP_
+			|| pars_list->type == REDIR_INP_ || pars_list->type == HERE_DOC_)
 			pars_redirect(&pars_list, &in_fd, &out_fd);
-		if (pars_list->type == PIPE || pars_list->next == NULL)
+		if (pars_list->type == PIPE_ || pars_list->next == NULL)
 			pars_pipe(&proc_list, &cmd, &in_fd, &out_fd);
 		pars_list = pars_list->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:08:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 17:40:21 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/28 16:46:23 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@
 # define DOLL_S "$"
 # define QUES_S "?"
 
-# define REDIR_OUT 0
-# define REDIR_INP 1
-# define REDIR_OUT_APP 2
+# define REDIR_OUT_ 0
+# define REDIR_INP_ 1
+# define REDIR_OUT_APP_ 2
 # define HERE_DOC_ 3
-# define PIPE 4
+# define PIPE_ 4
 
-# define REDIR_OUT_S ">"
-# define REDIR_INP_S "<"
-# define REDIR_OUT_APP_S ">>"
-# define HERE_DOR_S "<<"
-# define PIPE_S "|"
+# define REDIR_OUT_S_ ">"
+# define REDIR_INP_S_ "<"
+# define REDIR_OUT_APP_S_ ">>"
+# define HERE_DOR_S_ "<<"
+# define PIPE_S_ "|"
 
 # define OPERATORS 5
 
