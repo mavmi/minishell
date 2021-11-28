@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 19:08:16 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/28 13:16:18 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	main(int argc, char **argv, char **envp)
 	signals_set_up();
 	update_shlvl();
 	g_data.exit_status = 0;
+	g_data.error = NULL;
 	run();
 	env_destroy(g_data.envp);
 }

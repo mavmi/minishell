@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 13:12:46 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 17:10:24 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/28 13:35:11 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	pars_quotes_handler(char **input, char **string,
 	if (!quote_ptr)
 	{
 		free(*string);
+		g_data.error = "Unclosed quotes error";
 		return (1);
 	}
 	*substr = ft_substr(*input, 1, quote_ptr - *input - 1);
@@ -129,7 +130,10 @@ char	*pars_handle_substring(char *input)
 			quote_num = 2;
 		if ((quote_num && pars_quotes(&input, &string, quote_num))
 			|| (!quote_num && pars_substr(&input, &string)))
+		{
+			env_print_error();
 			return (NULL);
+		}
 	}
 	return (string);
 }

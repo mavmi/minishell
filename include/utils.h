@@ -6,14 +6,14 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 18:57:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 15:57:00 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/28 13:21:37 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-# define PROMT "minishel> "
+# define PROMT "minishell> "
 
 # include <stdio.h>
 # include <fcntl.h>

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 17:52:03 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 15:48:18 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/28 13:23:05 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ struct s_enviroment
 struct s_data
 {
 	int				exit_status;
+	char			*error;
 	t_enviroment	*envp;
 };
 
@@ -62,5 +63,8 @@ t_env_elem		*env_get_by_name(t_enviroment *env, char *name);
 int				env_set_by_position(t_enviroment *env,
 					size_t pos, char *new_val);
 int				env_set_by_name(t_enviroment *env, char *name, char *new_val);
+
+// env_utils.c
+void			env_print_error(void);
 
 #endif

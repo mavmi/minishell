@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/11 13:11:22 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 19:14:41 by pmaryjo          ###   ########.fr       */
+/*   Created: 2021/11/28 13:22:34 by pmaryjo           #+#    #+#             */
+/*   Updated: 2021/11/28 13:24:57 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/rebuilt_funcs.h"
+#include "../../include/enviroment.h"
 
-void	rebuilt_exit(void)
+// Print error from global variable and
+// assign it to NULL
+void	env_print_error(void)
 {
-	rl_clear_history();
-	env_destroy(g_data.envp);
-	exit(0);
+	if (!g_data.error)
+		return ;
+	ft_putendl_fd(g_data.error, STDERR_FILENO);
+	g_data.error = NULL;
 }

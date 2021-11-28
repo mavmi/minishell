@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 13:27:34 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 16:59:11 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/11/28 14:34:52 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	pars_value_substr(char *str, char **result, int *begin, int *end)
 	return (0);
 }
 
-// Get substring and replace names of values with values.
+// Get substring and replace names of variables with values.
 // May return NULL
 char	*pars_handle_substr(char *str)
 {
@@ -82,5 +82,6 @@ char	*pars_handle_substr(char *str)
 			|| (begin == end && pars_value_substr(str, &result, &begin, &end)))
 			return (NULL);
 	}
+	utils_append_string(&result, "");
 	return (result);
 }
