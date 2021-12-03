@@ -174,14 +174,14 @@ int	main(void)
 	elem = list->begin;
 
 	/////////for_par_split_outputing////////////
-	while (elem->next)
-	{
-		printf ("type_str= %d  ---------          ", elem->type);
-		printf("str_of_arr =%s                 num = %d\n", elem->value, elem->number_pos);
-		elem = elem->next;
-	}
-	printf ("type_str= %d  ---------          ", elem->type);
-	printf("str_of_arr =%s\n", elem->value);
+	// while (elem->next)
+	// {
+	// 	printf ("type_str= %d  ---------          ", elem->type);
+	// 	printf("str_of_arr =%s                 num = %d\n", elem->value, elem->number_pos);
+	// 	elem = elem->next;
+	// }
+	// printf ("type_str= %d  ---------          ", elem->type);
+	// printf("str_of_arr =%s\n", elem->value);
 
 	///////////////////////////////////////////
 
@@ -190,7 +190,7 @@ int	main(void)
 	// open("lsadfj", O_RDONLY);
 	// printf("minishell: %s: %s\n", "filename", strerror(errno));
 	// return 1;
-	/////////////////////////////////////////////////
+	///////////////////////////////////////////////
 
 
 	// char	**arr = arr_cmd_formation(list);

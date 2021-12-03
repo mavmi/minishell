@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/11/28 19:43:46 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/03 20:51:15 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	*arr_fd_formation(t_par_list *elem_list)
 {
 	t_par_elem	*substr;
 	int	*fd_arr;
-	size_t	fl_start;
 	int	fd_input;
 	int	fd_output;
 	char *error_str;
@@ -50,51 +49,55 @@ int	*arr_fd_formation(t_par_list *elem_list)
 	substr = elem_list->begin;
 	fd_input = 0; // maybe needs changing default fd
 	fd_output = 1; // maybe needs changing default fd
-	fl_start = 0;
 	fd_arr = NULL;
 	error_str = NULL;
 	while (substr)
 	{
 		if (substr->type == OPER_PIPE_N)
 		{
-			fd_arr = arr_fd_add_realloc(fd_arr, in_fd, out_fd);
-			fl_start = substr->number_pos;
+			fd_arr = arr_fd_add_realloc(fd_arr, fd_input, fd_output);
 			substr = substr->next;
 		}
 		else if (substr && substr->type == OPER_HERE_DOC_N)
 		{
 			substr = substr->next;
 			fd_input = proc_here_doc(substr->value);
-			///////////////mistakes/////////////
 			if (fd_input == -1)
 			{
-				if ((par_get_by_pos(elem_list, (fl_start + 1))->type == DEFAULT_N)
-				{
-					error_str = utils_sum_strings("minishell: ",
-										par_get_by_pos(elem_list, (fl_start + 1))->value); // minishell: "filename"
-				}
-				else
-				{
-					error_str = utils_sum_strings("minishell: ",
-										par_get_by_pos(elem_list, (fl_start + 2))->value); // minishell: "filename"
-				}
-				utils_append_string(&error_str, ":");// minishell: "filename":
-				utils_append_string(&error_str, strerror(errno)); // minishell: "filename": strerror(errno)
+				error_str = utils_sum_strings("minishell: here_doc: ", strerror(errno));
 				ft_putendl_fd(error_str, 1);
 			}
-			///////////////////////////////////
 		}
 		else if (substr && substr->type == OPER_INP_N)
 		{
-
+			substr = substr->next;
+			fd_input = proc_open_file(substr->value, READ);
+			if (fd_input == -1)
+			{
+				error_str = utils_sum_strings("minishell: input: ", strerror(errno));
+				ft_putendl_fd(error_str, 1);
+			}
 		}
-		else if (substr && (substr->type == OPER_OUT_N
-								|| substr->type == OPER_OUT_APP_N))
+		else if (substr && (substr->type == OPER_OUT_N))
 		{
-
+			substr = substr->next;
+			fd_output = proc_open_file(substr->value, WRITE);
+			if (fd_input == -1)
+			{
+				error_str = utils_sum_strings("minishell: output: ", strerror(errno));
+				ft_putendl_fd(error_str, 1);
+			}
+		}
+		else if (substr && (substr->type == OPER_OUT_APP_N))
+		{
+			substr = substr->next;
+			fd_output = proc_open_file(substr->value, WRITE_APP);
+			if (fd_input == -1)
+			{
+				error_str = utils_sum_strings("minishell: output_app: ", strerror(errno));
+				ft_putendl_fd(error_str, 1);
+			}
 		}
 		substr = substr->next;
 	}
-
-
 }
