@@ -85,4 +85,6 @@ char		**par_handle_quotes(char **commands);
 char		*par_handle_str(char *cmd);
 char		*par_handle_vars(char *substr);
 
+int			par_check_list(t_par_list *list);
+
 #endif
