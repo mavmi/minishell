@@ -6,6 +6,7 @@ FUNCS_DIR	=	$(SRCS_DIR)/rebuilt_funcs
 ENV_DIR		=	$(SRCS_DIR)/enviroment
 PROC_DIR	=	$(SRCS_DIR)/processes
 UTILS_DIR	=	$(SRCS_DIR)/utils
+PARS_DIR	=	$(SRCS_DIR)/parser
 PARS_DIR_	=	$(SRCS_DIR)/parser_
 HDRS_DIR	=	include
 READLN_DIR	=	readline
@@ -25,6 +26,7 @@ SRCS		= 	$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c ec
 				$(addprefix $(PROC_DIR)/, proc_files.c proc_paths.c proc_1.c proc_2.c proc_3.c proc_4.c proc_here_doc.c)\
 				$(addprefix $(UTILS_DIR)/, utils_1.c)\
 				$(addprefix $(PARS_DIR_)/, pars_list.c pars_split.c pars_utils.c pars_string_1.c pars_string_2.c pars_inter_1.c pars_inter_2.c)
+#				$(addprefix $(PARS_DIR)/, parser_0.c parser_1.c parser_cmd_array.c parser_fd_array.c parser_initial.c parser_operations.c parser_handle_quotes_1.c parser_handle_quotes_2.c parser_handle_quotes_3.c)
 OBJ_MAIN	=	$(SRC_MAIN:.c=.o)
 OBJS		=	$(SRCS:.c=.o)
 
@@ -91,8 +93,8 @@ norm:
 				@echo "$(BLUE)\n\t*** UTILS ***$(NC)"
 				@norminette $(UTILS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
-#				@echo "$(BLUE)\n\t*** PARSER ***$(NC)"
-#				@norminette $(PARS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
+				@echo "$(BLUE)\n\t*** PARSER ***$(NC)"
+				@norminette $(PARS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 				
 				@echo "$(BLUE)\n\t*** MY PARSER ***$(NC)"
 				@norminette $(PARS_DIR_) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'

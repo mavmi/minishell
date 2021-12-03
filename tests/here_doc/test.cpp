@@ -1,5 +1,5 @@
 extern "C"{
-	#include "../../include/pipex.h"
+	#include "../../include/processes.h"
 }
 
 #include <iostream>
