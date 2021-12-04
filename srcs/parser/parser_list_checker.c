@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 17:12:55 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/03 17:25:33 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 12:38:52 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ int	par_check_list(t_par_list *list)
 	t_par_elem	*elem;
 
 	if (!list || !list->size || !list->begin || !list->end
-		|| list->begin->type == OPER_PIPE_N || list->end->type != DEFAULT_N)
+		|| list->begin->type == OPER_PIPE_N
+		|| (list->end->type != DEFAULT_N && list->end->type != OPER_DOLL_N))
 		return (0);
 	elem = list->begin;
 	opers_in_row = 0;
 	while (elem)
 	{
-		if (elem->type != DEFAULT_N)
+		if (elem->type != DEFAULT_N && elem->type != OPER_DOLL_N)
 			opers_in_row++;
 		else
 			opers_in_row = 0;
 		if (opers_in_row > 1)
 			return (0);
-		if (elem->type != DEFAULT_N
-			&& (!elem->next || elem->next->type != DEFAULT_N))
+		if (opers_in_row && !elem->next)
 			return (0);
 		elem = elem->next;
 	}

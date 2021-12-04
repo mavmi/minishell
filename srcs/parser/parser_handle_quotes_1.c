@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 15:55:35 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/03 17:08:55 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 14:02:47 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static size_t	par_get_arr_len(char **array)
 	return (len);
 }
 
-char	**par_handle_quotes(char **commands)
+char	**par_handle_quotesNenv(char **commands)
 {
 	int		iter;
 	char	**output;
@@ -46,10 +46,12 @@ char	**par_handle_quotes(char **commands)
 			while (iter >= 0)
 				free(output[iter--]);
 			free(output);
+			utils_destroy_strings_array(commands);
 			return (NULL);
 		}
 		iter++;
 	}
 	output[iter] = NULL;
+	utils_destroy_strings_array(commands);
 	return (output);
 }

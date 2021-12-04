@@ -6,12 +6,12 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/28 13:16:18 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 14:08:40 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/enviroment.h"
-#include "../include/parser_.h"
+#include "../include/parser.h"
 #include "../include/processes.h"
 
 // Signals call this function
@@ -54,19 +54,31 @@ static void	update_shlvl(void)
 static void	run(void)
 {
 	char		*str;
+	char		**arr_cmd;
+	int			**arr_fd;
 	t_process	*proc_list;
-	t_pars_list	*pars_list;
+	t_par_list	*pars_list;
 
 	while (1)
 	{
 		str = readline(PROMT);
 		add_history(str);
-		pars_list = pars_split(str);
-		proc_list = pars_intepret(pars_list);
-		proc_execute_list(proc_list);
-		pars_destroy_list(pars_list);
-		proc_destroy_list(proc_list);
+		pars_list = par_split(str);
+		if (par_check_list(pars_list))
+		{
+			arr_cmd = arr_cmd_formation(pars_list);
+			arr_cmd = par_handle_quotesNenv(arr_cmd);
+			arr_fd = arr_fd_formation(pars_list);
+					
+		}
+			
+		
+
+		/*
 		free(str);
+		par_destroy_all(pars_list);
+		utils_destroy_strings_array(arr_cmd);*/
+		
 	}	
 	rl_clear_history();
 }

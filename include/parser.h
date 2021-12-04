@@ -80,8 +80,9 @@ int			par_compar_cNo(char *cmd, t_par_count *coun, char **arr);
 char		*par_handling_quotes(char *str);
 
 char		**arr_cmd_formation(t_par_list *elem_list);
+int			*arr_fd_formation(t_par_list *elem_list);
 
-char		**par_handle_quotes(char **commands);
+char		**par_handle_quotesNenv(char **commands);
 char		*par_handle_str(char *cmd);
 char		*par_handle_vars(char *substr);
 
