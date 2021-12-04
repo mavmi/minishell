@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 16:05:57 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 11:57:26 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-// # include <sys/errno.h>
 
 # include "../libft/libft.h"
 # include "utils.h"

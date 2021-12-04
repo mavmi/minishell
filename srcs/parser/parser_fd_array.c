@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/03 20:51:15 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/04 12:23:16 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,37 @@ static int	*arr_fd_add_realloc(int *fd_arr, int in_fd, int out_fd)
 	return (new_arr);
 }
 
+static void	mistake_fd(int fd, char error_fl)
+{
+	char *error_str;
+
+	error_str = NULL;
+	if (fd == NON_FD)
+	{
+		if (error_fl == 'h')
+			error_str = utils_sum_strings("minishell: here_doc: ", strerror(errno));
+		else if (error_fl == 'i')
+			error_str = utils_sum_strings("minishell: input: ", strerror(errno));
+		else if (error_fl == 'o')
+			error_str = utils_sum_strings("minishell: output: ", strerror(errno));
+		else if (error_fl == 'a')
+			error_str = utils_sum_strings("minishell: output_app: ", strerror(errno));
+	}
+	ft_putendl_fd(error_str, STDERR_FILENO);
+	free(error_str);
+}
+
 int	*arr_fd_formation(t_par_list *elem_list)
 {
 	t_par_elem	*substr;
 	int	*fd_arr;
 	int	fd_input;
 	int	fd_output;
-	char *error_str;
 
 	substr = elem_list->begin;
 	fd_input = 0; // maybe needs changing default fd
 	fd_output = 1; // maybe needs changing default fd
 	fd_arr = NULL;
-	error_str = NULL;
 	while (substr)
 	{
 		if (substr->type == OPER_PIPE_N)
@@ -62,41 +80,25 @@ int	*arr_fd_formation(t_par_list *elem_list)
 		{
 			substr = substr->next;
 			fd_input = proc_here_doc(substr->value);
-			if (fd_input == -1)
-			{
-				error_str = utils_sum_strings("minishell: here_doc: ", strerror(errno));
-				ft_putendl_fd(error_str, 1);
-			}
+			mistake_fd(fd_input, 'h');
 		}
 		else if (substr && substr->type == OPER_INP_N)
 		{
 			substr = substr->next;
 			fd_input = proc_open_file(substr->value, READ);
-			if (fd_input == -1)
-			{
-				error_str = utils_sum_strings("minishell: input: ", strerror(errno));
-				ft_putendl_fd(error_str, 1);
-			}
+			mistake_fd(fd_input, 'i');
 		}
 		else if (substr && (substr->type == OPER_OUT_N))
 		{
 			substr = substr->next;
 			fd_output = proc_open_file(substr->value, WRITE);
-			if (fd_input == -1)
-			{
-				error_str = utils_sum_strings("minishell: output: ", strerror(errno));
-				ft_putendl_fd(error_str, 1);
-			}
+			mistake_fd(fd_input, 'o');
 		}
 		else if (substr && (substr->type == OPER_OUT_APP_N))
 		{
 			substr = substr->next;
 			fd_output = proc_open_file(substr->value, WRITE_APP);
-			if (fd_input == -1)
-			{
-				error_str = utils_sum_strings("minishell: output_app: ", strerror(errno));
-				ft_putendl_fd(error_str, 1);
-			}
+			mistake_fd(fd_input, 'a');
 		}
 		substr = substr->next;
 	}
