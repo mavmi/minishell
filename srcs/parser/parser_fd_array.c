@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/04 18:32:58 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 19:57:32 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,13 @@ static void	mistake_fd(int fd, char *error)
 	error_str = NULL;
 	if (fd == NON_FD)
 	{
+		printf ("err = %s|\n", error);
 		if (utils_cmp_strings(error, "here_doc") == 1)
 			error_str = utils_sum_strings("minishell: here_doc", strerror(errno));
 		else 
 		{
 			error_str = utils_sum_strings("minishell: ", error);
+			utils_append_string(&error_str, " ");
 			utils_append_string(&error_str, strerror(errno));
 		}
 	}

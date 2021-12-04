@@ -159,7 +159,7 @@ int	main(void)
 	// char	str[52] = "cat $         ABS=123 \"doll $doll\"";
 	// printf("ret_str = %s \n", handling_quotes(str));
 	// char	str[100] = "<input_file cat|grep    \'$vFJFJFJ\'  SUBSTRING >output_file ";
-	char	str[65] = "<<cat -e jjjj| \"<\"<STOP file.c cat -e >file.c file.c";//cat";
+	char	str[65] = "< stop cat -e | < STOP cat -e >file.c";//cat";
 	t_par_list	*list;
 	t_par_elem	*elem;
 
@@ -192,17 +192,20 @@ int	main(void)
 
 
 	 char	**arr = arr_cmd_formation(list);
+	 int	*fd_arr = arr_fd_formation(list);
 	 int		i = 0;
 
+	return (0);
 	 while (arr && arr[i])
 	 {
-	 	printf ("arr[%d]: %s\n", i, arr[i]);
+	 	printf ("arr[%d]: %s           fd:%d\n", i, arr[i], fd_arr[i]);
 	 	i++;
 	 }
 	 for (int i=0; arr && arr[i]; i++)
 	 	free (arr[i]);
 	 free (arr);
-
+	////////////////////////////////////////////
+	
 
 	par_destroy_all(list);
 // sleep (1000);

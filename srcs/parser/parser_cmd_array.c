@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:51:02 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/04 18:15:05 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 19:44:35 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,15 @@ char	**arr_cmd_formation(t_par_list *elem_list)
 	substr = elem_list->begin;
 	while (substr)
 	{
-		if (substr->type != DEFAULT_N && substr->type != OPER_DOLL_N)
+		if (substr && substr->type == OPER_PIPE_N)
+			substr = substr->next;
+		else if (substr && substr->type != OPER_PIPE_N 
+						&& substr->type != OPER_DOLL_N && substr->type != DEFAULT_N)
 		{
-			if (substr)
-				substr = substr->next;
-			if (substr)
-				substr = substr->next;
+			substr = substr->next;
+			substr = substr->next;
 		}
-		if (substr && (substr->type == DEFAULT_N
+		else if (substr && (substr->type == DEFAULT_N
 							|| substr->type == OPER_DOLL_N))
 			substr = cmd_handler(substr, &cmd_substr);
 		if (!substr && !cmd_substr)
