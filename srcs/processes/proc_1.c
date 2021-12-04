@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 17:06:47 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 16:16:09 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_process	*proc_get_new_elem(char *cmd, int in, int out)
 }
 
 // Part of proc_init_list function
-static void	proc_init_list_handler(t_process **list, char **cmds)
+static void	proc_init_list_handler(t_process **list, char **cmds, int *fd)
 {
 	t_process	*ptr;
 	t_process	*new_elem;
@@ -75,7 +75,7 @@ static void	proc_init_list_handler(t_process **list, char **cmds)
 	ptr = *list;
 	while (*cmds)
 	{
-		new_elem = proc_get_new_elem(*cmds++, NON_FD, NON_FD);
+		new_elem = proc_get_new_elem(*cmds++, *fd, *(fd + 1));
 		if (!new_elem)
 		{
 			proc_destroy_list(*list);
@@ -85,24 +85,25 @@ static void	proc_init_list_handler(t_process **list, char **cmds)
 		ptr->next = new_elem;
 		new_elem->prev = ptr;
 		ptr = new_elem;
+		fd += 2;
 	}
 }
 
 // Parse commands to create list of processes to execute.
 // May return NULL
-t_process	*proc_init_list(char **commands, char **envp)
+t_process	*proc_init_list(char **cmd, int *fd, char **envp)
 {
 	t_process	*list;
 
-	if (!commands || !envp)
+	if (!cmd || !envp || !fd)
 		return (NULL);
-	list = proc_get_new_elem(*commands++, NON_FD, NON_FD);
+	list = proc_get_new_elem(*cmd++, *fd, *(fd + 1));
 	if (!list)
 	{
 		proc_destroy_elem(list);
 		return (NULL);
 	}
-	proc_init_list_handler(&list, commands);
+	proc_init_list_handler(&list, cmd, (fd + 2));
 	return (list);
 }
 

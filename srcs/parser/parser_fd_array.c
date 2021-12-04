@@ -6,11 +6,23 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/04 14:13:01 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 18:32:58 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
+
+static int	fd_arr_len(int *fd_arr)
+{	
+	int	size;
+
+	if (!fd_arr)
+		return (0);
+	size = 0;
+	while (fd_arr[size] != -2)
+		size++;
+	return (size);
+}
 
 static int	*arr_fd_add_realloc(int *fd_arr, int in_fd, int out_fd)
 {
@@ -21,7 +33,7 @@ static int	*arr_fd_add_realloc(int *fd_arr, int in_fd, int out_fd)
 	len = 0;
 	i = 0;
 	if (fd_arr)
-		len = ft_strlen((int *)fd_arr);
+		len = fd_arr_len(fd_arr);
 	new_arr = (int *)malloc(sizeof(int) * (len + 3));
 	if (!new_arr)
 	{
@@ -38,7 +50,7 @@ static int	*arr_fd_add_realloc(int *fd_arr, int in_fd, int out_fd)
 		free(fd_arr);
 	new_arr[i] = in_fd;
 	new_arr[++i] = out_fd;
-	new_arr[++i] = '\0';
+	new_arr[++i] = -2;
 	return (new_arr);
 }
 
@@ -49,12 +61,12 @@ static void	mistake_fd(int fd, char *error)
 	error_str = NULL;
 	if (fd == NON_FD)
 	{
-		if (error == "here_doc")
+		if (utils_cmp_strings(error, "here_doc") == 1)
 			error_str = utils_sum_strings("minishell: here_doc", strerror(errno));
 		else 
 		{
 			error_str = utils_sum_strings("minishell: ", error);
-			utils_append_string(error_str, strerror(errno));
+			utils_append_string(&error_str, strerror(errno));
 		}
 	}
 	ft_putendl_fd(error_str, STDERR_FILENO);
@@ -105,4 +117,5 @@ int	*arr_fd_formation(t_par_list *elem_list)
 		} 
 		substr = substr->next;
 	}
+	return (fd_arr);
 }

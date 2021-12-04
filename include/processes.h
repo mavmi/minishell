@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 16:05:57 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 15:46:52 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ struct s_process
 
 // proc_1.c
 t_process	*proc_get_new_elem(char *cmd, int in, int out);
-t_process	*proc_init_list(char **commands, char **envp);
+t_process	*proc_init_list(char **cmd, int *fd, char **envp);
 void		proc_push_back(t_process **list, t_process *elem);
 
 // proc_2.c

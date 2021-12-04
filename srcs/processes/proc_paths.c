@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:49:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 17:08:31 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 16:23:04 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*proc_get_full_path(char *dir, char *file_name)
 }
 
 // Get PATH string from enviroment
-// and convert it to the array of stirngs.
+// and convert it to the array of paths to directories.
 // May return NULL
 char	**proc_get_paths_array(char **envp)
 {

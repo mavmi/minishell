@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 14:00:23 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 18:44:54 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	rebuilt_export(int argc, char **argv)
 	char	*equal;
 	char	*new_name;
 	char	*new_val;
-	char	**array;
 
 	if (argc != 2 || !argv[1])
 		return ;

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 17:37:30 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 17:10:35 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ static void	proc_execute_built_ins(t_process **ptr)
 	first = *ptr;
 	while (*ptr && (*ptr)->is_built_in)
 	{
+		if ((*ptr)->input_fd == NON_FD || (*ptr)->output_fd == NON_FD)
+		{
+			(*ptr) = (*ptr)->next;
+			continue ;	
+		}
 		(*ptr)->pid = process_execute_built_in(*ptr);
 		if ((*ptr)->pid == -1)
 			return ;
@@ -70,7 +75,8 @@ void	proc_execute_list(t_process *list)
 			proc_execute_built_ins(&ptr);
 		while (ptr && !ptr->is_built_in)
 		{
-			process_execute_rebuilt(ptr);
+			if (ptr->input_fd != NON_FD && ptr->output_fd != NON_FD)
+				process_execute_rebuilt(ptr);
 			ptr = ptr->next;
 		}
 	}

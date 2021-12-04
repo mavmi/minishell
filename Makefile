@@ -7,7 +7,6 @@ ENV_DIR		=	$(SRCS_DIR)/enviroment
 PROC_DIR	=	$(SRCS_DIR)/processes
 UTILS_DIR	=	$(SRCS_DIR)/utils
 PARS_DIR	=	$(SRCS_DIR)/parser
-PARS_DIR_	=	$(SRCS_DIR)/parser_
 HDRS_DIR	=	include
 READLN_DIR	=	readline
 
@@ -16,10 +15,9 @@ TESTS_DIR	=	tests
 TESTS_PIPE	=	$(TESTS_DIR)/multi_pipe
 TESTS_HE_DO	=	$(TESTS_DIR)/here_doc
 TESTS_PARS	=	$(TESTS_DIR)/parser
-TESTS_PARS_	=	$(TESTS_DIR)/parser_
 
 
-HDRS		=	$(addprefix $(HDRS_DIR)/, rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h parser_.h)
+HDRS		=	$(addprefix $(HDRS_DIR)/, rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h)
 SRC_MAIN	= 	$(addprefix $(SRCS_DIR)/, minishell.c)
 SRCS		= 	$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c env_utils.c)\
@@ -43,7 +41,7 @@ CYAN		=	\033[36m
 NC			=	\033[0m
 
 
-FLAGS		=	-Wall -Wextra -Werror -g
+FLAGS		=	-w #-Wall -Wextra -Werror -g
 CC			=	gcc
 GCC			=	$(CC) $(FLAGS)
 
@@ -54,7 +52,7 @@ GPP			=	g++ -std=c++17 -w $(OBJS) $(LIBFT) $(READLN) -I $(READLN_DIR) -ltermcap 
 
 all:			compile_libft $(NAME)
 
-%.o:			%.c $(LIBFT) $(READLN) $(HDRS)
+%.o:			%.c
 				$(GCC) -c -o $@ $<
  
 $(NAME):		$(OBJS) $(OBJ_MAIN)
@@ -94,9 +92,6 @@ norm:
 
 				@echo "$(BLUE)\n\t*** PARSER ***$(NC)"
 				@norminette $(PARS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
-				
-#				@echo "$(BLUE)\n\t*** MY PARSER ***$(NC)"
-#				@norminette $(PARS_DIR_) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
 tests:			compile_libft $(OBJS)
 				$(eval CUR_TEST := $(TESTS_PIPE))

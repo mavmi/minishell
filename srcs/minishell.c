@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/04 14:08:40 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 19:10:06 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,30 @@ static void	update_shlvl(void)
 	}
 }
 
+static void	work_steps(t_par_list *pars_list)
+{
+	char		**arr_cmd;
+	int			*arr_fd;
+	char		**arr_env;
+	t_process	*proc_list;
+	
+	arr_cmd = arr_cmd_formation(pars_list);
+	arr_cmd = par_handle_quotesNenv(arr_cmd);
+	arr_fd = arr_fd_formation(pars_list);
+	arr_env = env_get_content(g_data.envp);
+	proc_list = proc_init_list(arr_cmd, arr_fd, arr_env);
+	proc_execute_list(proc_list);
+	utils_destroy_strings_array(arr_cmd);
+	free(arr_fd);
+	proc_destroy_list(proc_list);
+	par_destroy_all(pars_list);
+	utils_destroy_strings_array(arr_env);
+}
+
 // Calls parser and executor untill exit
 static void	run(void)
 {
 	char		*str;
-	char		**arr_cmd;
-	int			**arr_fd;
-	t_process	*proc_list;
 	t_par_list	*pars_list;
 
 	while (1)
@@ -66,35 +83,27 @@ static void	run(void)
 		pars_list = par_split(str);
 		if (par_check_list(pars_list))
 		{
-			arr_cmd = arr_cmd_formation(pars_list);
-			arr_cmd = par_handle_quotesNenv(arr_cmd);
-			arr_fd = arr_fd_formation(pars_list);
-					
-		}
-			
-		
-
-		/*
-		free(str);
-		par_destroy_all(pars_list);
-		utils_destroy_strings_array(arr_cmd);*/
-		
+			work_steps(pars_list);		
+		}		
 	}	
 	rl_clear_history();
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	g_data.envp = env_create(envp);
-	if (!g_data.envp)
-	{
-		printf("Can not create local enviroment\n");
-		return (1);
-	}
-	signals_set_up();
-	update_shlvl();
-	g_data.exit_status = 0;
-	g_data.error = NULL;
-	run();
-	env_destroy(g_data.envp);
-}
+//int	main(int argc, char **argv, char **envp)
+//{
+//	(void)argc;
+//	(void)argv;
+//	g_data.envp = env_create(envp);
+//	if (!g_data.envp)
+//	{
+//		printf("Can not create local enviroment\n");
+//		return (1);
+//	}
+//	signals_set_up();
+//	update_shlvl();
+//	g_data.exit_status = 0;
+//	g_data.error = NULL;
+//	run
+//	();
+//	env_destroy(g_data.envp);
+//}

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 17:37:15 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/04 17:39:02 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // pipe[1] -> write
 static void	proc_redirect(t_process *proc, int input, int output)
 {
-	if (input != STDIN_FILENO && input != NON_FD)
+	if (input != STDIN_FILENO)
 	{
 		dup2(input, STDIN_FILENO);
 		close(input);
@@ -29,7 +29,7 @@ static void	proc_redirect(t_process *proc, int input, int output)
 		close(proc->prev->io_buffer[STDIN_FILENO]);
 		close(proc->prev->io_buffer[STDOUT_FILENO]);
 	}
-	if (output != STDOUT_FILENO && output != NON_FD)
+	if (output != STDOUT_FILENO)
 	{
 		dup2(output, STDOUT_FILENO);
 		close(output);
@@ -72,7 +72,7 @@ pid_t	process_execute_built_in(t_process *process)
 // Part of process_execute_rebuilt function
 static void	process_execute_rebuilt_handler(t_process *process, int argc)
 {
-	if (process->output_fd != NON_FD)
+	if (process->output_fd != STDOUT_FILENO)
 	{
 		rebuilt_call_func(argc, process->argv, process->output_fd);
 		close(process->io_buffer[STDIN_FILENO]);
