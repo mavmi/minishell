@@ -13,20 +13,15 @@
 #include "../../include/parser.h"
 
 /* Frees operations arr and/or list */
-t_par_list	*par_free_out(char **oper_arr, t_par_list *list)
+t_par_list	*par_free_out(char **oper_arr, t_par_list *list, int fl)
 {
-	if (!oper_arr && !list)
-		return (NULL);
-	else if (!oper_arr)
-		par_destroy_all(list);
-	else if (!list)
-		free(oper_arr);
-	else
+	free(oper_arr);
+	if (fl == 1)
 	{
-		free(oper_arr);
 		par_destroy_all(list);
+		return (NULL);
 	}
-	return (NULL);
+	return (list);
 }
 
 char	*par_check_malloc(char *str)
@@ -120,102 +115,3 @@ char	*par_handling_quotes(char *str)
 	free (str);
 	return (return_str);
 }
-// int	main(void)
-// {
-// 	//FOR_PAR// gcc -Wall -Wextra -Werror srcs/parser/parser_1.c srcs/parser/parser_initial.c srcs/parser/parser_operations.c srcs/parser/parser_0.c libft/ft_strlen.c libft/ft_strdup.c  && leaks --atExit -- ./a.out
-
-// 	//FOR_ARR// gcc -Wall -Wextra -Werror srcs/parser/parser_cmd_array.c srcs/parser/parser_1.c srcs/parser/parser_initial.c srcs/parser/parser_operations.c srcs/parser/parser_0.c libft/libft.a srcs/utils/utils_2.c && ./a.out | cat -e
-
-// // valgrind --log-file=valgrind_output.txt --tool=memcheck --leak-check=yes
-
-// /* MAIN FOR HANDLING QUOTES TESTING*/
-
-// // 	// char	str[6] = "\"text\""; // "text"
-// // 	// char	str[6] = "\'text\'"; // 'text'
-// // 	// char	str[8] = "\"te\'xt\""; // "te'xt"
-// // 	// char	str[8] = "\'te\"xt\'"; // 'te"xt'
-
-// // 	// char	str[13] = "\"text\"\"text\""; // "text""text"
-// 	// char	str[13] = "\'text\'\'text\'"; // 'text''text'
-// // 	// char	str[13] = "\"text\"\'text\'"; // "text"'text'
-// 	// char	str[13] = "\'text\'\"text\""; // 'text'"text"
-
-// 	// char	str[13] = "\'text\'text\"\""; // 'text'text""
-
-// // 	//~~~~~~~~~~~~~~~~~~~~~~~~~~mistakes~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// // 	// char	str[13] = "\"text\\\"text\""; //"text\"text"
-// // 	// char	str[13] = "\'text\\\'text\'"; //'text\'text'
-// // 	// char	str[13] = "\'text\\\"text\'"; //'text\"text'
-// // 	// char	str[13] = "\"text\\\"text\""; //"text\'text"
-
-// 	// char	str[12] = "\'text\'text\'"; //'text'text'
-// // 	// char	str[12] = "\"text\"text\""; //"text"text"
-// // 	// char	str[12] = "\"text\'text\'"; //"text'text'
-// 	// char	str[12] = "\'text\"text\""; //'text"text"
-
-// // 	// char	str[13] = "\'text\'\"text\'"; //'text'"text'
-// 	// char	str[13] = "\"text\"\'text\""; //'text'"text'
-
-// 	// char	str[52] = "cat $         ABS=123 \"doll $doll\"";
-// 	// printf("ret_str = %s \n", handling_quotes(str));
-// 	// char	str[100] = "<input_file cat|grep    \'$vFJFJFJ\'  SUBSTRING >output_file ";
-	// char	str[65] = "< /Users/msalena/Desktop/33 cat -e | < STOP cat -e > 2:";//cat";
-	// t_par_list	*list;
-	// t_par_elem	*elem;
-
-	// list = par_split(str);
-	// if (!list)
-	// {
-	// 	printf ("NULL\n");
-	// 	return (0);
-	// }
-	// elem = list->begin;
-
-// 	/////////for_par_split_outputing////////////
-// 	// while (elem->next)
-// 	// {
-// 	// 	printf ("type_str= %d  ---------          ", elem->type);
-// 	// 	printf("str_of_arr =%s                 num = %d\n", elem->value, elem->number_pos);
-// 	// 	elem = elem->next;
-// 	// }
-// 	// printf ("type_str= %d  ---------          ", elem->type);
-// 	// printf("str_of_arr =%s\n", elem->value);
-
-// 	///////////////////////////////////////////
-
-
-// 	///////////////////////////////////////////////
-// 	// open("lsadfj", O_RDONLY);
-// 	// printf("minishell: %s: %s\n", "filename", strerror(errno));
-// 	// return 1;
-// 	///////////////////////////////////////////////
-
-
-	//  char	**arr = arr_cmd_formation(list);
-	//  int	*fd_arr = arr_fd_formation(list);
-	//  int		i = 0;
-	//  int		d = 0;
-
-// 	// char *s = "/Users/msalena/Desktop/33";
-
-	// printf ("open = %d\n", proc_open_file(s, READ));
-	// return (0);
-// 	printf ("arr[%d]: %s           in[%d+%d]:%d  out[%d+%d+1]:%d\n", i, arr[i], i, d, fd_arr[i+d], i, d, fd_arr[i+d+1]);
-// 	i++;
-// 	d += 1;
-// 	 while (arr && arr[i])
-// 	 {
-// 	 	printf ("arr[%d]: %s           in[%d+%d]:%d  out[%d+%d+1]:%d\n", i, arr[i], i, d, fd_arr[i+d], i, d, fd_arr[i+d+1]);
-// 	 	i++;
-// 		 d += 2;
-// 	 }
-// 	//  for (int i=0; arr && arr[i]; i++)
-// 	//  	free (arr[i]);
-// 	//  free (arr);
-// // 	////////////////////////////////////////////
-
-
-// 	// par_destroy_all(list);
-// // sleep (1000);
-// 	return (0);
-// }

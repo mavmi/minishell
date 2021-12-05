@@ -50,7 +50,7 @@ char	**par_get_redirect(void)
 --> return new list's elem
 	or NULL !value (which be in new elem)
 	and if malloc didn't allocate memory for new elem*/
-t_par_elem	*par_get_new_elem(int type, char *value, size_t num)
+t_par_elem	*par_get_new_elem(int type, char *value)
 {
 	t_par_elem	*new_elem;
 
@@ -61,7 +61,6 @@ t_par_elem	*par_get_new_elem(int type, char *value, size_t num)
 		return (NULL);
 	new_elem->type = type;
 	new_elem->value = ft_strdup(value);
-	new_elem->number_pos = num;
 	new_elem->prev = NULL;
 	new_elem->next = NULL;
 	return (new_elem);

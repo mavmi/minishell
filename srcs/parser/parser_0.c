@@ -77,10 +77,8 @@ static char	*end_of_argum_str(char *cmd, t_par_count *count,
 			break ;
 		}
 		if (cmd[count->i_elem] == '\'' || cmd[count->i_elem] == '\"')
-		{
 			if (end_of_quotes_area(cmd, count, start) == 0)
 				return (NULL);
-		}
 		count->i_elem++;
 		op_fl = par_compar_cNo(cmd + count->i_elem, count, oper_arr);
 	}
@@ -129,7 +127,6 @@ t_par_list	*par_split(char *cmd)
 	char		*substr;
 	char		**oper_arr;
 	t_par_count	coun;
-	size_t	count = 0;
 
 	if (!cmd)
 		return (NULL);
@@ -137,20 +134,18 @@ t_par_list	*par_split(char *cmd)
 	oper_arr = par_get_redirect();
 	list = par_initial_empty_list();
 	if (!oper_arr || !list)
-		return (par_free_out(oper_arr, list));
+		return (par_free_out(oper_arr, list, 1));
 	substr = get_elems(cmd, oper_arr, &coun);
 	if (!substr)
-		return (par_free_out(oper_arr, list));
+		return (par_free_out(oper_arr, list, 1));
 	while (substr)
 	{
-		par_push_back(par_get_new_elem(coun.num, substr, count), list);
+		par_push_back(par_get_new_elem(coun.num, substr), list);
 		if (coun.num == DEFAULT_N || coun.num == OPER_DOLL_N)
 			free (substr);
 		substr = get_elems(cmd, oper_arr, &coun);
 		if (!substr && (int)ft_strlen(cmd) != coun.i_elem)
-			return (par_free_out(oper_arr, list));
-		count++;
+			return (par_free_out(oper_arr, list, 1));
 	}
-	free (oper_arr);
-	return (list);
+	return (par_free_out(oper_arr, list, 0));
 }

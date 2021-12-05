@@ -6,11 +6,23 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:51:02 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/05 10:41:27 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/05 17:18:20 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
+
+int	fd_arr_len(int *fd_arr)
+{
+	int	size;
+
+	if (!fd_arr)
+		return (0);
+	size = 0;
+	while (fd_arr[size] != -2)
+		size++;
+	return (size);
+}
 
 static char	**arr_cmd_add_realloc(char *added_str, char **arr_str)
 {
@@ -33,8 +45,7 @@ static char	**arr_cmd_add_realloc(char *added_str, char **arr_str)
 		new_arr[tmp_i] = arr_str[tmp_i];
 		tmp_i++;
 	}
-	if (arr_str)
-		free(arr_str);
+	free(arr_str);
 	new_arr[tmp_i++] = added_str;
 	new_arr[tmp_i] = NULL;
 	return (new_arr);
@@ -46,12 +57,12 @@ static t_par_elem	*cmd_handler(t_par_elem *substr, char ***cmd_substr)
 
 	str = NULL;
 	while (substr && (substr->type == DEFAULT_N
-							|| substr->type == OPER_DOLL_N))
+			|| substr->type == OPER_DOLL_N))
 	{
-			utils_append_string(&str, substr->value);
-			substr = substr->next;
+		utils_append_string(&str, substr->value);
+		substr = substr->next;
 		if (substr && substr->type != OPER_PIPE_N && substr->type != DEFAULT_N
-						&& substr->type != OPER_DOLL_N)
+			&& substr->type != OPER_DOLL_N)
 		{
 			if (substr)
 				substr = substr->next;
@@ -70,7 +81,7 @@ static t_par_elem	*cmd_handler(t_par_elem *substr, char ***cmd_substr)
 char	**arr_cmd_formation(t_par_list *elem_list)
 {
 	t_par_elem	*substr;
-	char	**cmd_substr;
+	char		**cmd_substr;
 
 	if (!elem_list && !elem_list->begin)
 		return (NULL);
@@ -81,13 +92,13 @@ char	**arr_cmd_formation(t_par_list *elem_list)
 		if (substr && substr->type == OPER_PIPE_N)
 			substr = substr->next;
 		else if (substr && substr->type != OPER_PIPE_N
-						&& substr->type != OPER_DOLL_N && substr->type != DEFAULT_N)
+			&& substr->type != OPER_DOLL_N && substr->type != DEFAULT_N)
 		{
 			substr = substr->next;
 			substr = substr->next;
 		}
 		else if (substr && (substr->type == DEFAULT_N
-							|| substr->type == OPER_DOLL_N))
+				|| substr->type == OPER_DOLL_N))
 			substr = cmd_handler(substr, &cmd_substr);
 		if (!substr && !cmd_substr)
 			return (NULL);
