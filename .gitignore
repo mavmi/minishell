@@ -1,5 +1,6 @@
 minishell
 .*
+*.d
 *.o
 *.a
 *.out

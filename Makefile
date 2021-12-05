@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: msalena <msalena@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/12/05 19:05:38 by msalena           #+#    #+#              #
+#    Updated: 2021/12/05 19:21:29 by msalena          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME		=	minishell
 
 
@@ -11,21 +23,17 @@ HDRS_DIR	=	include
 READLN_DIR	=	readline
 
 
-TESTS_DIR	=	tests
-TESTS_PIPE	=	$(TESTS_DIR)/multi_pipe
-TESTS_HE_DO	=	$(TESTS_DIR)/here_doc
-TESTS_PARS	=	$(TESTS_DIR)/parser
-
-
 HDRS		=	$(addprefix $(HDRS_DIR)/, rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h)
-SRC_MAIN	= 	$(addprefix $(SRCS_DIR)/, minishell.c steps_execution.c)
-SRCS		= 	$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
+SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c steps_execution.c)\
+			 	$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c env_utils.c)\
 				$(addprefix $(PROC_DIR)/, proc_files.c proc_paths.c proc_1.c proc_2.c proc_3.c proc_4.c proc_here_doc.c)\
 				$(addprefix $(UTILS_DIR)/, utils_1.c)\
-				$(addprefix $(PARS_DIR)/, parser_0.c parser_1.c parser_cmd_array.c parser_fd_array.c parser_initial.c parser_operations.c parser_handle_quotes_1.c parser_handle_quotes_2.c parser_handle_quotes_3.c parser_list_checker.c)
-OBJ_MAIN	=	$(SRC_MAIN:.c=.o)
+				$(addprefix $(PARS_DIR)/, parser_0.c parser_1.c parser_cmd_array.c parser_fd_array.c\
+											parser_initial.c parser_operations.c parser_handle_quotes_1.c\
+											parser_handle_quotes_2.c parser_handle_quotes_3.c parser_list_checker.c)
 OBJS		=	$(SRCS:.c=.o)
+DEPEN		=	$(OBJS:.o=.d)
 
 
 LIBFT_DIR	=	libft
@@ -36,18 +44,15 @@ READLN_HDRS	=	$(addprefix $(READLN_DIR)/, chardefs.h history.h keymaps.h readlin
 READLN		=	$(addprefix $(READLN_DIR)/, libhistory.a libreadline.a)
 
 
+# Norminette colors
 BLUE		=	\033[34m
 CYAN		=	\033[36m
 NC			=	\033[0m
 
 
-FLAGS		=	-Wall -Wextra -Werror -g
+FLAGS		=	-Wall -Wextra -Werror -MMD
 CC			=	gcc
 GCC			=	$(CC) $(FLAGS)
-
-
-CUR_TEST	=	0
-GPP			=	g++ -std=c++17 -w $(OBJS) $(LIBFT) $(READLN) -I $(READLN_DIR) -ltermcap $(CUR_TEST)/test.cpp -o $(CUR_TEST)/test.out
 
 
 all:			compile_libft $(NAME)
@@ -55,14 +60,14 @@ all:			compile_libft $(NAME)
 %.o:			%.c
 				$(GCC) -c -o $@ $<
 
-$(NAME):		$(OBJS) $(OBJ_MAIN)
-				$(GCC) $(OBJS) $(OBJ_MAIN) $(LIBFT) $(READLN) -I $(READLN_DIR) -I $(HDRS_DIR) -ltermcap -o $(NAME)
+$(NAME):		$(OBJS) Makefile
+				$(GCC) $(OBJS) $(LIBFT) $(READLN) -I $(READLN_DIR) -I $(HDRS_DIR) -ltermcap -o $(NAME)
 
 compile_libft:
 				$(MAKE) -C $(LIBFT_DIR)
 
 clean:
-				rm -f $(OBJS) $(OBJ_MAIN)
+				rm -f $(OBJS) $(DEPEN)
 				$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean:			clean
@@ -75,8 +80,8 @@ norm:
 				@echo "$(BLUE)\n\t*** HEADERS ***$(NC)"
 				@norminette $(HDRS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
-				@echo "$(BLUE)\n\t*** MAIN ***$(NC)"
-				@norminette $(SRC_MAIN) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
+				@echo "$(BLUE)\n\t*** SRCS_DIR ***$(NC)"
+				@norminette $(SRCS_DIR)/*.c | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
 				@echo "$(BLUE)\n\t*** FUNCS ***$(NC)"
 				@norminette $(FUNCS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
@@ -84,7 +89,7 @@ norm:
 				@echo "$(BLUE)\n\t*** ENV ***$(NC)"
 				@norminette $(ENV_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
-				@echo "$(BLUE)\n\t*** PIPEX ***$(NC)"
+				@echo "$(BLUE)\n\t*** PROCESSES ***$(NC)"
 				@norminette $(PROC_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
 				@echo "$(BLUE)\n\t*** UTILS ***$(NC)"
@@ -93,17 +98,6 @@ norm:
 				@echo "$(BLUE)\n\t*** PARSER ***$(NC)"
 				@norminette $(PARS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 
-tests:			compile_libft $(OBJS)
-				$(eval CUR_TEST := $(TESTS_PIPE))
-				$(GPP)
+-include $(DEPEN)
 
-				$(eval CUR_TEST := $(TESTS_HE_DO))
-				$(GPP)
-
-				$(eval CUR_TEST := $(TESTS_PARS))
-				$(GPP)
-
-				$(eval CUR_TEST := $(TESTS_PARS_))
-				$(GPP)
-
-.PHONY:			all compile_libft clean fclean re tests norm
+.PHONY:			all compile_libft clean fclean re norm
