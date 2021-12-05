@@ -30,7 +30,6 @@
 # define OPER_PIPE_S "|"
 # define OPER_DOLL_S "$"
 
-// # include "minishell.h"
 # include "../libft/libft.h"
 # include <stdio.h>
 # include "utils.h"

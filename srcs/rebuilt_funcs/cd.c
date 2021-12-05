@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 17:11:47 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/05 11:56:27 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/05 16:09:30 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,41 @@ static void	set_values(char *new_pwd, char *old_pwd)
 	}
 }
 
-// Change working directory to [argv[1]].
-// At first it tries to use [argv[1]] as absolute path
-void	rebuilt_cd(int argc, char **argv)
+static void	change_dir(char *new_path)
 {
 	char	*old_pwd;
 	char	*new_pwd;
 
-	if (argc != 2)
-		return ;
 	old_pwd = getcwd(NULL, 0);
-	if (chdir(argv[1]))
+	if (chdir(new_path))
 	{
 		free(old_pwd);
 		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-		ft_putstr_fd(argv[1], STDERR_FILENO);
+		ft_putstr_fd(new_path, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		return ;
 	}
 	new_pwd = getcwd(NULL, 0);
 	set_values(new_pwd, old_pwd);
+}
+
+// Change working directory to [argv[1]].
+// At first it tries to use [argv[1]] as absolute path
+void	rebuilt_cd(int argc, char **argv)
+{
+	t_env_elem	*env_elem;
+
+	if (argc > 1)
+	{
+		change_dir(argv[1]);
+		return ;
+	}
+	env_elem = env_get_by_name(g_data.envp, "HOME");
+	if (!env_elem)
+	{
+		ft_putendl_fd("minishell: cd: HOME not set", STDERR_FILENO);
+		return ;
+	}
+	change_dir(env_elem->value);
 }
