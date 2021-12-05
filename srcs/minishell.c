@@ -21,8 +21,8 @@ static void	signal_handler(int sig)
 	{
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		printf("\n");
 		rl_redisplay();
+		printf("  \n");
 	}
 }
 
@@ -30,7 +30,7 @@ static void	signal_handler(int sig)
 static void	signals_set_up(void)
 {
 	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 // Increase enviroment's SHLVL value when programm starts
