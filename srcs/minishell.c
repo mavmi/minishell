@@ -6,7 +6,7 @@
 /*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/05 18:18:15 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/05 19:39:41 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static void	run(void)
 		str = readline(PROMT);
 		if (!str)
 			rebuilt_exit();
-		add_history(str);
+		if (ft_strlen(str))
+			add_history(str);
 		pars_list = par_split(str);
 		if (par_check_list(pars_list))
 		{

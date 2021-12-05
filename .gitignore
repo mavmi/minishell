@@ -5,6 +5,7 @@ minishell
 *.a
 *.out
 *.exe
+*.pdf
 print_separator
 input_file
 output_file
