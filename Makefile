@@ -41,7 +41,7 @@ CYAN		=	\033[36m
 NC			=	\033[0m
 
 
-FLAGS		=	-w #-Wall -Wextra -Werror -g
+FLAGS		=	-Wall -Wextra -Werror -g
 CC			=	gcc
 GCC			=	$(CC) $(FLAGS)
 
@@ -54,14 +54,14 @@ all:			compile_libft $(NAME)
 
 %.o:			%.c
 				$(GCC) -c -o $@ $<
- 
+
 $(NAME):		$(OBJS) $(OBJ_MAIN)
 				$(GCC) $(OBJS) $(OBJ_MAIN) $(LIBFT) $(READLN) -I $(READLN_DIR) -I $(HDRS_DIR) -ltermcap -o $(NAME)
 
-compile_libft:	
+compile_libft:
 				$(MAKE) -C $(LIBFT_DIR)
 
-clean:				
+clean:
 				rm -f $(OBJS) $(OBJ_MAIN)
 				$(MAKE) clean -C $(LIBFT_DIR)
 
@@ -71,7 +71,7 @@ fclean:			clean
 
 re:				fclean all
 
-norm:			
+norm:
 				@echo "$(BLUE)\n\t*** HEADERS ***$(NC)"
 				@norminette $(HDRS_DIR) | awk '{printf "$(CYAN)%s\n$(NC)", $$0 }'
 

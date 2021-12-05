@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd_array.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:51:02 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/04 19:44:35 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/05 10:41:27 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	**arr_cmd_formation(t_par_list *elem_list)
 	t_par_elem	*substr;
 	char	**cmd_substr;
 
-	if (!elem_list)
+	if (!elem_list && !elem_list->begin)
 		return (NULL);
 	cmd_substr = NULL;
 	substr = elem_list->begin;
@@ -80,7 +80,7 @@ char	**arr_cmd_formation(t_par_list *elem_list)
 	{
 		if (substr && substr->type == OPER_PIPE_N)
 			substr = substr->next;
-		else if (substr && substr->type != OPER_PIPE_N 
+		else if (substr && substr->type != OPER_PIPE_N
 						&& substr->type != OPER_DOLL_N && substr->type != DEFAULT_N)
 		{
 			substr = substr->next;

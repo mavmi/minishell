@@ -13,6 +13,8 @@
 #ifndef PARSER_H
 # define PARSER_H
 
+# define END_OF_FD_ARR -2
+
 # define DEFAULT_N -1
 # define OPER_OUT_N 0
 # define OPER_INP_N 1
