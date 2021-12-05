@@ -18,7 +18,7 @@ TESTS_PARS	=	$(TESTS_DIR)/parser
 
 
 HDRS		=	$(addprefix $(HDRS_DIR)/, rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h)
-SRC_MAIN	= 	$(addprefix $(SRCS_DIR)/, minishell.c)
+SRC_MAIN	= 	$(addprefix $(SRCS_DIR)/, minishell.c steps_execution.c)
 SRCS		= 	$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c env_utils.c)\
 				$(addprefix $(PROC_DIR)/, proc_files.c proc_paths.c proc_1.c proc_2.c proc_3.c proc_4.c proc_here_doc.c)\

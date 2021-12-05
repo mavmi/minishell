@@ -43,7 +43,6 @@ struct s_par_elem
 {
 	int			type;
 	char		*value;
-	size_t		number_pos;
 	t_par_elem	*next;
 	t_par_elem	*prev;
 };
@@ -63,7 +62,7 @@ struct s_par_count
 };
 
 t_par_list	*par_initial_empty_list(void);
-t_par_elem	*par_get_new_elem(int type, char *value, size_t num);
+t_par_elem	*par_get_new_elem(int type, char *value);
 char		**par_get_redirect(void);
 t_par_elem	*par_get_by_pos(t_par_list *list, size_t position);
 t_par_count	count_initial(void);
@@ -75,18 +74,22 @@ void		par_destroy_all(t_par_list *list);
 
 t_par_list	*par_split(char *cmd);
 
-t_par_list	*par_free_out(char **oper_arr, t_par_list *list);
+t_par_list	*par_free_out(char **oper_arr, t_par_list *list, int fl);
 char		*par_check_malloc(char *str);
 int			par_compar_cNo(char *cmd, t_par_count *coun, char **arr);
 char		*par_handling_quotes(char *str);
 
 char		**arr_cmd_formation(t_par_list *elem_list);
-int			*arr_fd_formation(t_par_list *elem_list);
+int			fd_arr_len(int *fd_arr);
+int			*arr_fd_formation(t_par_elem *elem_list);
 
 char		**par_handle_quotesNenv(char **commands);
 char		*par_handle_str(char *cmd);
 char		*par_handle_vars(char *substr);
 
 int			par_check_list(t_par_list *list);
+
+void		update_shlvl(void);
+void		work_steps(t_par_list *pars_list);
 
 #endif

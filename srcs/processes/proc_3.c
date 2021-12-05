@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/04 17:39:02 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/05 18:14:46 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,10 @@ pid_t	process_execute_built_in(t_process *process)
 		if (execve(process->exec_path, process->argv,
 				env_get_content(g_data.envp)) == -1)
 		{
-			if (process->exec_path)
-				perror(strerror(errno));
-			else
-			{
-				ft_putstr_fd(process->exec_name, STDERR_FILENO);
-				ft_putendl_fd(": programm not found", STDERR_FILENO);
-			}
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(process->exec_name, STDERR_FILENO);
+			ft_putstr_fd(": ", STDERR_FILENO);
+			ft_putendl_fd(strerror(errno), STDERR_FILENO);
 			exit(BAD_STATUS);
 		}
 	}

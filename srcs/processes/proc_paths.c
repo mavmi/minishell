@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
+/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:49:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/04 16:23:04 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/05 18:09:50 by msalena          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,12 @@ char	*proc_parse_cmd(char *cmd)
 	envp = env_get_content(g_data.envp);
 	dirs = proc_get_paths_array(envp);
 	path = proc_find_PATH_exec(dirs, cmd);
+	if (!path)
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putendl_fd(": command not found", STDERR_FILENO);
+	}
 	utils_destroy_strings_array(envp);
 	utils_destroy_strings_array(dirs);
 	return (path);
