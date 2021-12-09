@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/05 19:39:41 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/09 20:39:16 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ static void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("  \n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
+		printf("\n");
+		rl_redisplay();
 	}
 }
 
@@ -42,7 +43,7 @@ static void	run(void)
 	{
 		str = readline(PROMT);
 		if (!str)
-			rebuilt_exit();
+			rebuilt_exit(0, 0);
 		if (ft_strlen(str))
 			add_history(str);
 		pars_list = par_split(str);

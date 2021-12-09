@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_here_doc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/05 11:39:46 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/09 20:52:50 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 int	proc_here_doc(char *stop_word)
 {
 	int		io_buffer[2];
-	char	endl;
 	char	*line;
 
 	if (!stop_word || pipe(io_buffer))
 		return (-1);
-	endl = '\n';
 	while (1)
 	{
 		line = readline("> ");
+		if (!line)
+			return (NON_FD);
 		if (utils_cmp_strings(line, stop_word))
 		{
 			free(line);
@@ -35,7 +35,7 @@ int	proc_here_doc(char *stop_word)
 			return (io_buffer[STDIN_FILENO]);
 		}
 		write(io_buffer[STDOUT_FILENO], line, ft_strlen(line));
-		write(io_buffer[STDOUT_FILENO], &endl, 1);
+		write(io_buffer[STDOUT_FILENO], "\n", 1);
 		free(line);
 	}
 }

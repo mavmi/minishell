@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fd_array.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/05 17:20:36 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/09 20:50:38 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	mistake_fd(int fd, char *error)
 	if (fd == NON_FD)
 	{
 		if (utils_cmp_strings(error, "here_doc") == 1)
-			error_str = utils_sum_strings("minishell: here_doc",
+			error_str = utils_sum_strings("minishell: here_doc: ",
 					strerror(errno));
 		else
 		{

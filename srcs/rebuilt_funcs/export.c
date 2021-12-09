@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/04 18:44:54 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/09 20:54:43 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,17 @@ static void	add_value(char *new_name, char *new_val)
 	}
 }
 
-void	rebuilt_export(int argc, char **argv)
+void	rebuilt_export(int argc, char **argv, int fd_out)
 {
 	char	*equal;
 	char	*new_name;
 	char	*new_val;
 
+	if (argc == 1)
+	{
+		rebuilt_env(fd_out);
+		return ;
+	}
 	if (argc != 2 || !argv[1])
 		return ;
 	equal = ft_strchr(argv[1], '=');
