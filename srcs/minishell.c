@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/09 20:39:16 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/10 17:12:48 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	signal_handler(int sig)
 // Just set up signals
 static void	signals_set_up(void)
 {
+	rl_catch_signals = 0;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
