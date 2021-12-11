@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_paths.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:49:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/05 18:09:50 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/11 16:09:16 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*proc_parse_cmd(char *cmd)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
-	envp = env_get_content(g_data.envp);
+	envp = env_get_content(g_data.envp, 0);
 	dirs = proc_get_paths_array(envp);
 	path = proc_find_PATH_exec(dirs, cmd);
 	if (!path)

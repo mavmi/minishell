@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 17:52:03 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/10 18:09:25 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/11 16:07:28 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_data						g_data;
 // env_1.c
 t_env_elem		*env_get_new_elem(char *str);
 int				env_push_back(t_enviroment *env, char *str);
-char			**env_get_content(t_enviroment *env);
+char			**env_get_content(t_enviroment *env, int fl_emp);
 
 // env_2.c
 void			env_remove_elem(t_enviroment *env, char *name);
@@ -66,5 +66,8 @@ int				env_set_by_name(t_enviroment *env, char *name, char *new_val);
 
 // env_utils.c
 void			env_print_error(void);
+
+//env_sort.c
+t_enviroment	*env_sort(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/11 15:18:17 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/11 17:10:39 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	add_value(char *new_name, char *new_val)
 	}
 }
 
-static void	handle_input_2(char *arg)
+static void	handle_input(char *arg)
 {
 	char	*equal;
 	char	*new_name;
@@ -71,26 +71,42 @@ static void	handle_input_2(char *arg)
 	add_value(new_name, new_val);
 }
 
-static void	handle_input_1(int argc, char **argv, int fd_out)
+static void	export_output_oy_boy(int fd_out)
 {
-	(void)	fd_out; // не забыть удалить
-	int		i;
+	t_enviroment	*list;
+	char			**arr_list;
+	int				tmp;
+	size_t			size;
 
-	i = 1;
-	while (i < argc)
+	tmp = 0;
+	list = env_sort();
+	arr_list = env_get_content(list, 1);
+	while (arr_list && arr_list[tmp])
 	{
-		handle_input_2(argv[i++]);
+		size = ft_strlen(arr_list[tmp]);
+		if (size && arr_list[tmp++][--size] == '=')
+			arr_list[tmp - 1][size] = '\0';
+	}
+	while (arr_list && *arr_list)
+	{
+		ft_putstr_fd("declare -x ", fd_out);
+		ft_putendl_fd(*arr_list, fd_out);
+		arr_list++;
 	}
 }
 
 void	rebuilt_export(int argc, char **argv, int fd_out)
 {
+	int	i;
+
 	if (!argv)
 		return ;
 	if (argc == 1)
 	{
-		// пропринтовать херню
+		export_output_oy_boy(fd_out);
 		return ;
 	}
-	handle_input_1(argc, argv, fd_out);	
+	i = 1;
+	while (i < argc)
+		handle_input(argv[i++]);
 }

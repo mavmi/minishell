@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 19:20:45 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/12 13:06:13 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/11 16:08:52 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	rebuilt_env(int fd_out)
 	char	**envp;
 	char	**ptr;
 
-	envp = env_get_content(g_data.envp);
+	envp = env_get_content(g_data.envp, 0);
 	ptr = envp;
 	while (*ptr)
 	{

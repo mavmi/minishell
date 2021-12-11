@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:36:19 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/05 18:14:46 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/11 16:09:27 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ pid_t	process_execute_built_in(t_process *process)
 	{
 		proc_redirect(process, process->input_fd, process->output_fd);
 		if (execve(process->exec_path, process->argv,
-				env_get_content(g_data.envp)) == -1)
+				env_get_content(g_data.envp, 0)) == -1)
 		{
 			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			ft_putstr_fd(process->exec_name, STDERR_FILENO);

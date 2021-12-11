@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:42:54 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/11 15:19:16 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/11 17:00:18 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	env_push_back(t_enviroment *env, char *str)
 	return (0);
 }
 
-static size_t	get_env_size(t_enviroment *env)
+static size_t	get_env_size(t_enviroment *env, int fl_empty)
 {
 	size_t		size;
 	t_env_elem	*elem;
@@ -82,7 +82,7 @@ static size_t	get_env_size(t_enviroment *env)
 	elem = env->begin;
 	while (elem)
 	{
-		if (ft_strlen(elem->value))
+		if (ft_strlen(elem->value) || fl_empty)
 			size++;
 		elem = elem->next;
 	}
@@ -97,7 +97,7 @@ static char	**ft_kostil(char **arr)
 
 // Get array of strings from enviroment struct.
 // May return NULL
-char	**env_get_content(t_enviroment *env)
+char	**env_get_content(t_enviroment *env, int fl_emp)
 {
 	int			i;
 	char		**result;
@@ -105,14 +105,14 @@ char	**env_get_content(t_enviroment *env)
 
 	if (!env)
 		return (NULL);
-	result = (char **)malloc(sizeof(char *) * (get_env_size(env) + 1));
+	result = (char **)malloc(sizeof(char *) * (get_env_size(env, fl_emp) + 1));
 	if (!result)
 		return (NULL);
 	i = 0;
 	elem = env->begin;
 	while (elem)
 	{
-		if (ft_strlen(elem->value))
+		if (ft_strlen(elem->value) || fl_emp)
 		{
 			result[i] = utils_create_lone_string(elem->name, elem->value);
 			if (!result[i++])
