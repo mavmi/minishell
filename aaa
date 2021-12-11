@@ -59,4 +59,5 @@ $$VAR
 
 
 мы не будем это делать:
-  += в exort
+  += в export
+  ls > file | < file cat -> не выводит cat file
