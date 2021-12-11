@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:42:54 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/26 16:43:02 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/11 15:19:16 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,30 @@ int	env_push_back(t_enviroment *env, char *str)
 	return (0);
 }
 
+static size_t	get_env_size(t_enviroment *env)
+{
+	size_t		size;
+	t_env_elem	*elem;
+
+	if (!env)
+		return (0);
+	size = 0;
+	elem = env->begin;
+	while (elem)
+	{
+		if (ft_strlen(elem->value))
+			size++;
+		elem = elem->next;
+	}
+	return (size);
+}
+
+static char	**ft_kostil(char **arr)
+{
+	utils_destroy_strings_array(arr);
+	return (NULL);
+}
+
 // Get array of strings from enviroment struct.
 // May return NULL
 char	**env_get_content(t_enviroment *env)
@@ -81,21 +105,19 @@ char	**env_get_content(t_enviroment *env)
 
 	if (!env)
 		return (NULL);
-	result = (char **)malloc(sizeof(char *) * (env->size + 1));
+	result = (char **)malloc(sizeof(char *) * (get_env_size(env) + 1));
 	if (!result)
 		return (NULL);
 	i = 0;
 	elem = env->begin;
 	while (elem)
 	{
-		result[i] = utils_create_lone_string(elem->name, elem->value);
-		if (!result[i])
+		if (ft_strlen(elem->value))
 		{
-			while (i >= 0)
-				free(result[--i]);
-			return (NULL);
+			result[i] = utils_create_lone_string(elem->name, elem->value);
+			if (!result[i++])
+				return (ft_kostil(result));
 		}
-		i++;
 		elem = elem->next;
 	}
 	result[i] = NULL;

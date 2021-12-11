@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/10 18:04:56 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/11 15:18:17 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,17 @@ static void	add_value(char *new_name, char *new_val)
 	}
 }
 
-void	rebuilt_export(int argc, char **argv, int fd_out)
-{(void)fd_out;
+static void	handle_input_2(char *arg)
+{
 	char	*equal;
 	char	*new_name;
 	char	*new_val;
 
-	if (argc == 1)
-	{
-		print_declare();
-		return ;
-	}
-	if (argc != 2 || !argv[1])
-		return ;
-	equal = ft_strchr(argv[1], '=');
-	new_name = ft_substr(argv[1], 0, equal - argv[1]);
+	equal = ft_strchr(arg, '=');
+	if (equal)
+		new_name = ft_substr(arg, 0, equal - arg);
+	else
+		new_name = ft_strdup(arg);
 	if (!is_valid_name(new_name))
 	{
 		free(new_name);
@@ -67,7 +63,34 @@ void	rebuilt_export(int argc, char **argv, int fd_out)
 		ft_putendl_fd(new_name, STDERR_FILENO);
 		return ;
 	}
-	new_val = ft_substr(equal + 1, 0,
-			ft_strlen(argv[1]) - ft_strlen(new_name) + 1);
+	if (equal)
+		new_val = ft_substr(equal + 1, 0,
+				ft_strlen(arg) - ft_strlen(new_name) + 1);
+	else
+		new_val = ft_strdup("");
 	add_value(new_name, new_val);
+}
+
+static void	handle_input_1(int argc, char **argv, int fd_out)
+{
+	(void)	fd_out; // не забыть удалить
+	int		i;
+
+	i = 1;
+	while (i < argc)
+	{
+		handle_input_2(argv[i++]);
+	}
+}
+
+void	rebuilt_export(int argc, char **argv, int fd_out)
+{
+	if (!argv)
+		return ;
+	if (argc == 1)
+	{
+		// пропринтовать херню
+		return ;
+	}
+	handle_input_1(argc, argv, fd_out);	
 }

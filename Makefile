@@ -6,7 +6,7 @@
 #    By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/05 19:05:38 by msalena           #+#    #+#              #
-#    Updated: 2021/12/10 18:06:11 by pmaryjo          ###   ########.fr        #
+#    Updated: 2021/12/11 14:51:51 by pmaryjo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ CYAN		=	\033[36m
 NC			=	\033[0m
 
 
-FLAGS		=	-Wall -Wextra -Werror -MMD
+FLAGS		=	-Wall -Wextra -Werror -MMD -g
 CC			=	gcc
 GCC			=	$(CC) $(FLAGS)
 

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/10 17:12:48 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/11 15:17:40 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	run(void)
 	{
 		str = readline(PROMT);
 		if (!str)
-			rebuilt_exit(0, 0);
+			rebuilt_exit(1, NULL);
 		if (ft_strlen(str))
 			add_history(str);
 		pars_list = par_split(str);
