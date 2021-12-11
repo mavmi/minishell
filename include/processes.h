@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/05 18:20:10 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/11 21:15:28 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ struct s_process
 // proc_1.c
 t_process	*proc_get_new_elem(char *cmd, int in, int out);
 t_process	*proc_init_list(char **cmd, int *fd, char **envp);
-void		proc_push_back(t_process **list, t_process *elem);
 
 // proc_2.c
 void		proc_execute_list(t_process *list);
@@ -79,6 +78,7 @@ int			proc_open_file(char *path, t_file_mode file_mode);
 // proc_here_doc.c
 int			proc_here_doc(char *stop_word);
 
-// void	work_steps(t_par_list *pars_list)
+// proc_split.c
+void		proc_split(char *str, char ***array, size_t *size, int fl_size);
 
 #endif

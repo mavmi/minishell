@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:25:34 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/03 17:07:11 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/11 18:35:18 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*par_handle_str(char *cmd)
 
 	if (!cmd)
 		return (NULL);
-	output = NULL;
+	output = ft_strdup("");
 	while (*cmd)
 	{
 		if (*cmd != '\'' && *cmd != '\"')

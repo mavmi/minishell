@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/09 20:50:38 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/11 18:57:05 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,22 @@ static void	mistake_fd(int fd, char *error)
 	free(error_str);
 }
 
-static char	*delets_spaces(char *list_elem)
+static char	*work_with_spacesNquotesNenv(char *value_elem)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-	while (list_elem[i])
+	while (value_elem[i])
 		i++;
 	i--;
-	if (list_elem[i] == ' ')
+	if (value_elem[i] == ' ')
 	{
-		while (i && list_elem[i] == ' ')
+		while (i >= 0 && value_elem[i] == ' ')
 			i--;
-		list_elem[++i] = '\0';
+		value_elem[++i] = '\0';
 	}
-	return (list_elem);
+	value_elem = par_handle_str(value_elem);
+	return (value_elem);
 }
 
 static t_par_elem	*between_pipe(t_par_elem *sub, int *fd_in, int *fd_out)
@@ -83,22 +84,22 @@ static t_par_elem	*between_pipe(t_par_elem *sub, int *fd_in, int *fd_out)
 	if (sub && sub->type == OPER_HERE_DOC_N)
 	{
 		sub = sub->next;
-		*fd_in = proc_here_doc(delets_spaces(sub->value));
+		*fd_in = proc_here_doc(work_with_spacesNquotesNenv(sub->value));
 		mistake_fd(*fd_in, "here_doc");
 	}
 	else if (sub && sub->type == OPER_INP_N && sub->type != DEFAULT_N
 		&& sub->type != OPER_DOLL_N)
 	{
-		*fd_in = proc_open_file(delets_spaces(sub->next->value), READ);
+		*fd_in = proc_open_file(work_with_spacesNquotesNenv(sub->next->value), READ);
 		mistake_fd(*fd_in, sub->next->value);
 	}
 	else if (sub && sub->type != DEFAULT_N
 		&& sub->type != OPER_DOLL_N)
 	{
 		if (sub && (sub->type == OPER_OUT_N))
-			*fd_out = proc_open_file(delets_spaces(sub->next->value), WRITE);
+			*fd_out = proc_open_file(work_with_spacesNquotesNenv(sub->next->value), WRITE);
 		else if (sub && (sub->type == OPER_OUT_APP_N))
-			*fd_out = proc_open_file(delets_spaces(sub->next->value),
+			*fd_out = proc_open_file(work_with_spacesNquotesNenv(sub->next->value),
 					WRITE_APP);
 		mistake_fd(*fd_out, sub->next->value);
 	}

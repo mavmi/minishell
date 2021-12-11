@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/04 16:16:09 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/11 20:52:41 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_process	*proc_get_new_elem(char *cmd, int in, int out)
 		return (NULL);
 	process = (t_process *)malloc(sizeof(t_process));
 	argv = ft_split(cmd, ' ');
+	// cmd "-e"   $PWD  'file'   -> cmd;"-e        ";$PWD;'file'
 	if (!process || !argv)
 	{
 		free(process);
@@ -105,23 +106,4 @@ t_process	*proc_init_list(char **cmd, int *fd, char **envp)
 	}
 	proc_init_list_handler(&list, cmd, (fd + 2));
 	return (list);
-}
-
-// Add new element to the end of process list
-void	proc_push_back(t_process **list, t_process *elem)
-{
-	t_process	*ptr;
-
-	if (!list || !elem)
-		return ;
-	if (!*list)
-	{
-		*list = elem;
-		return ;
-	}
-	ptr = *list;
-	while (ptr->next)
-		ptr = ptr->next;
-	ptr->next = elem;
-	elem->prev = ptr;
 }
