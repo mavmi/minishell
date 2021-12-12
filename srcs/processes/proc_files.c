@@ -6,14 +6,13 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 18:11:25 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/05 16:10:57 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 13:51:57 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/processes.h"
 
-// Open file with specified mode
-int	proc_open_file(char *path, t_file_mode file_mode)
+int	proc_open_file_(char *path, t_file_mode file_mode)
 {
 	if (!path)
 		return (NON_FD);
@@ -28,4 +27,14 @@ int	proc_open_file(char *path, t_file_mode file_mode)
 	else if (file_mode == READ_WRITE_APP)
 		return (open(path, O_RDWR | O_TRUNC));
 	return (NON_FD);
+}
+
+// Open file with specified mode
+int	proc_open_file(char *path, t_file_mode file_mode)
+{
+	int	fd;
+
+	fd = proc_open_file_(path, file_mode);
+	free(path);
+	return (fd);
 }

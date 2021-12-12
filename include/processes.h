@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/12 11:46:20 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 13:33:35 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@
 # include "utils.h"
 # include "rebuilt_funcs.h"
 # include "enviroment.h"
+# include "parser.h"
 
 # define BAD_STATUS 1
 # define NON_FD -1
+# define NON_HERE_DOC -2
 
 typedef enum e_file_mode	t_file_mode;
 typedef struct s_process	t_process;
@@ -79,6 +81,6 @@ int			proc_open_file(char *path, t_file_mode file_mode);
 int			proc_here_doc(char *stop_word);
 
 // proc_split.c
-void		proc_split(char *str, char ***array, size_t *size, int fl_size);
+char		**proc_split(char *cmd);
 
 #endif

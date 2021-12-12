@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:36:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/03 17:06:57 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 13:29:44 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	par_handle_non_percent(char **substr, char **output)
 static void	par_handle_percent(char **substr, char **output)
 {
 	char		*ptr;
-	char		*tmp;
 	char		*var_name;
 	t_env_elem	*env_elem;
 
@@ -46,16 +45,19 @@ static void	par_handle_percent(char **substr, char **output)
 	env_elem = env_get_by_name(g_data.envp, var_name);
 	if (env_elem)
 		utils_append_string(output, env_elem->value);
-	else if (utils_cmp_strings(var_name, "?"))
-	{
-		tmp = ft_itoa(g_data.exit_status);
-		utils_append_string(output, tmp);
-		free (tmp);
-	}
 	else
 		utils_append_string(output, "");
 	*substr += ft_strlen(var_name);
 	free(var_name);
+}
+
+static void	par_uppender(char **output)
+{
+	char	*tmp;
+
+	tmp = ft_itoa(g_data.exit_status);
+	utils_append_string(output, tmp);
+	free (tmp);
 }
 
 char	*par_handle_vars(char *substr)
@@ -73,6 +75,11 @@ char	*par_handle_vars(char *substr)
 		{
 			utils_append_string(&output, "$");
 			substr++;
+		}
+		else if (*(substr + 1) == '?')
+		{
+			par_uppender(&output);
+			substr += 2;
 		}
 		else
 			par_handle_percent(&substr, &output);

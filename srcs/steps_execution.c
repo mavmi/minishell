@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:18:17 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/11 19:06:14 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 13:58:24 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	work_steps(t_par_list *pars_list)
 	t_process	*proc_list;
 
 	arr_cmd = arr_cmd_formation(pars_list);
-	//arr_cmd = par_handle_quotesNenv(arr_cmd);
 	arr_fd = arr_fd_formation(pars_list->begin);
 	arr_env = env_get_content(g_data.envp, 0);
 	proc_list = proc_init_list(arr_cmd, arr_fd, arr_env);
@@ -45,6 +44,5 @@ void	work_steps(t_par_list *pars_list)
 	utils_destroy_strings_array(arr_cmd);
 	free(arr_fd);
 	proc_destroy_list(proc_list);
-	par_destroy_all(pars_list);
 	utils_destroy_strings_array(arr_env);
 }

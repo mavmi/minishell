@@ -6,24 +6,11 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 13:11:22 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/10 17:26:36 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 14:18:05 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rebuilt_funcs.h"
-
-static int	is_number(char *str)
-{
-	if (!str)
-		return (0);
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-			return (0);
-		str++;
-	}
-	return (1);
-}
 
 void	rebuilt_exit(int argc, char **argv)
 {
@@ -34,7 +21,7 @@ void	rebuilt_exit(int argc, char **argv)
 	else if (argc == 2)
 	{
 		status = ft_atoi(*(argv + 1));
-		if (!is_number(argv[1]))
+		if (ft_atoi(argv[1]) == 0 && !utils_cmp_strings(argv[1], "0"))
 		{
 			status = 255;
 			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);

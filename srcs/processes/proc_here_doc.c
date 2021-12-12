@@ -6,28 +6,24 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/11 18:58:59 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 13:49:32 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/processes.h"
 
-// Read here_doc input, write it to the pipe and
-// return it's fd.
-// Return fd to read line from
-// or -1 if an error occured.
-int	proc_here_doc(char *stop_word)
+static int	proc_here_doc_(char *stop_word)
 {
 	int		io_buffer[2];
 	char	*line;
 
 	if (!stop_word || pipe(io_buffer))
-		return (-1);
+		return (NON_FD);
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
-			return (NON_FD);
+			return (NON_HERE_DOC);
 		if (utils_cmp_strings(line, stop_word))
 		{
 			free(line);
@@ -38,4 +34,17 @@ int	proc_here_doc(char *stop_word)
 		write(io_buffer[STDOUT_FILENO], "\n", 1);
 		free(line);
 	}
+}
+
+// Read here_doc input, write it to the pipe and
+// return it's fd.
+// Return fd to read line from
+// or -1 if an error occured.
+int	proc_here_doc(char *stop_word)
+{
+	int	fd;
+
+	fd = proc_here_doc_(stop_word);
+	free(stop_word);
+	return (fd);
 }

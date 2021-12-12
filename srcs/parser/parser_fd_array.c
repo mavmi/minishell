@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/11 18:57:05 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 13:57:26 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static void	mistake_fd(int fd, char *error)
 	char	*error_str;
 
 	error_str = NULL;
+	if (fd == NON_HERE_DOC)
+		return ;
 	if (fd == NON_FD)
 	{
 		if (utils_cmp_strings(error, "here_doc") == 1)
@@ -61,7 +63,7 @@ static void	mistake_fd(int fd, char *error)
 	free(error_str);
 }
 
-static char	*work_with_spacesNquotesNenv(char *value_elem)
+static char	*space_quote_env(char *value_elem)
 {
 	int		i;
 
@@ -84,22 +86,22 @@ static t_par_elem	*between_pipe(t_par_elem *sub, int *fd_in, int *fd_out)
 	if (sub && sub->type == OPER_HERE_DOC_N)
 	{
 		sub = sub->next;
-		*fd_in = proc_here_doc(work_with_spacesNquotesNenv(sub->value));
+		*fd_in = proc_here_doc(space_quote_env(sub->value));
 		mistake_fd(*fd_in, "here_doc");
 	}
 	else if (sub && sub->type == OPER_INP_N && sub->type != DEFAULT_N
 		&& sub->type != OPER_DOLL_N)
 	{
-		*fd_in = proc_open_file(work_with_spacesNquotesNenv(sub->next->value), READ);
+		*fd_in = proc_open_file(space_quote_env(sub->next->value), READ);
 		mistake_fd(*fd_in, sub->next->value);
 	}
 	else if (sub && sub->type != DEFAULT_N
 		&& sub->type != OPER_DOLL_N)
 	{
 		if (sub && (sub->type == OPER_OUT_N))
-			*fd_out = proc_open_file(work_with_spacesNquotesNenv(sub->next->value), WRITE);
+			*fd_out = proc_open_file(space_quote_env(sub->next->value), WRITE);
 		else if (sub && (sub->type == OPER_OUT_APP_N))
-			*fd_out = proc_open_file(work_with_spacesNquotesNenv(sub->next->value),
+			*fd_out = proc_open_file(space_quote_env(sub->next->value),
 					WRITE_APP);
 		mistake_fd(*fd_out, sub->next->value);
 	}

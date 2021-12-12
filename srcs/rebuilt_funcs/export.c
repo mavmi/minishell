@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/11 17:10:39 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 14:08:08 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,15 @@ static void	export_output_oy_boy(int fd_out)
 		if (size && arr_list[tmp++][--size] == '=')
 			arr_list[tmp - 1][size] = '\0';
 	}
-	while (arr_list && *arr_list)
+	size = 0;
+	while (arr_list && arr_list[size])
 	{
 		ft_putstr_fd("declare -x ", fd_out);
-		ft_putendl_fd(*arr_list, fd_out);
-		arr_list++;
+		ft_putendl_fd(arr_list[size], fd_out);
+		size++;
 	}
+	env_destroy(list);
+	utils_destroy_strings_array(arr_list);
 }
 
 void	rebuilt_export(int argc, char **argv, int fd_out)

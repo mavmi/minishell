@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msalena <msalena@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 17:47:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/05 18:05:41 by msalena          ###   ########.fr       */
+/*   Updated: 2021/12/12 13:59:45 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ static void	proc_execute_built_ins(t_process **ptr)
 	first = *ptr;
 	while (*ptr && (*ptr)->is_built_in)
 	{
-		if ((*ptr)->input_fd == NON_FD || (*ptr)->output_fd == NON_FD)
+		if ((*ptr)->input_fd == NON_FD || (*ptr)->output_fd == NON_FD
+			|| (*ptr)->input_fd == NON_HERE_DOC
+			|| (*ptr)->output_fd == NON_HERE_DOC)
 		{
 			(*ptr) = (*ptr)->next;
 			continue ;

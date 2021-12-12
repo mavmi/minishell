@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 19:04:40 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/12 11:48:47 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 13:03:43 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,21 @@ static int	proc_get_new_elem_handler(t_process *proc, char **argv)
 t_process	*proc_get_new_elem(char *cmd, int in, int out)
 {
 	char		**argv;
-	size_t		argv_size;
+	char		**noice_argv;
 	t_process	*process;
 
 	if (!cmd)
 		return (NULL);
 	process = (t_process *)malloc(sizeof(t_process));
-	proc_split(cmd, &argv, &argv_size, 1);
-	proc_split(cmd, &argv, &argv_size, 0);
-	
-	char** cpy = argv;
-	printf("size: %zu\n", argv_size);
-	while (*cpy){
-		printf("%s|\n", *cpy);
-		cpy++;
-	}
-
-	exit(0);
-	if (!process || !argv)
+	argv = proc_split(cmd);
+	noice_argv = par_handle_quotesNenv(argv);
+	if (!process || !noice_argv)
 	{
 		free(process);
-		utils_destroy_strings_array(argv);
+		utils_destroy_strings_array(noice_argv);
 		return (NULL);
 	}
-	if (proc_get_new_elem_handler(process, argv))
+	if (proc_get_new_elem_handler(process, noice_argv))
 	{
 		proc_destroy_elem(process);
 		return (NULL);

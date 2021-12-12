@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:06:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/11 17:11:21 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 14:05:04 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ t_enviroment	*env_sort(void)
 	if (!env)
 		return (NULL);
 	copy_list = env_create(env);
+	utils_destroy_strings_array(env);
 	if (!copy_list)
 	{
-		utils_destroy_strings_array(env);
 		return (NULL);
 	}
 	sort_list(copy_list);

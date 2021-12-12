@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/12 10:40:58 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 13:44:31 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ static void	run(void)
 			add_history(str);
 		pars_list = par_split(str);
 		if (par_check_list(pars_list))
-		{
 			work_steps(pars_list);
-		}
+		par_destroy_all(pars_list);
 		free(str);
 	}
 	rl_clear_history();
@@ -59,23 +58,6 @@ static void	run(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	//char **arg;
-	//size_t size;
-	//proc_split(
-	//	"PWD \'asd  \'\"   qwerty\"      ",
-	//	&arg,
-	//	&size,
-	//	0
-	//);
-	//char **cpy = arg;
-	//while (*cpy){
-	//	printf("%s|\n", *cpy);
-	//	cpy++;
-	//}
-	//utils_destroy_strings_array(arg);
-	//printf("%ld\n", size);
-	//return 0;
-	
 	(void)argc;
 	(void)argv;
 	g_data.envp = env_create(envp);
