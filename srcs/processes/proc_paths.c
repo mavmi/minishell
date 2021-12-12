@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:49:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/11 16:09:16 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 14:41:15 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ char	*proc_parse_cmd(char *cmd)
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);
 		ft_putendl_fd(": command not found", STDERR_FILENO);
+		g_data.exit_status = 127;
 	}
 	utils_destroy_strings_array(envp);
 	utils_destroy_strings_array(dirs);

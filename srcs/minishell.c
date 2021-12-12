@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/12 14:28:00 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 14:48:37 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	run(void)
 		pars_list = par_split(str);
 		if (par_check_list(pars_list))
 			work_steps(pars_list);
-		else
+		else if (pars_list && pars_list->size)
 			ft_putendl_fd("minishell: error: syntax error", STDERR_FILENO);
 		par_destroy_all(pars_list);
 		free(str);
