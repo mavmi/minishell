@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 21:14:31 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/11 21:52:56 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 11:49:25 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,18 @@ static char	*non_quotes(char *str, int *begin, int fl_size)
 	return (tmp);
 }
 
-static int	add_to_array(char ***array, char *str, int *i)
+static int	add_to_array(char ***array, char *str, int *i, int fl_size)
 {
-	if (!str)
+	if (!fl_size)
 	{
-		utils_destroy_strings_array(*array);
-		return (1);
+		if (!str)
+		{
+			utils_destroy_strings_array(*array);
+			return (1);
+		}
+		(*array)[(*i)] = str;
+		(*i)++;
 	}
-	(*array)[(*i)++] = str;
 	return (0);
 }
 
@@ -83,7 +87,7 @@ void	proc_split(char *str, char ***array, size_t *size, int fl_size)
 	int		i;
 	int		pos;
 
-	if (!str && get_some_memore(array, size, fl_size))
+	if (!str || get_some_memore(array, size, fl_size))
 		return ;
 	i = 0;
 	*size = 0;
@@ -96,10 +100,10 @@ void	proc_split(char *str, char ***array, size_t *size, int fl_size)
 			continue ;
 		}
 		if ((str[pos] == '\'' || str[pos] == '\"')
-			&& add_to_array(array, quotes(str, &pos, fl_size), &i))
+			&& add_to_array(array, quotes(str, &pos, fl_size), &i, fl_size))
 			return ;
-		else if ((str[pos] != '\'' && str[pos] != '\"' && str[pos] != ' ')
-			&& add_to_array(array, non_quotes(str, &pos, fl_size), &i))
+		if ((str[pos] && str[pos] != '\'' && str[pos] != '\"' && str[pos] != ' ')
+			&& add_to_array(array, non_quotes(str, &pos, fl_size), &i, fl_size))
 			return ;
 		(*size)++;
 	}

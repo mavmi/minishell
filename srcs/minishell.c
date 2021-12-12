@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/11 21:49:58 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/12 10:40:58 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,22 @@ static void	run(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char **arg;
-	size_t size;
-	proc_split(
-		"PWD \'asd  \'\"   qwerty\"      ",
-		&arg,
-		&size,
-		0
-	);
-	char **cpy = arg;
-	while (*cpy){
-		printf("%s|\n", *cpy);
-		cpy++;
-	}
-	utils_destroy_strings_array(arg);
-	printf("%ld\n", size);
-	return 0;
+	//char **arg;
+	//size_t size;
+	//proc_split(
+	//	"PWD \'asd  \'\"   qwerty\"      ",
+	//	&arg,
+	//	&size,
+	//	0
+	//);
+	//char **cpy = arg;
+	//while (*cpy){
+	//	printf("%s|\n", *cpy);
+	//	cpy++;
+	//}
+	//utils_destroy_strings_array(arg);
+	//printf("%ld\n", size);
+	//return 0;
 	
 	(void)argc;
 	(void)argv;
