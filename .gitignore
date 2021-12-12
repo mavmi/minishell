@@ -6,6 +6,7 @@ minishell
 *.out
 *.exe
 *.pdf
+*.dSYM/*
 print_separator
 input_file
 output_file

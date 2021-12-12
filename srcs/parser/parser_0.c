@@ -49,6 +49,7 @@ static int	end_of_quotes_area(char *cmd, t_par_count *count, int start)
 	if (!cmd[count->i_elem])
 	{
 		count->i_elem = start;
+		ft_putendl_fd("minishell: error: invalid quotes", STDERR_FILENO);
 		return (0);
 	}
 	else
