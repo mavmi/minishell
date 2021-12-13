@@ -1,4 +1,0 @@
-1. Parsing input cmd on substrs
-2. Understanding what every substr is it (cmd, operator, file and etc.)
-3. Checking on correct potition every substr (file cannot be on first position, for example)
-4. Finding executable binar file (or function if we realizationed cmd) and sending way&arguments&envto function Execve

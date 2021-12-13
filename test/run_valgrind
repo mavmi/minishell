@@ -1,1 +1,0 @@
-clear; gcc -g test.c handling_quotes.c parser_initial.c parser_operations.c parser.c ../../libft/libft.a -o test.out && valgrind --leak-check=full --track-origins=yes ./test.out
