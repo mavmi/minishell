@@ -6,14 +6,14 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:18:17 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/12 13:58:24 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 13:31:28 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/parser.h"
 
 // Increase enviroment's SHLVL value when programm starts
-void	update_shlvl(void)
+void	par_update_shlvl(void)
 {
 	int			shlvl;
 	t_env_elem	*env_elem;
@@ -29,7 +29,7 @@ void	update_shlvl(void)
 	}
 }
 
-void	work_steps(t_par_list *pars_list)
+void	par_work_steps(t_par_list *pars_list)
 {
 	char		**arr_cmd;
 	int			*arr_fd;

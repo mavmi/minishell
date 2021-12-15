@@ -61,35 +61,54 @@ struct s_par_count
 	int		i_elem;
 };
 
-t_par_list	*par_initial_empty_list(void);
-t_par_elem	*par_get_new_elem(int type, char *value);
-char		**par_get_redirect(void);
-t_par_elem	*par_get_by_pos(t_par_list *list, size_t position);
-t_par_count	count_initial(void);
-
-int			par_push_back(t_par_elem *new_back, t_par_list *list);
-void		par_remove_by_pos(t_par_list *list, size_t position);
-void		par_destroy_elem(t_par_elem *elem);
-void		par_destroy_all(t_par_list *list);
-
+// parser_0.c
 t_par_list	*par_split(char *cmd);
 
+// parser_1.c
 t_par_list	*par_free_out(char **oper_arr, t_par_list *list, int fl);
 char		*par_check_malloc(char *str);
 int			par_compar_cNo(char *cmd, t_par_count *coun, char **arr);
 char		*par_handling_quotes(char *str);
 
-char		**arr_cmd_formation(t_par_list *elem_list);
+// parser_cmd_array.c
 int			fd_arr_len(int *fd_arr);
+char		**arr_cmd_formation(t_par_list *elem_list);
+
+// parser_fd_array.c
 int			*arr_fd_formation(t_par_elem *elem_list);
 
+// parser_handle_quotes_1.c
 char		**par_handle_quotesNenv(char **commands);
+
+// parser_handle_quotes_2.c
 char		*par_handle_str(char *cmd);
+
+// parser_handle_quotes_3.c
 char		*par_handle_vars(char *substr);
 
+// parser_initial.c
+t_par_list	*par_initial_empty_list(void);
+char		**par_get_redirect(void);
+t_par_elem	*par_get_new_elem(int type, char *value);
+t_par_elem	*par_get_by_pos(t_par_list *list, size_t position);
+t_par_count	par_count_initial(void);
+
+// parser_list_checker.c
 int			par_check_list(t_par_list *list);
 
-void		update_shlvl(void);
-void		work_steps(t_par_list *pars_list);
+// parser_opeartions.c
+int			par_push_back(t_par_elem *new_back, t_par_list *list);
+void		par_remove_by_pos(t_par_list *list, size_t position);
+void		par_destroy_elem(t_par_elem *elem);
+void		par_destroy_all(t_par_list *list);
+
+// steps_execution.c
+void		par_update_shlvl(void);
+void		par_work_steps(t_par_list *pars_list);
+
+// signals.c
+void		par_set_custom_sig(void);
+void		par_set_default_sig(void);
+void		par_disable_sig(void);
 
 #endif

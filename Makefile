@@ -6,7 +6,7 @@
 #    By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/05 19:05:38 by msalena           #+#    #+#              #
-#    Updated: 2021/12/11 21:14:30 by pmaryjo          ###   ########.fr        #
+#    Updated: 2021/12/15 13:30:16 by pmaryjo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ READLN_DIR	=	readline
 
 
 HDRS		=	$(addprefix $(HDRS_DIR)/, rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h)
-SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c steps_execution.c)\
+SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c steps_execution.c signals.c)\
 			 	$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
 				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c env_utils.c env_sort.c)\
 				$(addprefix $(PROC_DIR)/, proc_files.c proc_paths.c proc_1.c proc_2.c proc_3.c proc_4.c proc_here_doc.c proc_split.c)\

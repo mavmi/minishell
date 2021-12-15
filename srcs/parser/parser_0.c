@@ -131,7 +131,7 @@ t_par_list	*par_split(char *cmd)
 
 	if (!cmd)
 		return (NULL);
-	coun = count_initial();
+	coun = par_count_initial();
 	oper_arr = par_get_redirect();
 	list = par_initial_empty_list();
 	if (!oper_arr || !list)

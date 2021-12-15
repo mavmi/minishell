@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:41:09 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/12 13:33:35 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 14:02:21 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ t_process	*proc_get_new_elem(char *cmd, int in, int out);
 t_process	*proc_init_list(char **cmd, int *fd, char **envp);
 
 // proc_2.c
-void		proc_execute_list(t_process *list);
-
-// proc_3.c
-pid_t		process_execute_built_in(t_process *process);
-void		process_execute_rebuilt(t_process *process);
-
-// proc_4.c
 void		proc_destroy_elem(t_process *process);
 void		proc_destroy_list(t_process *list);
+
+// proc_3.c
+void		proc_execute_list(t_process *list);
+
+// proc_4.c
+pid_t		process_execute_built_in(t_process *process);
+void		process_execute_rebuilt(t_process *process);
 
 // proc_paths.c
 char		**proc_get_paths_array(char **envp);

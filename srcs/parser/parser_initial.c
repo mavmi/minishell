@@ -88,7 +88,7 @@ t_par_elem	*par_get_by_pos(t_par_list *list, size_t position)
 
 /*	Initializes coun struct which keeps
 	num of elem, operator size and operator flag*/
-t_par_count	count_initial(void)
+t_par_count	par_count_initial(void)
 {
 	t_par_count	coun;
 

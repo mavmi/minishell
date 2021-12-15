@@ -6,33 +6,13 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/12 14:48:37 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 13:41:18 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/enviroment.h"
 #include "../include/parser.h"
 #include "../include/processes.h"
-
-// Signals call this function
-static void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		printf("\n");
-		rl_redisplay();
-	}
-}
-
-// Just set up signals
-static void	signals_set_up(void)
-{
-	rl_catch_signals = 0;
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
 
 // Calls parser and executor untill exit
 static void	run(void)
@@ -49,7 +29,7 @@ static void	run(void)
 			add_history(str);
 		pars_list = par_split(str);
 		if (par_check_list(pars_list))
-			work_steps(pars_list);
+			par_work_steps(pars_list);
 		else if (pars_list && pars_list->size)
 			ft_putendl_fd("minishell: error: syntax error", STDERR_FILENO);
 		par_destroy_all(pars_list);
@@ -68,8 +48,8 @@ int	main(int argc, char **argv, char **envp)
 		printf("Can not create local enviroment\n");
 		return (1);
 	}
-	signals_set_up();
-	update_shlvl();
+	par_set_custom_sig();
+	par_update_shlvl();
 	g_data.exit_status = 0;
 	g_data.error = NULL;
 	run();
