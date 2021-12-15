@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/15 17:44:01 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 19:16:15 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	*arr_fd_add_realloc(int *fd_arr, int in_fd, int out_fd)
 
 static void	mistake_fd(int fd, char *error)
 {
+	char	*parsed;
 	char	*error_str;
 
 	error_str = NULL;
@@ -49,15 +50,17 @@ static void	mistake_fd(int fd, char *error)
 		return ;
 	if (fd == NON_FD)
 	{
-		if (utils_cmp_strings(error, "here_doc") == 1)
+		parsed = par_handle_str(error, 1);
+		if (utils_cmp_strings(parsed, "here_doc") == 1)
 			error_str = utils_sum_strings("minishell: here_doc: ",
 					strerror(errno));
 		else
 		{
-			error_str = utils_sum_strings("minishell: ", error);
+			error_str = utils_sum_strings("minishell: ", parsed);
 			utils_append_string(&error_str, ": ");
 			utils_append_string(&error_str, strerror(errno));
 		}
+		free(parsed);
 		ft_putendl_fd(error_str, STDERR_FILENO);
 	}
 	free(error_str);
