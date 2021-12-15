@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/15 19:16:15 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 19:23:43 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,20 +86,20 @@ static char	*space_quote_env(char *value_elem, int hand_var)
 
 static t_par_elem	*between_pipe(t_par_elem *sub, int *fd_in, int *fd_out)
 {
-	if (sub && sub->type == OPER_HERE_DOC_N)
+	if (sub && sub->type == OPER_HERE_DOC_N && *fd_in != NON_FD)
 	{
 		sub = sub->next;
 		*fd_in = proc_here_doc(space_quote_env(sub->value, 0));
 		mistake_fd(*fd_in, "here_doc");
 	}
 	else if (sub && sub->type == OPER_INP_N && sub->type != DEFAULT_N
-		&& sub->type != OPER_DOLL_N)
+		&& sub->type != OPER_DOLL_N && *fd_in != NON_FD)
 	{
 		*fd_in = proc_open_file(space_quote_env(sub->next->value, 1), READ);
 		mistake_fd(*fd_in, sub->next->value);
 	}
 	else if (sub && sub->type != DEFAULT_N
-		&& sub->type != OPER_DOLL_N)
+		&& sub->type != OPER_DOLL_N && *fd_out != NON_FD)
 	{
 		if (sub && (sub->type == OPER_OUT_N))
 			*fd_out = proc_open_file(space_quote_env(sub->next->value, 1),
