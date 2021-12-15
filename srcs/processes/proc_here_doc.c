@@ -6,34 +6,63 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/12 13:49:32 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 16:47:09 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/processes.h"
 
-static int	proc_here_doc_(char *stop_word)
+static void	exit_here_doc(int sig)
 {
-	int		io_buffer[2];
+	(void)sig;
+	exit(1);
+}
+
+static int	here_doc_func(char *stop_word, int out_fd)
+{
 	char	*line;
 
-	if (!stop_word || pipe(io_buffer))
+	if (!stop_word)
 		return (NON_FD);
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
-			return (NON_HERE_DOC);
+			return (0);
 		if (utils_cmp_strings(line, stop_word))
 		{
 			free(line);
-			close(io_buffer[STDOUT_FILENO]);
-			return (io_buffer[STDIN_FILENO]);
+			return (0);
 		}
-		write(io_buffer[STDOUT_FILENO], line, ft_strlen(line));
-		write(io_buffer[STDOUT_FILENO], "\n", 1);
+		write(out_fd, line, ft_strlen(line));
+		write(out_fd, "\n", 1);
 		free(line);
 	}
+}
+
+static pid_t	exec_here_doc(char *stop_word, int in_fd, int out_fd)
+{
+	int		exit_code;
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		close(in_fd);
+		close(out_fd);
+	}
+	par_disable_sig();
+	if (pid == 0)
+	{
+		par_set_default_sig();
+		signal(SIGINT, exit_here_doc);
+		close(in_fd);
+		exit_code = here_doc_func(stop_word, out_fd);
+		close(out_fd);
+		free(stop_word);
+		exit(exit_code);
+	}
+	return (pid);
 }
 
 // Read here_doc input, write it to the pipe and
@@ -42,9 +71,21 @@ static int	proc_here_doc_(char *stop_word)
 // or -1 if an error occured.
 int	proc_here_doc(char *stop_word)
 {
-	int	fd;
+	pid_t	pid;
+	int		io_buffer[2];
 
-	fd = proc_here_doc_(stop_word);
+	if (pipe(io_buffer))
+		return (NON_FD);
+	pid = exec_here_doc(stop_word, io_buffer[STDIN_FILENO],
+			io_buffer[STDOUT_FILENO]);
+	waitpid(pid, &g_data.exit_status, WNOHANG & WUNTRACED);
+	if (WIFEXITED(g_data.exit_status))
+		g_data.exit_status = WEXITSTATUS(g_data.exit_status);
+	par_set_custom_sig();
+	close(io_buffer[STDOUT_FILENO]);
 	free(stop_word);
-	return (fd);
+	if (g_data.exit_status == 0)
+		return (io_buffer[STDIN_FILENO]);
+	close(io_buffer[STDIN_FILENO]);
+	return (NON_HERE_DOC);
 }

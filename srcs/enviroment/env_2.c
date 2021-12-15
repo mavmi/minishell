@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:43:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/27 16:15:19 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 14:16:54 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ t_enviroment	*env_create(char **envp)
 {
 	t_enviroment	*env;
 
-	if (!envp)
-		return (NULL);
 	env = env_create_empty();
 	if (!env)
 		return (NULL);
