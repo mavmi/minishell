@@ -6,25 +6,11 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/12 14:08:08 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 18:48:21 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rebuilt_funcs.h"
-
-static int	is_valid_name(char *name)
-{
-	if (!name || !ft_strlen(name) || (!ft_isalpha(name[0]) && name[0] != '_'))
-		return (0);
-	name++;
-	while (*name)
-	{
-		if (!ft_isalpha(*name) && !ft_isdigit(*name) && *name != '_')
-			return (0);
-		name++;
-	}
-	return (1);
-}
 
 static void	add_value(char *new_name, char *new_val)
 {
@@ -56,11 +42,11 @@ static void	handle_input(char *arg)
 		new_name = ft_substr(arg, 0, equal - arg);
 	else
 		new_name = ft_strdup(arg);
-	if (!is_valid_name(new_name))
+	if (!rebuilt_is_valid_name(new_name))
 	{
-		free(new_name);
 		ft_putstr_fd("export: not an identifier: ", STDERR_FILENO);
-		ft_putendl_fd(new_name, STDERR_FILENO);
+		ft_putendl_fd(arg, STDERR_FILENO);
+		free(new_name);
 		return ;
 	}
 	if (equal)
@@ -69,6 +55,29 @@ static void	handle_input(char *arg)
 	else
 		new_val = ft_strdup("");
 	add_value(new_name, new_val);
+}
+
+static void	print_value(char *str, int fd_out)
+{
+	char	*eq;
+	char	*name;
+	char	*value;
+
+	eq = ft_strchr(str, '=');
+	if (!eq)
+		return ;
+	name = ft_substr(str, 0, eq - str);
+	value = ft_substr(eq + 1, 0, ft_strlen(eq + 1));
+	if (name && value)
+	{
+		ft_putstr_fd("declare -x ", fd_out);
+		ft_putstr_fd(name, fd_out);
+		ft_putstr_fd("=\"", fd_out);
+		ft_putstr_fd(value, fd_out);
+		ft_putendl_fd("\"", fd_out);
+	}
+	free(name);
+	free(value);
 }
 
 static void	export_output_oy_boy(int fd_out)
@@ -81,17 +90,10 @@ static void	export_output_oy_boy(int fd_out)
 	tmp = 0;
 	list = env_sort();
 	arr_list = env_get_content(list, 1);
-	while (arr_list && arr_list[tmp])
-	{
-		size = ft_strlen(arr_list[tmp]);
-		if (size && arr_list[tmp++][--size] == '=')
-			arr_list[tmp - 1][size] = '\0';
-	}
 	size = 0;
 	while (arr_list && arr_list[size])
 	{
-		ft_putstr_fd("declare -x ", fd_out);
-		ft_putendl_fd(arr_list[size], fd_out);
+		print_value(arr_list[size], fd_out);
 		size++;
 	}
 	env_destroy(list);

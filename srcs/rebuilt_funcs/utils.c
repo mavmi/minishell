@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 17:47:57 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/09 20:56:07 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 18:42:48 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,18 @@ void	rebuilt_call_func(int argc, char **argv, int fd_out)
 		rebuilt_env(fd_out);
 	else if (utils_cmp_strings(func, EXIT))
 		rebuilt_exit(argc, argv);
+}
+
+int	rebuilt_is_valid_name(char *name)
+{
+	if (!name || !ft_strlen(name) || (!ft_isalpha(name[0]) && name[0] != '_'))
+		return (0);
+	name++;
+	while (*name)
+	{
+		if (!ft_isalpha(*name) && !ft_isdigit(*name) && *name != '_')
+			return (0);
+		name++;
+	}
+	return (1);
 }

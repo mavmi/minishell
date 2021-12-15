@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 16:31:39 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/09 20:54:31 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 18:42:56 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 // utils.c
 int		rebuit_is_rebuilt(char *func);
 void	rebuilt_call_func(int argc, char **argv, int fd_out);
+int		rebuilt_is_valid_name(char *name);
 
 void	rebuilt_pwd(int fd_out);
 void	rebuilt_cd(int argc, char **argv);
