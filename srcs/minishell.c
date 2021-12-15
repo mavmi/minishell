@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 15:54:30 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/15 14:15:39 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 20:35:31 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("Can not create local enviroment\n");
 		return (1);
 	}
-	par_set_custom_sig();
+	par_sig_init();
 	par_update_shlvl();
 	g_data.exit_status = 0;
 	g_data.error = NULL;

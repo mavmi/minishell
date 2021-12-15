@@ -107,6 +107,7 @@ void		par_update_shlvl(void);
 void		par_work_steps(t_par_list *pars_list);
 
 // signals.c
+void		par_sig_init(void);
 void		par_set_custom_sig(void);
 void		par_set_default_sig(void);
 void		par_disable_sig(void);

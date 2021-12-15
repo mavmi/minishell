@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/15 17:40:45 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 20:29:20 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	exit_here_doc(int sig)
 {
 	(void)sig;
-	exit(1);
+	exit(NON_HERE_DOC);
 }
 
 static int	here_doc_func(char *stop_word, int out_fd)

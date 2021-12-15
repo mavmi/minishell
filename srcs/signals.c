@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 13:30:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/15 17:12:57 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 20:35:10 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,27 @@ static void	signal_handler(int sig)
 	}
 }
 
+void	par_sig_init(void)
+{
+	rl_catch_signals = 0;
+	g_data.SIG_INT = signal(SIGINT, signal_handler);
+	g_data.SIG_QUIT = signal(SIGQUIT, SIG_IGN);
+}
+
 void	par_set_custom_sig(void)
 {
-	sig_t	sig;
-
-	rl_catch_signals = 0;
-	sig = signal(SIGINT, signal_handler);
-	if (sig != SIG_IGN)
-		g_data.SIG_INT = sig;
-	sig = signal(SIGQUIT, SIG_IGN);
-	if (sig != SIG_IGN)
-		g_data.SIG_QUIT = sig;
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	par_set_default_sig(void)
 {
-	rl_catch_signals = 1;
 	signal(SIGINT, g_data.SIG_INT);
 	signal(SIGQUIT, g_data.SIG_QUIT);
 }
 
 void	par_disable_sig(void)
 {
-	rl_catch_signals = 0;
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
