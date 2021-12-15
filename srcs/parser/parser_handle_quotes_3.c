@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:36:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/15 17:22:39 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 18:19:07 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ static void	par_handle_percent(char **substr, char **output)
 
 	(*substr)++;
 	ptr = ft_strchr(*substr, ' ');
-	if (ptr)
-		var_name = ft_substr(*substr, 0, ptr - *substr);
-	else
+	if (!ptr)
+		ptr = ft_strchr(*substr, '\'');
+	if (!ptr)
+		ptr = ft_strchr(*substr, '\"');
+	if (!ptr)
 		ptr = ft_strchr(*substr, '$');
 	if (ptr)
 		var_name = ft_substr(*substr, 0, ptr - *substr);
