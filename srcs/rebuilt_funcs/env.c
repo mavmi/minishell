@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 19:20:45 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/11 16:08:52 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 18:56:53 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	rebuilt_env(int fd_out)
 		ptr++;
 	}
 	utils_destroy_strings_array(envp);
+	g_data.exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/15 18:48:21 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 18:59:43 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	handle_input(char *arg)
 		ft_putstr_fd("export: not an identifier: ", STDERR_FILENO);
 		ft_putendl_fd(arg, STDERR_FILENO);
 		free(new_name);
+		g_data.exit_status = 1;
 		return ;
 	}
 	if (equal)
@@ -106,6 +107,7 @@ void	rebuilt_export(int argc, char **argv, int fd_out)
 
 	if (!argv)
 		return ;
+	g_data.exit_status = 0;
 	if (argc == 1)
 	{
 		export_output_oy_boy(fd_out);

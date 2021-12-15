@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 16:47:13 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/11/12 13:06:18 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 19:01:10 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ void	rebuilt_pwd(int fd_out)
 		ft_putendl_fd(path, fd_out);
 		free(path);
 	}
+	g_data.exit_status = 0;
 }

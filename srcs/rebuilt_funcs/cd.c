@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/03 17:11:47 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/05 16:09:30 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 18:55:39 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ static void	change_dir(char *new_path)
 		ft_putstr_fd(new_path, STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		g_data.exit_status = 1;
 		return ;
 	}
 	new_pwd = getcwd(NULL, 0);
 	set_values(new_pwd, old_pwd);
+	g_data.exit_status = 0;
 }
 
 // Change working directory to [argv[1]].
@@ -66,6 +68,7 @@ void	rebuilt_cd(int argc, char **argv)
 	if (!env_elem)
 	{
 		ft_putendl_fd("minishell: cd: HOME not set", STDERR_FILENO);
+		g_data.exit_status = 1;
 		return ;
 	}
 	change_dir(env_elem->value);
