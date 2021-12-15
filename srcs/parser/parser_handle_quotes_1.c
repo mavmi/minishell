@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 15:55:35 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/12 13:03:33 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 17:32:52 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**par_handle_quotesNenv(char **commands)
 	iter = 0;
 	while (commands[iter])
 	{
-		output[iter] = par_handle_str(commands[iter]);
+		output[iter] = par_handle_str(commands[iter], 1);
 		if (!output[iter])
 		{
 			while (iter >= 0)

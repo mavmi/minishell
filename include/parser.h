@@ -81,7 +81,7 @@ int			*arr_fd_formation(t_par_elem *elem_list);
 char		**par_handle_quotesNenv(char **commands);
 
 // parser_handle_quotes_2.c
-char		*par_handle_str(char *cmd);
+char		*par_handle_str(char *cmd, int hand_vars);
 
 // parser_handle_quotes_3.c
 char		*par_handle_vars(char *substr);

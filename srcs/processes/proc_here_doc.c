@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/15 16:47:09 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/15 17:40:45 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static pid_t	exec_here_doc(char *stop_word, int in_fd, int out_fd)
 	par_disable_sig();
 	if (pid == 0)
 	{
+		rl_catch_signals = 1;
 		par_set_default_sig();
 		signal(SIGINT, exit_here_doc);
 		close(in_fd);
@@ -78,6 +79,8 @@ int	proc_here_doc(char *stop_word)
 		return (NON_FD);
 	pid = exec_here_doc(stop_word, io_buffer[STDIN_FILENO],
 			io_buffer[STDOUT_FILENO]);
+	if (!pid)
+		return (NON_FD);
 	waitpid(pid, &g_data.exit_status, WNOHANG & WUNTRACED);
 	if (WIFEXITED(g_data.exit_status))
 		g_data.exit_status = WEXITSTATUS(g_data.exit_status);
