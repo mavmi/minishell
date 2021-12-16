@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/15 19:23:43 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/16 14:41:50 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	*arr_fd_add_realloc(int *fd_arr, int in_fd, int out_fd)
 	free(fd_arr);
 	new_arr[i] = in_fd;
 	new_arr[++i] = out_fd;
-	new_arr[++i] = -2;
+	new_arr[++i] = END_OF_FD_ARR;
 	return (new_arr);
 }
 

@@ -13,7 +13,7 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# define END_OF_FD_ARR -2
+# define END_OF_FD_ARR -3
 
 # define DEFAULT_N -1
 # define OPER_OUT_N 0
@@ -102,11 +102,11 @@ void		par_remove_by_pos(t_par_list *list, size_t position);
 void		par_destroy_elem(t_par_elem *elem);
 void		par_destroy_all(t_par_list *list);
 
-// steps_execution.c
+// parser_steps_execution.c
 void		par_update_shlvl(void);
 void		par_work_steps(t_par_list *pars_list);
 
-// signals.c
+// parser_signals.c
 void		par_sig_init(void);
 void		par_set_custom_sig(void);
 void		par_set_default_sig(void);

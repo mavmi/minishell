@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 18:18:17 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/15 13:31:28 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/16 14:44:40 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@ void	par_update_shlvl(void)
 	}
 }
 
+// Check if arr_fd contains NON_HERE_DOC 
+static int	par_check_fd_array(int *arr_fd)
+{
+	if (!arr_fd)
+		return (0);
+	while (*arr_fd != END_OF_FD_ARR)
+	{
+		if (*arr_fd == NON_HERE_DOC)
+			return (0);
+		arr_fd++;
+	}
+	return (1);
+}
+
 void	par_work_steps(t_par_list *pars_list)
 {
 	char		**arr_cmd;
@@ -38,6 +52,12 @@ void	par_work_steps(t_par_list *pars_list)
 
 	arr_cmd = arr_cmd_formation(pars_list);
 	arr_fd = arr_fd_formation(pars_list->begin);
+	if (!par_check_fd_array(arr_fd))
+	{
+		free(arr_fd);
+		utils_destroy_strings_array(arr_cmd);
+		return ;
+	}
 	arr_env = env_get_content(g_data.envp, 0);
 	proc_list = proc_init_list(arr_cmd, arr_fd, arr_env);
 	proc_execute_list(proc_list);

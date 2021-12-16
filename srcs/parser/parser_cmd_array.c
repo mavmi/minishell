@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 17:51:02 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/11 18:50:54 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/16 14:42:11 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	fd_arr_len(int *fd_arr)
 	if (!fd_arr)
 		return (0);
 	size = 0;
-	while (fd_arr[size] != -2)
+	while (fd_arr[size] != END_OF_FD_ARR)
 		size++;
 	return (size);
 }
