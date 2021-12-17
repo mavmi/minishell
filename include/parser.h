@@ -84,7 +84,8 @@ char		**par_handle_quotesNenv(char **commands);
 char		*par_handle_str(char *cmd, int hand_vars);
 
 // parser_handle_quotes_3.c
-char		*par_handle_vars(char *substr);
+//char		*par_handle_vars(char *substr);
+char		*vars(char *str, int is_last);
 
 // parser_initial.c
 t_par_list	*par_initial_empty_list(void);

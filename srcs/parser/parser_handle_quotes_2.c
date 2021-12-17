@@ -6,82 +6,94 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:25:34 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/15 18:08:49 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/17 19:28:09 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static char	*par_call_vars_handler(char *str, int hand_vars)
-{
-	if (hand_vars)
-		return (par_handle_vars(str));
-	return (ft_strdup(str));
+static char	*non_quote(char **cmd)
+{	
+	char	*ptr_1;
+	char	*ptr_2;
+	char	*substr;
+
+	ptr_1 = ft_strchr(*cmd, '\'');
+	ptr_2 = ft_strchr(*cmd, '\"');
+	if (!ptr_1 && !ptr_2)
+		substr = ft_strdup(*cmd);
+	else if (ptr_1 && !ptr_2)
+		substr = ft_substr(*cmd, 0, ptr_1 - *cmd);
+	else if (!ptr_1 && ptr_2)
+		substr = ft_substr(*cmd, 0, ptr_2 - *cmd);
+	else
+	{
+		if (ptr_2 < ptr_1)
+			ptr_1 = ptr_2;
+		substr = ft_substr(*cmd, 0, ptr_1 - *cmd);
+	}
+	*cmd += ft_strlen(substr);
+	return (substr);
 }
 
-static char	*par_handle_quote_substr(char **cmd, int hand_vars)
+static char	*quotes(char **cmd, char q)
 {
 	char	*quote;
 	char	*substr;
-	char	*parsed_substr;
 
-	quote = ft_strchr(*cmd + 1, **cmd);
-	if (!quote)
-		return (NULL);
-	else
-		substr = ft_substr(*cmd, 1, quote - *cmd - 1);
-	if (**cmd == '\"')
-		parsed_substr = par_call_vars_handler(substr, hand_vars);
-	else
-		parsed_substr = ft_strdup(substr);
+	quote = ft_strchr(*cmd + 1, q);
+	substr = ft_substr(*cmd, 1, quote - *cmd - 1);
 	*cmd += ft_strlen(substr) + 2;
-	free(substr);
-	return (parsed_substr);
+	return (substr);
 }
 
-static char	*par_handle_non_quote_substr(char **cmd, int hand_vars)
+static void	vvvars(char *cmd, int quote, char **output, char *substr)
 {
-	char	*quote_1;
-	char	*quote_2;
-	char	*substr;
-	char	*parsed_substr;
+	char	*tmp;
 
-	quote_1 = ft_strchr(*cmd, '\'');
-	quote_2 = ft_strchr(*cmd, '\"');
-	if (!quote_1 && !quote_2)
-		substr = ft_strdup(*cmd);
-	else if (quote_1 && !quote_2)
-		substr = ft_substr(*cmd, 0, quote_1 - *cmd);
-	else if (!quote_1 && quote_2)
-		substr = ft_substr(*cmd, 0, quote_2 - *cmd);
+	if (quote)
+		tmp = vars(substr, 1);
+	else
+		tmp = vars(substr, *cmd == 0);
+	utils_append_string(output, tmp);
+	free(tmp);
+}
+
+static void	substr_(char **cmd, char **output, int hand_vars)
+{
+	int		quote;
+	char	*substr;
+
+	if (**cmd == '\'')
+	{
+		substr = quotes(cmd, '\'');
+		utils_append_string(output, substr);
+		free(substr);
+		return ;
+	}
+	quote = 1;
+	if (**cmd == '\"')
+		substr = quotes(cmd, '\"');
 	else
 	{
-		if (quote_2 < quote_1)
-			quote_1 = quote_2;
-		substr = ft_substr(*cmd, 0, quote_1 - *cmd);
+		quote = 0;
+		substr = non_quote(cmd);
 	}
-	parsed_substr = par_call_vars_handler(substr, hand_vars);
-	*cmd += ft_strlen(substr);
+	if (hand_vars)
+		vvvars(*cmd, quote, output, substr);
+	else
+		utils_append_string(output, substr);
 	free(substr);
-	return (parsed_substr);
 }
 
 char	*par_handle_str(char *cmd, int hand_vars)
 {
 	char	*output;
-	char	*parsed_substr;	
 
-	if (!cmd)
-		return (NULL);
 	output = ft_strdup("");
 	while (*cmd)
 	{
-		if (*cmd != '\'' && *cmd != '\"')
-			parsed_substr = par_handle_non_quote_substr(&cmd, hand_vars);
-		else
-			parsed_substr = par_handle_quote_substr(&cmd, hand_vars);
-		utils_append_string(&output, parsed_substr);
-		free(parsed_substr);
+		substr_(&cmd, &output, hand_vars);
 	}
 	return (output);
 }

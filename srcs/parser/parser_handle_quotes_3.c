@@ -5,90 +5,110 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 16:36:10 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/15 18:19:07 by pmaryjo          ###   ########.fr       */
+/*   Created: 2021/12/17 18:55:53 by pmaryjo           #+#    #+#             */
+/*   Updated: 2021/12/17 19:27:53 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static void	par_handle_non_percent(char **substr, char **output)
+static char	*get_var_value(char *name)
 {
-	char	*tmp;
-	char	*ptr;
+	t_env_elem	*elem;
 
-	ptr = ft_strchr(*substr, '$');
-	if (!ptr)
-	{
-		utils_append_string(output, *substr);
-		*substr += ft_strlen(*substr);
-		return ;
-	}
-	tmp = ft_substr(*substr, 0, ptr - *substr);
-	utils_append_string(output, tmp);
-	*substr += ft_strlen(tmp);
-	free(tmp);
+	if (utils_cmp_strings(name, "?"))
+		return (ft_itoa(g_data.exit_status));
+	elem = env_get_by_name(g_data.envp, name);
+	if (!elem)
+		return (NULL);
+	return (ft_strdup(elem->value));
 }
 
-static void	par_handle_percent(char **substr, char **output)
+static char	*get_var_name(char *str)
 {
-	char		*ptr;
-	char		*var_name;
-	t_env_elem	*env_elem;
+	int		i;
+	char	*ptr;
 
-	(*substr)++;
-	ptr = ft_strchr(*substr, ' ');
-	if (!ptr)
-		ptr = ft_strchr(*substr, '\'');
-	if (!ptr)
-		ptr = ft_strchr(*substr, '\"');
-	if (!ptr)
-		ptr = ft_strchr(*substr, '$');
-	if (ptr)
-		var_name = ft_substr(*substr, 0, ptr - *substr);
+	i = 0;
+	if (*str == '$')
+	{
+		while (str[i] && str[i] != ' '
+			&& str[i] != '\'' && str[i] != '\"')
+			i++;
+		return (ft_substr(str, 0, i));
+	}
 	else
-		var_name = ft_strdup(*substr);
-	env_elem = env_get_by_name(g_data.envp, var_name);
-	if (env_elem)
-		utils_append_string(output, env_elem->value);
-	else
-		utils_append_string(output, "");
-	*substr += ft_strlen(var_name);
+	{
+		ptr = ft_strchr(str, ' ');
+		if (!ptr)
+			ptr = ft_strchr(str, '\'');
+		if (!ptr)
+			ptr = ft_strchr(str, '\"');
+		if (!ptr)
+			ptr = ft_strchr(str, '$');
+		if (ptr)
+			return (ft_substr(str, 0, ptr - str));
+		return (ft_strdup(str));
+	}
+}
+
+static void	doll(char **str, char **output, int is_last)
+{
+	char	*tmp;
+	char	*var_name;
+
+	if (*(*str + 1) == 0)
+	{
+		if (is_last)
+			utils_append_string(output, "$");
+		*str += 1;
+		return ;
+	}
+	var_name = get_var_name(*str + 1);
+	*str += ft_strlen(var_name) + 1;
+	tmp = get_var_value(var_name);
+	utils_append_string(output, tmp);
+	free(tmp);
 	free(var_name);
 }
 
-static void	par_uppender(char **output)
+static void	non_doll(char **str, char **output)
 {
+	char	*ptr;
 	char	*tmp;
 
-	tmp = ft_itoa(g_data.exit_status);
-	utils_append_string(output, tmp);
-	free (tmp);
+	ptr = ft_strchr(*str, '$');
+	if (!ptr)
+	{
+		tmp = ft_strdup(*str);
+		utils_append_string(output, tmp);
+		*str += ft_strlen(tmp);
+		free(tmp);
+	}
+	else
+	{
+		tmp = ft_substr(*str, 0, ptr - *str);
+		utils_append_string(output, tmp);
+		*str = ptr;
+		free(tmp);
+	}	
 }
 
-char	*par_handle_vars(char *substr)
+char	*vars(char *str, int is_last)
 {
 	char	*output;
 
-	if (!substr)
-		return (NULL);
 	output = NULL;
-	while (*substr)
+	while (*str)
 	{
-		if (*substr != '$')
-			par_handle_non_percent(&substr, &output);
-		else if (*(substr + 1) == ' ' || *(substr + 1) == 0)
+		if (*str == '$')
 		{
-			utils_append_string(&output, "$");
-			substr++;
-		}
-		else if (*(substr + 1) == '?')
-		{
-			par_uppender(&output);
-			substr += 2;
+			doll(&str, &output, is_last);
 		}
 		else
-			par_handle_percent(&substr, &output);
+		{	
+			non_doll(&str, &output);
+		}
 	}
 	return (output);
 }
