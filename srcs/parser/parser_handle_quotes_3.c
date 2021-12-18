@@ -6,13 +6,13 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 18:55:53 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/17 19:27:53 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/18 14:08:20 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static char	*get_var_value(char *name)
+static char	*par_get_var_value(char *name)
 {
 	t_env_elem	*elem;
 
@@ -24,7 +24,7 @@ static char	*get_var_value(char *name)
 	return (ft_strdup(elem->value));
 }
 
-static char	*get_var_name(char *str)
+static char	*par_get_var_name(char *str)
 {
 	int		i;
 	char	*ptr;
@@ -52,7 +52,7 @@ static char	*get_var_name(char *str)
 	}
 }
 
-static void	doll(char **str, char **output, int is_last)
+static void	par_parse_doll(char **str, char **output, int is_last)
 {
 	char	*tmp;
 	char	*var_name;
@@ -64,15 +64,15 @@ static void	doll(char **str, char **output, int is_last)
 		*str += 1;
 		return ;
 	}
-	var_name = get_var_name(*str + 1);
+	var_name = par_get_var_name(*str + 1);
 	*str += ft_strlen(var_name) + 1;
-	tmp = get_var_value(var_name);
+	tmp = par_get_var_value(var_name);
 	utils_append_string(output, tmp);
 	free(tmp);
 	free(var_name);
 }
 
-static void	non_doll(char **str, char **output)
+static void	par_parse_non_doll(char **str, char **output)
 {
 	char	*ptr;
 	char	*tmp;
@@ -94,7 +94,7 @@ static void	non_doll(char **str, char **output)
 	}	
 }
 
-char	*vars(char *str, int is_last)
+char	*par_parse_vars(char *str, int is_last)
 {
 	char	*output;
 
@@ -103,11 +103,11 @@ char	*vars(char *str, int is_last)
 	{
 		if (*str == '$')
 		{
-			doll(&str, &output, is_last);
+			par_parse_doll(&str, &output, is_last);
 		}
 		else
 		{	
-			non_doll(&str, &output);
+			par_parse_non_doll(&str, &output);
 		}
 	}
 	return (output);

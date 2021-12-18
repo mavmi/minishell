@@ -6,13 +6,13 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:25:34 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/17 19:28:09 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/18 14:09:44 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static char	*non_quote(char **cmd)
+static char	*par_get_non_quote_substr(char **cmd)
 {	
 	char	*ptr_1;
 	char	*ptr_2;
@@ -36,7 +36,7 @@ static char	*non_quote(char **cmd)
 	return (substr);
 }
 
-static char	*quotes(char **cmd, char q)
+static char	*par_get_quotes_substr(char **cmd, char q)
 {
 	char	*quote;
 	char	*substr;
@@ -47,53 +47,53 @@ static char	*quotes(char **cmd, char q)
 	return (substr);
 }
 
-static void	vvvars(char *cmd, int quote, char **output, char *substr)
+static void	par_handle_vars(char *cmd, int quote, char **output, char *substr)
 {
 	char	*tmp;
 
 	if (quote)
-		tmp = vars(substr, 1);
+		tmp = par_parse_vars(substr, 1);
 	else
-		tmp = vars(substr, *cmd == 0);
+		tmp = par_parse_vars(substr, *cmd == 0);
 	utils_append_string(output, tmp);
 	free(tmp);
 }
 
-static void	substr_(char **cmd, char **output, int hand_vars)
+static void	par_handle_substr(char **cmd, char **output, int hand_vars)
 {
 	int		quote;
 	char	*substr;
 
 	if (**cmd == '\'')
 	{
-		substr = quotes(cmd, '\'');
+		substr = par_get_quotes_substr(cmd, '\'');
 		utils_append_string(output, substr);
 		free(substr);
 		return ;
 	}
 	quote = 1;
 	if (**cmd == '\"')
-		substr = quotes(cmd, '\"');
+		substr = par_get_quotes_substr(cmd, '\"');
 	else
 	{
 		quote = 0;
-		substr = non_quote(cmd);
+		substr = par_get_non_quote_substr(cmd);
 	}
 	if (hand_vars)
-		vvvars(*cmd, quote, output, substr);
+		par_handle_vars(*cmd, quote, output, substr);
 	else
 		utils_append_string(output, substr);
 	free(substr);
 }
 
-char	*par_handle_str(char *cmd, int hand_vars)
+char	*par_parse_quotes_and_vars(char *cmd, int hand_vars)
 {
 	char	*output;
 
 	output = ft_strdup("");
 	while (*cmd)
 	{
-		substr_(&cmd, &output, hand_vars);
+		par_handle_substr(&cmd, &output, hand_vars);
 	}
 	return (output);
 }
