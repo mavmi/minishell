@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/28 18:38:55 by msalena           #+#    #+#             */
-/*   Updated: 2021/12/18 14:06:15 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/18 16:20:33 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ static int	*arr_fd_add_realloc(int *fd_arr, int in_fd, int out_fd)
 	return (new_arr);
 }
 
-static void	mistake_fd(int fd, char *error)
+static int	mistake_fd(int fd, char *error)
 {
 	char	*parsed;
 	char	*error_str;
 
 	error_str = NULL;
 	if (fd == NON_HERE_DOC)
-		return ;
+		return (NON_HERE_DOC);
 	if (fd == NON_FD)
 	{
 		parsed = par_parse_quotes_and_vars(error, 1);
@@ -64,6 +64,7 @@ static void	mistake_fd(int fd, char *error)
 		ft_putendl_fd(error_str, STDERR_FILENO);
 	}
 	free(error_str);
+	return (1);
 }
 
 static char	*space_quote_env(char *value_elem, int hand_var)
@@ -84,32 +85,33 @@ static char	*space_quote_env(char *value_elem, int hand_var)
 	return (value_elem);
 }
 
-static t_par_elem	*between_pipe(t_par_elem *sub, int *fd_in, int *fd_out)
+static int	between_pipe(t_par_elem **sub, int *fd_in, int *fd_out)
 {
-	if (sub && sub->type == OPER_HERE_DOC_N && *fd_in != NON_FD)
+	if ((*sub) && (*sub)->type == OPER_HERE_DOC_N && *fd_in != NON_FD)
 	{
-		sub = sub->next;
-		*fd_in = proc_here_doc(space_quote_env(sub->value, 0));
-		mistake_fd(*fd_in, "here_doc");
+		(*sub) = (*sub)->next;
+		*fd_in = proc_here_doc(space_quote_env((*sub)->value, 0));
+		if ((mistake_fd(*fd_in, "here_doc") == NON_HERE_DOC))
+			return (NON_HERE_DOC);
 	}
-	else if (sub && sub->type == OPER_INP_N && sub->type != DEFAULT_N
-		&& sub->type != OPER_DOLL_N && *fd_in != NON_FD)
+	else if ((*sub) && (*sub)->type == OPER_INP_N && (*sub)->type != DEFAULT_N
+		&& (*sub)->type != OPER_DOLL_N && *fd_in != NON_FD)
 	{
-		*fd_in = proc_open_file(space_quote_env(sub->next->value, 1), READ);
-		mistake_fd(*fd_in, sub->next->value);
+		*fd_in = proc_open_file(space_quote_env((*sub)->next->value, 1), READ);
+		mistake_fd(*fd_in, (*sub)->next->value);
 	}
-	else if (sub && sub->type != DEFAULT_N
-		&& sub->type != OPER_DOLL_N && *fd_out != NON_FD)
+	else if ((*sub) && (*sub)->type != DEFAULT_N
+		&& (*sub)->type != OPER_DOLL_N && *fd_out != NON_FD)
 	{
-		if (sub && (sub->type == OPER_OUT_N))
-			*fd_out = proc_open_file(space_quote_env(sub->next->value, 1),
+		if (sub && ((*sub)->type == OPER_OUT_N))
+			*fd_out = proc_open_file(space_quote_env((*sub)->next->value, 1),
 					WRITE);
-		else if (sub && (sub->type == OPER_OUT_APP_N))
-			*fd_out = proc_open_file(space_quote_env(sub->next->value, 1),
+		else if (sub && ((*sub)->type == OPER_OUT_APP_N))
+			*fd_out = proc_open_file(space_quote_env((*sub)->next->value, 1),
 					WRITE_APP);
-		mistake_fd(*fd_out, sub->next->value);
+		mistake_fd(*fd_out, (*sub)->next->value);
 	}
-	return (sub);
+	return (1);
 }
 
 int	*arr_fd_formation(t_par_elem *sub)
@@ -133,9 +135,9 @@ int	*arr_fd_formation(t_par_elem *sub)
 			fd_input = 0;
 			fd_output = 1;
 		}
-		else if (sub && sub->type != DEFAULT_N
-			&& sub->type != OPER_DOLL_N)
-			sub = between_pipe(sub, &fd_input, &fd_output);
+		else if (sub && sub->type != DEFAULT_N && sub->type != OPER_DOLL_N)
+			if (between_pipe(&sub, &fd_input, &fd_output) == NON_HERE_DOC)
+				return (fd_arr);
 		sub = sub->next;
 	}
 	return (fd_arr);
