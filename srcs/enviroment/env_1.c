@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:42:54 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/11 17:00:18 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/18 19:44:32 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,34 +43,6 @@ t_env_elem	*env_get_new_elem(char *str)
 	return (new_elem);
 }
 
-// Create new env element
-// and push it to the end of enviroment struct.
-// Return 0 if everything is ok,
-// 1 otherwise
-int	env_push_back(t_enviroment *env, char *str)
-{
-	t_env_elem	*new_elem;
-
-	if (!str)
-		return (1);
-	new_elem = env_get_new_elem(str);
-	if (!new_elem)
-		return (1);
-	if (env->size)
-	{
-		env->end->next = new_elem;
-		new_elem->prev = env->end;
-		env->end = new_elem;
-	}
-	else
-	{
-		env->begin = new_elem;
-		env->end = new_elem;
-	}
-	env->size++;
-	return (0);
-}
-
 static size_t	get_env_size(t_enviroment *env, int fl_empty)
 {
 	size_t		size;
@@ -82,17 +54,40 @@ static size_t	get_env_size(t_enviroment *env, int fl_empty)
 	elem = env->begin;
 	while (elem)
 	{
-		if (ft_strlen(elem->value) || fl_empty)
+		if (elem->value || (!elem->value && fl_empty))
 			size++;
 		elem = elem->next;
 	}
 	return (size);
 }
 
-static char	**ft_kostil(char **arr)
+static int	ft_kostil(char **arr)
 {
 	utils_destroy_strings_array(arr);
-	return (NULL);
+	return (1);
+}
+
+static int	smth(int fl_emp, t_env_elem *elem, int *i, char **result)
+{
+	if (fl_emp)
+	{
+		if (!elem->value)
+			result[*i] = utils_create_lone_string(elem->name, "");
+		else
+			result[*i] = utils_create_lone_string(elem->name, elem->value);
+		if (!result[(*i)++])
+			return (ft_kostil(result));
+	}
+	else
+	{
+		if (elem->value)
+		{
+			result[*i] = utils_create_lone_string(elem->name, elem->value);
+			if (!result[(*i)++])
+				return (ft_kostil(result));
+		}
+	}
+	return (0);
 }
 
 // Get array of strings from enviroment struct.
@@ -112,12 +107,8 @@ char	**env_get_content(t_enviroment *env, int fl_emp)
 	elem = env->begin;
 	while (elem)
 	{
-		if (ft_strlen(elem->value) || fl_emp)
-		{
-			result[i] = utils_create_lone_string(elem->name, elem->value);
-			if (!result[i++])
-				return (ft_kostil(result));
-		}
+		if (smth(fl_emp, elem, &i, result))
+			return (NULL);
 		elem = elem->next;
 	}
 	result[i] = NULL;

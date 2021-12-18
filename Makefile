@@ -6,7 +6,7 @@
 #    By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/05 19:05:38 by msalena           #+#    #+#              #
-#    Updated: 2021/12/16 15:04:40 by pmaryjo          ###   ########.fr        #
+#    Updated: 2021/12/18 19:04:57 by pmaryjo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ READLN_DIR	=	readline
 
 HDRS		=	$(addprefix $(HDRS_DIR)/, rebuilt_funcs.h enviroment.h utils.h pipex.h variables.h signal.h)
 SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c)\
-			 	$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export.c unset.c echo.c exit.c)\
-				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c env_utils.c env_sort.c)\
+			 	$(addprefix $(FUNCS_DIR)/, utils.c pwd.c cd.c env.c export_1.c export_2.c unset.c echo.c exit.c)\
+				$(addprefix $(ENV_DIR)/, env_1.c env_2.c env_3.c env_4.c env_utils.c env_sort.c)\
 				$(addprefix $(PROC_DIR)/, proc_files.c proc_paths.c proc_1.c proc_2.c proc_3.c proc_4.c proc_here_doc.c proc_split.c)\
 				$(addprefix $(UTILS_DIR)/, utils_1.c)\
 				$(addprefix $(PARS_DIR)/, parser_0.c parser_1.c parser_cmd_array.c parser_fd_array.c\

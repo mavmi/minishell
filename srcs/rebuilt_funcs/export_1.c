@@ -1,41 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   export_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/10 15:33:33 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/15 18:59:43 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/18 19:05:35 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/rebuilt_funcs.h"
 
-static void	add_value(char *new_name, char *new_val)
-{
-	char	*str;
-
-	if (env_set_by_name(g_data.envp, new_name, new_val))
-		free(new_name);
-	else
-	{
-		str = NULL;
-		utils_append_string(&str, new_name);
-		utils_append_string(&str, "=");
-		utils_append_string(&str, new_val);
-		env_push_back(g_data.envp, str);
-		free(str);
-		free(new_name);
-		free(new_val);
-	}
-}
-
 static void	handle_input(char *arg)
 {
 	char	*equal;
 	char	*new_name;
-	char	*new_val;
 
 	equal = ft_strchr(arg, '=');
 	if (equal)
@@ -51,11 +31,10 @@ static void	handle_input(char *arg)
 		return ;
 	}
 	if (equal)
-		new_val = ft_substr(equal + 1, 0,
-				ft_strlen(arg) - ft_strlen(new_name) + 1);
+		add_value(new_name, ft_substr(equal + 1, 0,
+				ft_strlen(arg) - ft_strlen(new_name) + 1));
 	else
-		new_val = ft_strdup("");
-	add_value(new_name, new_val);
+		add_value(new_name, NULL);
 }
 
 static void	print_value(char *str, int fd_out)
