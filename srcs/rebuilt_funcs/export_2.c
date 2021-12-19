@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 19:05:08 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/18 19:06:00 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/19 15:44:37 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	add_empty(char *new_name)
 		return ;
 	elem->name = ft_strdup(new_name);
 	elem->value = NULL;
+	elem->prev = NULL;
+	elem->next = NULL;
 	env_push_back_elem(g_data.envp, elem);
 }
 

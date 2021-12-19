@@ -112,4 +112,8 @@ void		par_set_custom_sig(void);
 void		par_set_default_sig(void);
 void		par_disable_sig(void);
 
+// parser_utils.c
+int			par_is_valid_symbol(char c);
+char		*par_strchr(char *str);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 16:07:00 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/16 14:30:03 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/19 17:57:09 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	exit_here_doc(int sig)
 {
 	(void)sig;
+	printf("\n");
 	exit(1);
 }
 

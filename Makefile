@@ -6,7 +6,7 @@
 #    By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/05 19:05:38 by msalena           #+#    #+#              #
-#    Updated: 2021/12/18 19:04:57 by pmaryjo          ###   ########.fr        #
+#    Updated: 2021/12/19 17:42:04 by pmaryjo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRCS		= 	$(addprefix $(SRCS_DIR)/, minishell.c)\
 				$(addprefix $(PARS_DIR)/, parser_0.c parser_1.c parser_cmd_array.c parser_fd_array.c\
 											parser_initial.c parser_operations.c parser_handle_quotes_1.c\
 											parser_handle_quotes_2.c parser_handle_quotes_3.c parser_list_checker.c\
-											parser_signal.c parser_steps_execution.c)
+											parser_signal.c parser_steps_execution.c parser_utils.c)
 OBJS		=	$(SRCS:.c=.o)
 DEPEN		=	$(OBJS:.o=.d)
 

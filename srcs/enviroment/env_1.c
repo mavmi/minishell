@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 17:42:54 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/18 19:44:32 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/19 18:11:29 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	ft_kostil(char **arr)
 	return (1);
 }
 
-static int	smth(int fl_emp, t_env_elem *elem, int *i, char **result)
+static int	handler(int fl_emp, t_env_elem *elem, int *i, char **result)
 {
 	if (fl_emp)
 	{
@@ -107,7 +107,7 @@ char	**env_get_content(t_enviroment *env, int fl_emp)
 	elem = env->begin;
 	while (elem)
 	{
-		if (smth(fl_emp, elem, &i, result))
+		if (handler(fl_emp, elem, &i, result))
 			return (NULL);
 		elem = elem->next;
 	}

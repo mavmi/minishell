@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 18:55:53 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/18 17:04:49 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/19 17:50:44 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,7 @@ static char	*par_get_var_name(char *str)
 			i++;
 		return (ft_substr(str, 0, i));
 	}
-	ptr = ft_strchr(str, ' ');
-	if (!ptr)
-		ptr = ft_strchr(str, '\'');
-	if (!ptr)
-		ptr = ft_strchr(str, '\"');
-	if (!ptr)
-		ptr = ft_strchr(str, '/');
-	if (!ptr)
-		ptr = ft_strchr(str, '$');
+	ptr = par_strchr(str + i);
 	if (ptr)
 		return (ft_substr(str, 0, ptr - str));
 	return (ft_strdup(str));
