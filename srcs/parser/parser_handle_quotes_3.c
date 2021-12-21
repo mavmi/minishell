@@ -6,7 +6,7 @@
 /*   By: pmaryjo <pmaryjo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 18:55:53 by pmaryjo           #+#    #+#             */
-/*   Updated: 2021/12/19 17:50:44 by pmaryjo          ###   ########.fr       */
+/*   Updated: 2021/12/21 15:40:03 by pmaryjo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ static char	*par_get_var_name(char *str)
 	char	*ptr;
 
 	i = 0;
+	if (*str == '?')
+	{
+		return (ft_strdup("?"));
+	}
 	if (*str == '$')
 	{
 		while (str[i] && str[i] != ' '
@@ -48,7 +52,7 @@ static void	par_parse_doll(char **str, char **output, int is_last)
 	char	*tmp;
 	char	*var_name;
 
-	if (*(*str + 1) == 0)
+	if (*(*str + 1) == 0 || *(*str + 1) == ' ')
 	{
 		if (is_last)
 			utils_append_string(output, "$");
