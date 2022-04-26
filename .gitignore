@@ -1,0 +1,16 @@
+minishell
+.*
+*.d
+*.o
+*.a
+*.out
+*.exe
+*.pdf
+*.dSYM/*
+print_separator
+input_file
+output_file
+!.gitignore
+!libhistory.a
+!libreadline.a
+!en.subject.pdf
