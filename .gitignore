@@ -11,3 +11,6 @@ print_separator
 input_file
 output_file
 !.gitignore
+!libhistory.a
+!libreadline.a
+!en.subject.pdf
